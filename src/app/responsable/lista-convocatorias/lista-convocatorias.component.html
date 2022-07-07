@@ -1,0 +1,211 @@
+<mat-card-title style="background-color:#1d3557; color:white; padding: 20px; border-radius: 5px">
+    Convocatorias
+   </mat-card-title>
+<mat-card>
+<p-table #dt id="tconvocatorias"
+            dataKey="idConvocatoria"
+            [value]="convocatorias"
+            [paginator]="true"
+            [rows]="10"
+            [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10,25,50]"
+            [paginator]="true"
+            styleClass="p-datatable-customers p-datatable-gridlines"
+            [globalFilterFields]="['nombreConvocatoria','solicitudEmpresa.empleado.empresa.nombreEmpresa']"
+            >
+
+            <ng-template pTemplate="caption">
+                <div class="p-grid">
+                    <div class="p-col" style="text-align: left;">
+                        <p>Lista de Convocatorias</p>
+                    </div>
+                    <div class="p-col" style="text-align: right">
+                        <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                        <input type="text" pInputText size="50" placeholder="Busqueda: "
+                            (input)="dt.filterGlobal($any($event.target).value, 'contains')" style="width:auto">
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+
+                <tr>
+                    <th style="width: 80px;">Id</th>
+                    <th>Nombre</th>
+                    <th>Empresa</th>
+                    <th>Fecha Máxima</th>
+                    <th>Estado</th>                   
+                    <th style="width: 100px;">Generar Respuesta</th>
+                    <th style="width: 100px;">Documento Respuesta</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-conv>
+                <tr>
+                  <td>{{conv.idConvocatoria}}</td>
+                  <td>{{conv.nombreConvocatoria}}</td>
+                  <td>{{conv.solicitudEmpresa.empleado.empresa.nombreEmpresa}}</td>
+                  <td>{{conv.fechaMaxima| date}}</td>
+                  <td>{{conv.estado}}</td>
+                    <td style="align-items: center; text-align: center;">
+                        <button pButton pRipple type="button" icon="pi pi-arrow-up-right"
+                      class="p-button-rounded p-button-secondary" (click)="generarRespuesta(conv)">
+                    </button>
+                    </td>
+                    <td style="align-items: center; text-align: center;">
+                        <button pButton pRipple type="button" icon="pi pi-bookmark"
+                      class="p-button-rounded p-button-secondary" (click)="getRespuesta(conv)">
+                    </button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td >No hay datos.</td>
+                </tr>
+            </ng-template>
+
+    </p-table>
+</mat-card>
+
+<p-dialog appendTo="body" header="Registro de Respuesta" [(visible)]="documentacion" [modal]="true" [style]="{width: '50%', height: '40vw'}"
+        [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [resizable]="false"
+        >
+        
+        <div>
+          <h3>Subir archivo de respuesta firmado y en pdf</h3>
+          <p-fileUpload
+                accept=".pdf"
+                [customUpload]="true"
+                [showCancelButton]="false"
+                [multiple]="false"
+                (uploadHandler)="onFileSelected($event)"
+                chooseLabel="Seleccionar anexo"
+                uploadLabel="Cargar anexo"
+                invalidFileTypeMessageSummary="Archivo no valido"
+                invalidFileSizeMessageDetail="Solo se acepta archivos con extensiones .pdf"
+              >
+              </p-fileUpload>
+        </div>
+
+        <p-footer>
+            <button type="button" pButton icon="pi pi-save"   label="Guardar Archivo" (click)="updateSolicitud()"></button>
+            <button type="button" pButton icon="pi pi-times"  label="Cancelar" (click)="documentacion = false" class="ui-button-secondary"></button>
+        </p-footer>
+    </p-dialog>
+
+    <p-dialog appendTo="body" header="Solicitudes de Estudiantes" [(visible)]="soliEstudiantes" [modal]="true" [style]="{width: '80%', height: '80%'}"
+        [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [resizable]="false" [closable]="false"
+        >
+        <div class="row">
+            <div class="col-md" style="min-width: 500px;">
+                <p-table #dt id="tconvocatorias"
+                dataKey="idSolicitud"
+                [value]="estudiantes"
+                [paginator]="true"
+                [rows]="10"
+                [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[10,25,50]"
+                [paginator]="true"
+                styleClass="p-datatable-customers p-datatable-gridlines"
+                [globalFilterFields]="['alumno.persona.primerNombre','alumno.persona.primerApellido','fechaEmision']"
+                >
+    
+                <ng-template pTemplate="caption">
+                    <div class="p-grid">
+                        <div class="p-col" style="text-align: left;" *ngIf="convocatoria != null">
+                            <h3>Lista de Solicitudes</h3>
+                            <p>Máximo de alumnos para la convocatoria: {{convocatoria.solicitudEmpresa.numeroAlumnos}}</p>
+                        </div>
+                        <div class="p-col" style="text-align: right">
+                            <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                            <input type="text" pInputText size="50" placeholder="Busqueda: "
+                                (input)="dt.filterGlobal($any($event.target).value, 'contains')" style="width:auto">
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+    
+                    <tr>
+                        <th style="width: 80px;">Id</th>
+                        <th>Nombre Estudiante</th>
+                        <th>Horas Solicitadas</th>
+                        <th>Fecha Emisión</th>                  
+                        <th style="width: 100px;">Agregar</th>
+                    </tr>
+                </ng-template>
+    
+                <ng-template pTemplate="body" let-soli>
+                    <tr>
+                        <td>{{soli.idSolicitudAlumno}}</td>
+                      <td>{{soli.alumno.persona.primerNombre + ' ' + soli.alumno.persona.primerApellido}}</td>
+                      <td>{{soli.horasPPP}}</td>
+                      <td>{{soli.fechaEmision| date}}</td>
+                        <td style="align-items: center; text-align: center;">
+                            <button pButton pRipple type="button" icon="pi pi-angle-right"
+                          class="p-button-rounded p-button-success" (click)="agregarSolicitud(soli)">
+                        </button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td >No hay datos.</td>
+                    </tr>
+                </ng-template>
+    
+                </p-table>
+            </div>
+            <div class="col-md" style="min-width: 500px;">
+                <p-table #dt id="tconvocatorias"
+                dataKey="idSolicitud"
+                [value]="estudiantesAgregados"
+                [paginator]="false"
+                [rows]="10"
+                [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[10,25,50]"
+                styleClass="p-datatable-customers p-datatable-gridlines"
+                [globalFilterFields]="['alumno.persona.primerNombre','alumno.persona.primerApellido','fechaEmision']"
+                >
+                <ng-template pTemplate="caption">
+                    <h3>Solicitudes Agregadas</h3>
+                </ng-template>
+                <ng-template pTemplate="header">
+    
+                    <tr>
+                        <th style="width: 80px;">Id</th>
+                        <th>Nombre Estudiante</th>
+                        <th>Horas Solicitadas</th>
+                        <th>Fecha Emisión</th>                  
+                        <th style="width: 100px;">Agregar</th>
+                    </tr>
+                </ng-template>
+    
+                <ng-template pTemplate="body" let-soli>
+                    <tr>
+                        <td>{{soli.idSolicitudAlumno}}</td>
+                      <td>{{soli.alumno.persona.primerNombre + ' ' + soli.alumno.persona.primerApellido}}</td>
+                      <td>{{soli.horasPPP}}</td>
+                      <td>{{soli.fechaEmision| date}}</td>
+                        <td style="align-items: center; text-align: center;">
+                            <button pButton pRipple type="button" icon="pi pi-times"
+                          class="p-button-rounded p-button-danger" (click)="eliminarAgregado(soli)">
+                        </button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td >No hay datos.</td>
+                    </tr>
+                </ng-template>
+    
+                </p-table>
+            </div>
+        </div>
+        
+
+        <p-footer>
+            <button type="button" pButton icon="pi pi-save"   label="Guardar Archivo" (click)="guardarSeleccion()"></button>
+            <button type="button" pButton icon="pi pi-times"  label="Cancelar" (click)="salirListaEstudiantes()" class="ui-button-secondary"></button>
+        </p-footer>
+    </p-dialog>

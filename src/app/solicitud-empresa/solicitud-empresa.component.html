@@ -1,0 +1,188 @@
+<p-toast></p-toast>
+<section class="vh-100" style="padding: 55px;">
+  <mat-card>
+    <mat-card-title style="background-color:#1d3557; color:white; padding: 33px; border-radius: 5px">
+      <div class="form-row">
+        <div class="form-group col-md-9">
+          <h1>Gestión Solicitudes</h1>
+        </div>
+        <div class="form-group col-md-3">
+
+          <button (click)="desplegarResponsables()" type="submit" class="btn">Generar Solicitud</button>
+
+        </div>
+      </div>
+    </mat-card-title>
+    <p-table [value]="dataSolicitudes"
+             [columns]="columnasSolicitudes"
+             [paginator]="true"
+             [rows]="3"
+             [autoLayout]="true"
+             [scrollable]="true"
+             (onRowSelect)="onRowSelectResponsable($event)"
+             (onRowUnselect)="onRowUnSelectResponsable($event)"
+             selectionMode="single">
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let columna of columnasSolicitudes">
+            {{columna.header}}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-dataSolicitudes>
+        <tr [pSelectableRow]="dataSolicitudes">
+          <td *ngFor="let col of columnasSolicitudes">
+            <div [ngSwitch]="col.field">
+              <span *ngSwitchCase="'fecha_emision'">{{dataSolicitudes[col.field] | date}}</span>
+              <span *ngSwitchCase="'pdf_solicitud'">
+                <button pButton pRipple type="button" icon="pi pi-bookmark"
+                        class="p-button-rounded p-button-secondary" (click)="checkForMIMEType()">
+                      </button>
+              </span>
+              <span *ngSwitchCase="'respuesta'">
+                <button pButton pRipple type="button" icon="pi pi-bookmark"
+                        class="p-button-rounded p-button-secondary" (click)="checkForMIMEType2()">
+                      </button>
+              </span>
+              <span *ngSwitchCase="'eliminartS'">
+                      <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
+                              (click)="eliminarSolicitud()"    ></button>
+                  </span>
+              <span *ngSwitchCase="'fecha_inicio'">{{dataSolicitudes[col.field] | date}}</span>
+              <span *ngSwitchDefault>{{dataSolicitudes[col.field]}}</span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+  </mat-card>
+</section>
+
+<p-dialog
+  [(visible)]="dialogoResponsable"
+  [style]="{width:'50vw'}"
+  [draggable]="false"
+  [baseZIndex]="10000"
+  [modal]="true"
+  styleClass="p-fluid">
+  <ng-template pTemplate="header">
+    <h2>Lista Responsables</h2>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <h2>DATOS PARA LA SOLICITUD</h2>
+    <p-panel header="Datos adicionales">
+      <form [formGroup]="formSolicitud" >
+        <h3>Ingrese fecha tentativa</h3>
+        <input type="date" id="fechaTentativa" formControlName="fechaTentativa" >
+        <h3>Ingrese numero de estudiantes requeridos: </h3>
+        <input type="number" id="numeroEstudiantes" formControlName="numeroEstudiantes" >
+      </form>
+      <br>
+      <button pButton pRipple type="button" (click)="obtenerResponsables()" label="Generar Documento " ></button>
+    </p-panel>
+    <br>
+    <p-accordion>
+      <p-accordionTab header="Informacion de solicitante">
+        <p-panel header="Solicitante">
+          <ng-template pTemplate="content">
+            <div mat-row="">
+              <h3>Nombres:  {{this.empleado.primer_nombre}}  {{this.empleado.segundo_nombre}} </h3>
+              <h3>Apellidos:  {{this.empleado.primer_apellido}}  {{this.empleado.segundo_apellido}} </h3>
+              <h3>Cargo:  {{this.empleado.cargo}} </h3>
+            </div>
+          </ng-template>
+        </p-panel>
+      </p-accordionTab>
+      <p-accordionTab header="Responsable al que se dirige">
+        <p-panel header="Responsable a cargo">
+          <ng-template pTemplate="content">
+            <div mat-row="">
+              <h3>Nombres:  {{this.dataActividadesConvenio[0].nombresrp}} </h3>
+              <h3>Apellidos:  {{this.dataActividadesConvenio[0].apellidosrp}} </h3>
+              <h3>Carrera:  {{this.dataActividadesConvenio[0].carrera}} </h3>
+              <h3>Abrev Titulo:  {{this.dataActividadesConvenio[0].abrev_titulo}} </h3>
+            </div>
+          </ng-template>
+        </p-panel>
+      </p-accordionTab>
+      <p-accordionTab header="Actividades">
+        <p-table [value]="dataActividadesConvenio"
+                 [columns]="columnasActividades"
+                 [paginator]="false"
+                 [rows]="10"
+                 [autoLayout]="true"
+                 [scrollable]="true">
+          <ng-template pTemplate="header">
+            <tr>
+              <th *ngFor="let columna of columnasActividades">
+                {{columna.header}}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-dataActividadesConvenio>
+            <tr>
+              <td *ngFor="let col  of columnasActividades">
+                {{dataActividadesConvenio[col.field]}}
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-accordionTab>
+      <p-accordionTab header="Subida de documento">
+        <p-panel header="Envio de documento">
+          <ng-template pTemplate="content">
+            <div mat-row="">
+              <h3>Ingrese el documento firmado que se genero: </h3>
+              <p-fileUpload
+                [customUpload]="true"
+                [showCancelButton]="false"
+                [multiple]="false"
+                (uploadHandler)="onFileSelected($event)"
+                chooseLabel="Seleccionar anexo"
+                uploadLabel="Cargar anexo"
+                invalidFileTypeMessageSummary="Archivo no valido"
+                invalidFileSizeMessageDetail="Solo se acepta archivos con extensiones .doc - docx."
+              >
+              </p-fileUpload>
+            </div>
+          </ng-template>
+        </p-panel>
+      </p-accordionTab>
+    </p-accordion>
+    <button pButton pRipple type="button" (click)="enviarSolicitud()" label="Enviar solicitud " ></button>
+
+
+    <!-- <p-table
+       [value]="dataResponsable"
+       [columns]="columnasResponsable"
+       [paginator]="true"
+       [rows]="3"
+       [autoLayout]="true"
+       [(selection)]="dataRowResponsable"
+       (onRowSelect)="onRowSelectResponsable($event)"
+       (onRowUnselect)="onRowUnSelectResponsable($event)"
+       [scrollable]="true"
+       selectionMode="single">
+       <ng-template pTemplate="header">
+         <tr>
+           <th *ngFor="let columna of columnasResponsable">
+             {{columna.header}}
+           </th>
+         </tr>
+       </ng-template>
+       <ng-template pTemplate="body" let-dataRespo>
+         <tr [pSelectableRow]="dataRespo">
+           <td *ngFor="let col of columnasResponsable">
+             <div [ngSwitch]="col.field">
+                   <span *ngSwitchCase="'designarC'">
+                     <button type="button" class="btn btn-primary" (click)="anadirResponsable()">Asignar</button>
+                   </span>
+               <span *ngSwitchDefault>{{dataRespo[col.field]}}</span>
+             </div>
+           </td>
+         </tr>
+       </ng-template>
+     </p-table>-->
+  </ng-template>
+</p-dialog>

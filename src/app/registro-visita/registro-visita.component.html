@@ -1,0 +1,108 @@
+<section class="vh-100">
+  <mat-card class="card">
+    <mat-card-title style="background-color:#1d3557; color:white; padding: 20px; border-radius: 5px">
+      VISITAS A LA INSTITUCIÓN
+    </mat-card-title>
+    <mat-card>
+      <div>
+        <div class="card card-w-title">
+          <p-table #dt id="tresponsable" [value]="registrotutor" [paginator]="true" [columns]="columnasTutor" [rows]="1"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true"
+            [globalFilterFields]="['primerNombre','primerApellido']">
+
+            <ng-template pTemplate="caption">
+              <div class="p-grid">
+                <div class="p-col" style="text-align: left;">
+                  <p>Lista de Tutores para la Visita</p>
+                </div>
+              </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columnasResponsable>
+              <tr>
+                <th *ngFor="let col of columnasTutor">
+                  {{col.header}}
+                </th>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body">
+              <tr *ngFor="let tutor of registrotutor">
+                <td>{{tutor.idTutorAcademico}}</td>
+                <td>{{tutor.docente.persona.primerNombre}}</td>
+                <td>{{tutor.docente.persona.segundoNombre}}</td>
+                <td>{{tutor.alumno.idAlumno}}</td>
+                <td>{{tutor.alumno.persona.primerNombre}}</td>
+                <td>{{tutor.alumno.persona.segundoNombre}}</td>
+                <td>
+                  <button class="btn btn-sm btn-primary" (click)='create(tutor.alumno.idAlumno)'
+                    (click)="dialogoPasos= true">Seleccionar</button>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td [attr.colspan]="columnasTutor.length">No hay datos.</td>
+              </tr>
+            </ng-template>
+
+          </p-table>
+
+        </div>
+      </div>
+      <div class="col">
+        <button type="submit" class="btn" [routerLink]="['/gestion-visitas']"
+          style="background:aqua; color: white;">Visitas</button>
+      </div>
+
+    </mat-card>
+  </mat-card>
+</section>
+
+<p-dialog [(visible)]="dialogoPasos" [style]="{width: '50vw', height: '30vw'}">
+  <div class="container-fluid">
+    <form [formGroup]="formInforme">
+      <h3 class="titulo"><strong>Informe</strong></h3>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="fecha">Fecha de Visita:</label>
+          <input type="text" class="form-control" [(ngModel)]="informe.fecha" id="fecha" formControlName="fecha"
+            placeholder="Ingrese la Fecha de Visita">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="horainicio">Hora Inicio:</label>
+          <input type="time" class="form-control" id="horainicio" formControlName="horainicio"
+            [(ngModel)]="informe.horaInicio">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="horafin">Hora Fin:</label>
+          <input type="time" class="form-control" id="horafin" formControlName="horafin" [(ngModel)]="informe.horaFin">
+        </div>
+        <div class="form-group col-md-6">
+          <label for="asunto">Asunto a tratar:</label>
+          <textarea type="text" class="form-control" id="asunto" formControlName="asunto" [(ngModel)]="informe.asunto"
+            placeholder="Ingrese el Asunto de la Reunion"></textarea>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="actividades">Actividades:</label>
+          <textarea type="text" class="form-control" id="actividades" formControlName="actividades"
+            [(ngModel)]="informe.actividades" placeholder="Ingrese las activiades que se realizo"></textarea>
+        </div>
+        <div class="form-group col-md-6">
+          <label for="observaciones">Observaciones:</label>
+          <textarea type="text" class="form-control" id="observaciones" formControlName="observaciones"
+            [(ngModel)]="informe.observaciones" placeholder="Observaciones de la Visita"></textarea>
+        </div>
+      </div>
+
+      <br><br>
+      <div class="row text-center">
+        <div class="col">
+          <button type="submit" (click)='createInformeVisita()' class="btn" style="background: #1d3557; color: white;"
+            (click)="dialogoPasos= false">Registrar
+            Visita</button>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</p-dialog>

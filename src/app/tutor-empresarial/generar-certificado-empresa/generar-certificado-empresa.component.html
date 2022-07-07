@@ -1,0 +1,19 @@
+<mat-card>
+  <mat-card-title>
+    CERTIFICAR ALUMNOS
+  </mat-card-title>
+</mat-card>
+<form>
+  <p-table [value]="dataAlumnos"
+           [columns]="columnasEstudiantes"
+           [paginator]="true"
+           [rows]="3"
+           [autoLayout]="true"
+           [(selection)]="dataRowAlumno"
+           (onRowSelect)="onRowSelectAlumno($event)"
+           (onRowUnselect)="onRowUnSelectAlumno($event)"
+           [scrollable]="true"
+           selectionMode="single">
+
+  </p-table>
+</form>

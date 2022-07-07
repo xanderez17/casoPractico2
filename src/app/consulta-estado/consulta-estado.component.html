@@ -1,0 +1,40 @@
+<section class="vh-100">
+  <div class="container-fluid" style="padding: 55px;">
+
+    <mat-card-title style="background-color:#1d3557; color:white; padding: 20px; border-radius: 5px">
+     Consultar Estado de Convocatorias
+    </mat-card-title>
+    <br>
+    <mat-card>
+      <h2 style="color: #1d3557;">Buscar Convocatorias</h2>
+      <div class="search-historial">
+        <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="on" placeholder="   ">
+      </div>
+
+      <br>
+      <form>
+        <h3>
+          <table class="table table-striped">
+            <thead class="bg-warning" >
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Estado</th>
+              <th scope="col">Empresa</th>
+              <th scope="col">Carrera</th>
+            </tr>
+            </thead>
+
+            <tbody >
+            <tr *ngFor="let historial of ConsultaEstado | filter:searchText">
+              <td>{{historial.nombreConvocatoria}}</td>
+              <td>{{historial.estado}}</td>
+              <td>{{historial.solicitudEmpresa.empleado.empresa.nombreEmpresa}}</td>
+              <td>{{historial.solicitudEmpresa.carrera.nombre}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </h3>
+      </form>
+    </mat-card>
+  </div>
+</section>

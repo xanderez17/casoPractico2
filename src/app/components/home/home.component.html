@@ -1,0 +1,35 @@
+<mat-card>
+  <mat-card-title>
+    LISTA DE CARRERAS
+  </mat-card-title>
+
+  <div class="row justify-content-center" >
+    <div class="card p-3 m-4 col-sm-4" *ngFor="let carrera of carreras">
+
+      <mat-icon (click)="showDialog(carrera)">info</mat-icon>
+
+
+      <h4 class="carrera-titulo">{{carrera.nombre}}</h4>
+      <p class="carrera-body">{{carrera.modalidad}}</p>
+
+      <p-dialog
+        [(visible)]="infoCarrera"
+        [draggable] ="false" *ngIf="infoCarrera">
+
+        <ng-template pTemplate="header">
+          <h2 style="margin-top: 10px;">Información de la Carrera</h2>
+        </ng-template>
+        <h3>Nombre de la carrera</h3>
+        <span>{{carreraind.nombre}}</span>
+        <h3>Abreviatura</h3>
+        <span>{{carreraind.abreviatura}}</span>
+        <h3>Modalidad</h3>
+        <span>{{carreraind.modalidad}}</span>
+
+      </p-dialog>
+    </div>
+  </div>
+
+</mat-card>
+
+

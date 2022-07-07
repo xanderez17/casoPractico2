@@ -1,0 +1,411 @@
+
+<div class="container-fluid" style="text-align:center; padding: 55px;">
+
+    <mat-card-title style="background-color:#1d3557; color:white; padding: 20px; border-radius: 5px">
+        ACTA REUNIÓN
+    </mat-card-title>
+    <br><br>
+    <mat-card>
+        <div class="container-fluid">
+            <form [formGroup]="formActa">
+                <div class="form-row">
+                    <div class="form-group col-md-9">
+                        <label for="lugar">Lugar de la reunión:</label>
+                        <input type="text" class="form-control" id="lugar"  formControlName="lugar" placeholder="Ingrese el lugar en donde se llevara acabo la reunión" >
+                            
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="fecha">Fecha</label>
+                        <input type="date" class="form-control"  id="fecha" formControlName="fecha" [(ngModel)]="actareunion.fechaEmision"  >
+    
+                    </div>
+                   
+                </div>
+                <p-divider align="left" type="dashed">
+                    <div class="inline-flex align-items-center">
+                        <i class="pi pi-user mr-2"></i>
+                        <b>Asistentes</b>
+                    </div>
+                </p-divider>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        
+                    <label for="carrera">Buscar responsable:</label>
+                    <br>
+                    <p-dropdown 
+                        [options]="docentes" 
+                        [(ngModel)]="docentePPP" 
+                        optionLabel="cedula" 
+                        [showClear]="true" 
+                        (onChange)="OnChange($event)"
+                        formControlName="docente"
+                        [filter]="true" 
+                        filterBy="primer_nombre"
+                        [showClear]="true"
+                        >
+                        <ng-template let-doc pTemplate="item">
+                            <div class="country-item">
+                               
+                                <div>{{doc.primer_nombre}} {{doc.segundo_nombre}} {{doc.primer_apellido}} {{doc.segundo_apellido}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                    </div>
+                    <div class="form-group col-md-8" >
+                        <label for="titulo"><b> {{docentePPP.abrev_titulo}} {{docentePPP.primer_nombre}} {{docentePPP.segundo_nombre}} {{docentePPP.primer_apellido}} {{docentePPP.segundo_apellido}}</b>, Responsable de Praticas Pre-Profesionales  de la carrera <b> {{docentePPP.carrera}} </b> del Instituto Superior Tecnológico del Azuay.</label>
+                    </div>
+                </div> 
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        
+                    <label for="carrera">Buscar empleado:</label>
+                    <br>
+                    <p-dropdown 
+                        [options]="empleados" 
+                        [(ngModel)]="empleadoPPP" 
+                        optionLabel="cedula" 
+                        [showClear]="true" 
+                        (onChange)="OnChangeEmp($event)"
+                        formControlName="empleado"
+                        [filter]="true" 
+                        filterBy="primer_nombre"
+                        [showClear]="true"
+                        >
+                        <ng-template let-doc pTemplate="item">
+                            <div class="country-item">
+                               
+                                <div>{{doc.primer_nombre}} {{doc.segundo_nombre}} {{doc.primer_apellido}} {{doc.segundo_apellido}}</div>
+                            </div>
+                        </ng-template>
+                    </p-dropdown>
+                    </div>
+                    <div class="form-group col-md-8" >
+                        <label for="empresa"><b> {{empleadoPPP.abrev_titulo}} {{empleadoPPP.primer_nombre}} {{empleadoPPP.segundo_nombre}} {{empleadoPPP.primer_apellido}} {{empleadoPPP.segundo_apellido}}</b>  Tutor asignado por la empresa <b>{{empleadoPPP.nombre_empresa}}</b></label>
+                    
+                    </div>
+                </div>  
+                <p-divider align="left" type="dashed">
+                    <div class="inline-flex align-items-center">
+                        <i class="pi pi-user mr-2"></i>
+                        <b>Datos estudiante</b>
+                    </div>
+                </p-divider>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        
+                        <label for="carrera">Buscar estudiante:</label>
+                        <br>
+                        <p-dropdown 
+                            [options]="alumnos" 
+                            [(ngModel)]="alumnoPPP" 
+                            optionLabel="cedula" 
+                            [showClear]="true" 
+                            (onChange)="OnChangeEst($event)"
+                            formControlName="est"
+                            [filter]="true" 
+                            filterBy="primer_nombre"
+                            [showClear]="true"
+                            >
+                            <ng-template let-doc pTemplate="item">
+                                <div class="country-item">
+                                    
+                                    <div>{{doc.primer_nombre}} {{doc.segundo_nombre}} {{doc.primer_apellido}} {{doc.segundo_apellido}}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+                    <div class="form-group col-md-8" >
+                        <label for="est"> <b>Asunto:</b> Actividades a desarrollar en las prácticas pre profesionales por el estudiante <b>{{alumnoPPP.primer_nombre}} {{alumnoPPP.segundo_nombre}} {{alumnoPPP.primer_apellido}} {{alumnoPPP.segundo_apellido}}</b></label>
+                   
+                    </div>
+                </div>
+                <p-divider align="left" type="dashed">
+                    <div class="inline-flex align-items-center">
+                        <i class="pi pi-user mr-2"></i>
+                        <b>Fechas Importantes y horario de prácticas pre profesionales</b>
+                    </div>
+                </p-divider>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="finicio">Fecha de inicio:</label>
+                        <input type="date" class="form-control"  id="finicio" formControlName="finicio" [(ngModel)]="actareunion.fechaInicioPPP">
+                        
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="ffinal">Fecha de finalización:</label>
+                        <input type="date" class="form-control"  id="ffinal"  formControlName="ffinal" [(ngModel)]="actareunion.fechaFinPPP">
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        
+                        <label for="hinicio">Horario de entrada:</label>
+                        
+                        <input type="text" class="form-control"  id="hinicio"  formControlName="hinicio" placeholder="Ingrese la hora de entrada">
+                        
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="hfinal">Horario de salida:</label>
+                        <input type="text" class="form-control"  id="hfinal"  formControlName="hfinal" placeholder="Ingrese la hora de la salida">
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <label for="est"> El estudiante comenzará a desarrollar las prácticas pre profesionales a partir 
+                        del <b>{{this.formActa.get('finicio').value}}</b> y terminará el
+                        <b>{{this.formActa.get('ffinal').value}}</b>, en un horario de  <b>{{this.formActa.get('hinicio').value}}</b> a  <b>{{this.formActa.get('hfinal').value}}</b>.
+                    </label>                
+                </div>
+                <p-divider align="left" type="dashed">
+                    <div class="inline-flex align-items-center">
+                        <i class="pi pi-user mr-2"></i>
+                        <b>Planificación de actividades a desarrollar</b>
+                    </div>
+                </p-divider>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        
+                        <label for="horas">Horas a cumplir:</label>
+                        
+                        <input type="text" class="form-control"  id="horas"  formControlName="horas" placeholder="Ingrese las horas de las practicas pre-profesionales">
+                        
+                    </div>
+                    <div class="form-group col-md-6">
+
+                        <label for="carrera">Convenio</label><br>
+    
+                        <p-dropdown 
+                            [options]="convenios" 
+                            optionLabel="documento"
+                            [showClear]="true" 
+                            (onChange)="OnChangeConv($event)"
+                            [filter]="true" 
+                            filterBy="documento"
+                            [showClear]="true"
+                            >
+                            <ng-template let-doc pTemplate="item">
+                                <div class="country-item">
+                                    
+                                    <div>{{doc.documento}}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+    
+                    </div>
+                </div>
+                <div class="form-row">
+                    <label for="est"> Con base en la solicitud realizada por la empresa <b>{{empleadoPPP.nombre_empresa}}</b> (el/la) estudiante
+                        <b>{{alumnoPPP.primer_nombre}} {{alumnoPPP.segundo_nombre}} {{alumnoPPP.primer_apellido}} {{alumnoPPP.segundo_apellido}}</b>,
+                        estudiante de <b>{{alumnoPPP.ciclo}}</b> ciclo de la carrera <b>{{alumnoPPP.carrera}} </b> del Instituto Superior Tecnológico del Azuay 
+                        llevará a cabo las siguientes actividades para la cumplir con las 
+                        <b>{{this.formActa.get('horas').value}}</b> horas de prácticas pre profesionales.</label>
+                </div>
+            </form>
+            <br><br>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    
+                    <button pButton  (click)='ShowAgregarActividadReunion()' pRipple type="button" label="Agregar" class="p-button-success"></button>
+                </div>
+                <div class="form-group col-md-10">
+                    <p-table [value]="actividadesFiltradas" responsiveLayout="scroll">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Area</th>
+                                <th>Actividades</th>
+                                <th>Asignatura Relacionada</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-act>
+                            <tr>
+                                <td>{{act.area}}</td>
+                                <td>{{act.descripcion}}</td>
+                                <td>{{act.asignatura.nombreAsignatura}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+
+            </div>
+            
+            <p-divider align="left" type="dashed">
+                <div class="inline-flex align-items-center">
+                    <i class="pi pi-user mr-2"></i>
+                    <b>Cronograma de actividades</b>
+                </div>
+            </p-divider>
+            <br><br>
+            
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    
+                    <button pButton (click)='ShowAgregarActividadCronograma()' pRipple type="button" label="Agregar" class="p-button-success"></button>
+                </div>
+                <div class="form-group col-md-10">
+                    <p-table [value]="actividadesReunionFiltradas" responsiveLayout="scroll">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Semanas</th>
+                                <th>Areas</th>
+                                <th>Actividades</th>
+                                <th>Horas</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-act>
+                            <tr>
+                                <td>{{act.numSemanas}}</td>
+                                <td>{{act.actividades.area}}</td>
+                                <td>{{act.actividades.descripcion}}</td>
+                                <td>{{act.numHoras}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+
+            </div>
+           
+            <p-divider align="left" type="dashed">
+                <div class="inline-flex align-items-center">
+                    <i class="pi pi-user mr-2"></i>
+                    <b>Acuerdos varios</b>
+                </div>
+            </p-divider>
+            <div class="form-row">
+                <label>En este literal se colocará (en caso de existir) los acuerdos adicionales que puedan darse a lo largo de la reunión.</label>
+                <input type="text" class="form-control" id="extra"  formControlName="extra" placeholder="Ingrese los acuerdos adicionales" >
+                         
+            </div>
+            <br><br><br>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                </div>
+                <div class="form-group col-md-6">
+                    <button pButton pRipple (click)="GenerarActa()" type="button" label="Generar Acta" class="p-button-warning"></button>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+    <p-dialog header="Agregar actividades practicas" [(visible)]="dis" [style]="{width: '50vw'}">
+        <div class="container-fluid" >
+            <form [formGroup]="formActividades" >
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="area">Asignatura</label><br>
+                        
+                        <p-dropdown 
+                            [options]="asignaturas" 
+                            [(ngModel)]="asignatura" 
+                            optionLabel="nombreAsignatura"
+                            [showClear]="true" 
+                            (onChange)="OnChangeAsi($event)"
+                            formControlName="asignatura"
+                            [filter]="true" 
+                            filterBy="nombreAsignatura"
+                            [showClear]="true"
+                            >
+                            <ng-template let-doc pTemplate="item">
+                                <div class="country-item">
+                                    
+                                    <div>{{doc.nombreAsignatura}}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+                    
+
+                </div>
+            
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                    <label for="descripcion">Descripción:</label>
+                    <input type="text" class="form-control" [(ngModel)]="actividad.descripcion" id="descripcion"  formControlName="descripcion" placeholder="Ingrese la descripción de la actividad">
+                    </div>
+
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                    <label for="area">Area:</label>
+                    <input type="text" class="form-control" [(ngModel)]="actividad.area" id="area"  formControlName="area" placeholder="Ingrese la area">
+                    </div>
+                </div>
+                
+
+                <br><br>
+                <div class="row text-center">
+                    <div class="col">
+                    </div>
+                    <div class="col">
+                    <button type="submit" (click)='CrearActividad()' class="btn" style="background: #1d3557; color: white;">Crear</button>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-check" (click)="dis=false" label="Cancel" styleClass="p-button-text"></p-button>
+        </ng-template>
+
+    </p-dialog>
+
+
+    <p-dialog header="Agregar actividades cronograma" [(visible)]="dis2" [style]="{width: '55vw'}">
+        <div class="container-fluid" >
+            <form [formGroup]="formActividadesReunion" >
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+    
+                        <label for="carrera">Actividad</label><br>
+    
+                        <p-dropdown 
+                            [options]="actividadesFiltradas" 
+                            [(ngModel)]="actividadselec"
+                            optionLabel="descripcion"
+                            [showClear]="true" 
+                            (onChange)="OnChangeActividad($event)"
+                            formControlName="actividad"
+                            [filter]="true" 
+                            filterBy="descripcion"
+                            [showClear]="true"
+                            >
+                            <ng-template let-doc pTemplate="item">
+                                <div class="country-item">
+                                    
+                                    <div>{{doc.descripcion}}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+    
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                    <label for="semanas">Numero de semanas:</label>
+                    <input type="number" class="form-control" [(ngModel)]="actividadReunion.numSemanas" id="semanas"  formControlName="semanas" placeholder="Ingrese el numero de semanas">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="horas">Numero de horas:</label>
+                        <input type="number" class="form-control" [(ngModel)]="actividadReunion.numHoras" id="horas"  formControlName="horas" placeholder="Ingrese el numero de horas">
+                    </div>
+                </div>
+            
+                <br><br>
+                <div class="row text-center">
+                    <div class="col">
+                    </div>
+                    <div class="col">
+                    <button type="submit" (click)='crearActividadCronograma()' class="btn" style="background: #1d3557; color: white;">Crear</button>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-check" (click)="dis2=false" label="Cancel" styleClass="p-button-text"></p-button>
+        </ng-template>
+
+    </p-dialog>
+</div>
+

@@ -1,0 +1,77 @@
+<section class="vh-100">
+  <div class="container-fluid" style="padding: 55px;">
+
+    <mat-card-title style="background-color:#1d3557; color:white; padding: 20px; border-radius: 5px">
+      {{titulo}}
+    </mat-card-title>
+    <br>
+    <mat-card>
+      <h2 style="color: #1d3557;">{{convocatoriaTitulo}}</h2>
+      <div>
+        <select class="form-control" [(ngModel)]="opcionSeleccionado" (change)="capturarConvocatoria()">
+          <option>Seleccione una convocatoria </option>
+          <option *ngFor="let convocatoria of convocatorias">{{convocatoria.nombreConvocatoria}}</option>
+        </select>
+      </div>
+
+
+      <br>
+      <h2 style="color: #1d3557;">{{listaTitulo}}</h2>
+      <form>
+        <h3>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Apellidos</th>
+                <th scope="col">Nombres</th>
+                <th scope="col">Paralelo</th>
+                <th scope="col">H. Practicas</th>
+                <th scope="col">Documento</th>
+                <th scope="col">Aceptar</th>
+                <th scope="col">Denegar</th>
+              </tr>
+            </thead>
+
+            <tbody *ngFor="let solicitud of solicitudes">
+              <tr *ngIf="solicitud.estado==true; else listado"></tr>
+              <ng-template #listado>
+                <tr *ngIf="solicitud.convocatoria.nombreConvocatoria==verSeleccion">
+                  <td>{{solicitud.alumno.persona.primerApellido}} {{solicitud.alumno.persona.segundoApellido}}</td>
+                  <td>{{solicitud.alumno.persona.primerNombre}} {{solicitud.alumno.persona.segundoNombre}}</td>
+                  <td>{{solicitud.alumno.paralelo}}</td>
+                  <td>{{solicitud.horasPPP}}</td>
+                  <td><a class="btn btn-primary btn-xs" style="color: white">Documento</a></td>
+                  <td><a class="btn btn-primary btn-xs" style="color: white">Aceptar</a></td>
+                  <td><a class="btn btn-danger btn-xs" style="color: white">Denegar</a></td>
+                </tr>
+              </ng-template>
+            </tbody>
+
+            <tbody *ngFor="let solitud of solicitudes">
+
+              <tr *ngIf="solitud.estado==true; else login">
+              </tr>
+
+              <ng-template #login>
+                <tr *ngIf="verSeleccion=='Seleccione una convocatoria'">
+                  <td>{{solitud.alumno.persona.primerApellido}} {{solitud.alumno.persona.segundoApellido}}</td>
+                  <td>{{solitud.alumno.persona.primerNombre}} {{solitud.alumno.persona.segundoNombre}}</td>
+                  <td>{{solitud.alumno.paralelo}}</td>
+                  <td>{{solitud.horasPPP}}</td>
+                  <td><a class="btn btn-primary btn-xs" style="color: white">Documento</a></td>
+                  <td><a class="btn btn-primary btn-xs" style="color: white">Aceptar</a></td>
+                  <td><a class="btn btn-danger btn-xs" style="color: white">Denegar</a></td>
+                </tr>
+              </ng-template>
+            </tbody>
+
+
+          </table>
+        </h3>
+      </form>
+
+
+    </mat-card>
+
+  </div>
+</section>

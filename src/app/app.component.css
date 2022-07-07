@@ -1,0 +1,119 @@
+mat-toolbar {
+    background: #1d3557 ;
+    color:white;
+  }
+  mat-sidenav{
+    margin: 0;
+    width: 303px;
+    border-right:none;
+    background: #5F9EA0;
+    color:white;
+    border-radius: 0;
+    padding: 10px;
+    text-align:initial;
+    
+  }
+
+
+  .content::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .content::-webkit-scrollbar-thumb {
+    background: #1d3557;
+    border-radius: 10px;
+    border-right: 2px solid white; /*ESPACIO*/
+  }
+
+  .logo{
+    margin: auto;
+    height: 50px;
+  }
+
+  mat-icon{
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+
+  .content{
+    height: calc(100vh - 98px);
+    margin: 16px;
+    margin-left: 32px;
+    border-radius: 9px;
+    background: white;
+    overflow: scroll;
+  }
+
+  mat-sidenav-container{
+    
+  height: calc(100vh - 65px);
+  }
+
+
+  .menu-button {
+    width: 100%;
+    display: flex;
+    align-items: initial;
+    justify-content: initial;
+    font-size: 1rem;
+    color:white;
+    background: #1177d1;
+    
+  }
+
+.divimag{
+  display: flex;
+  justify-content: center;
+}
+
+
+  img{
+    width: 50px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  mat-expansion-panel {
+    width: 100%;
+    background: #5F9EA0;
+    color: white;
+    border-radius: 0;
+    box-shadow: none !important;
+    
+    
+  }
+
+  mat-panel-title {
+    color: white;
+    width: 100%;
+    padding: 0;
+    margin-left: 6px;
+    padding-left: 0px !important;
+    
+  }
+
+  mat-expansion-panel-header {
+    padding-left: 10px !important;
+    
+  }
+
+  mat-expansion-panel:hover {
+    background: #579294;
+  }
+
+
+  .button-accordion{
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  a:hover {
+    background: #579294;
+  }
+
+
+  

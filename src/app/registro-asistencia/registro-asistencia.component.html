@@ -1,0 +1,287 @@
+<!--Section de barra de título-->
+<section>
+
+  <mat-card>
+
+    <mat-card-title style="background-color:#1d3557; color:white; padding: 20px; border-radius: 5px">
+      REGISTRO DE ASISTENCIA
+    </mat-card-title>
+
+  </mat-card>
+
+</section>
+
+
+<!--Section para ver si esta apto para aplicar a las actividades-->
+<section>
+  <mat-card>
+    <mat-card-content>
+
+
+      <body *ngFor="let lista of listaAnexo9Datos">
+      <!--Esta Aprobado-->
+      <div *ngIf="lista.cedula_a==cedulaAlumno">
+
+        <body *ngFor="let registro of listaRegistroActividades">
+
+
+        <!--Si el estudiante ya inicio con sus actividades-->
+        <div *ngIf="lista.id_alumno == registro.alumno.idAlumno; else registrarModulo">
+
+          <div *ngFor=" let listaSolicitud of listaSolicitudAlumno">
+
+            <div *ngIf="lista.id_alumno== listaSolicitud.alumno.idAlumno">
+
+
+              <br>
+              <mat-card>
+
+                <h2 style="text-align:center">TECNOLOGIA EN {{lista.nombre_carrera}} </h2>
+
+
+                <div class="container-fluid">
+
+                  <div class="form-row">
+
+                    <div class="form-group col-md-6">
+                      <label>CÉDULA:</label>
+                      <input type="text" class="form-control" placeholder="{{lista.cedula_a}}" [disabled]="true">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <label>ESTUDIANTE:</label>
+                      <input type="text" class="form-control"
+                             placeholder="{{lista.nombre_a|uppercase}} {{lista.apellido_a|uppercase}}" [disabled]="true">
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div class="container-fluid">
+
+                  <div class="form-row">
+
+                    <div class="form-group col-md-6">
+                      <label>EMPRESA:</label>
+                      <input type="text" class="form-control"
+                             placeholder="{{listaSolicitud.convocatoria.solicitudEmpresa.empleado.empresa.nombreEmpresa|uppercase}}"
+                             [disabled]="true">
+                    </div>
+
+                    <div class="form-group col-md-6">
+                      <label>TUTOR EMPRESARIAL:</label>
+                      <input type="text" class="form-control" placeholder="{{lista.nombre_t|uppercase}}"
+                             [disabled]="true">
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <br>
+                <div class="d-grid gap-2 col-4 mx-auto">
+                  <button class="btn btn-primary" style="background: #1d3557; color: white;" pButton
+                          icon="pi pi-plus" label="REGISTRAR ASISTENCIA"
+                          (click)="showDialog(lista.id_registro_asistencia)"></button>
+                </div>
+                <br>
+              </mat-card>
+
+
+              <br><br>
+              <mat-card>
+
+
+                <table class="table table-borderless">
+
+                  <thead>
+                  <tr class="text-center">
+                    <th>Fecha</th>
+                    <th>Hora llegada</th>
+                    <th>Hora salida</th>
+                    <th>Actividades realizadas</th>
+                    <th>Horas</th>
+                    <th>Acciones</th>
+                  </tr>
+                  </thead>
+
+                  <tbody *ngFor="let actividad of listaActividades">
+                  <tr *ngIf="actividad.registroA.alumno.idAlumno==lista.id_alumno">
+                    <td style="text-align: center;">{{actividad.fecha | date:'yyyy/MM/dd'}}</td>
+                    <td style="text-align: center;">{{actividad.horaLlegada}}</td>
+                    <td style="text-align: center;">{{actividad.horaSalida}}</td>
+                    <td style="text-align: center;">{{actividad.descripcion}}</td>
+                    <td style="text-align: center;">{{actividad.numHoras}}</td>
+                    <td style="text-align:center;">
+
+                      <button class="material-icons" style="background: #d72c2c; color: white;" pButton
+                              icon="pi pi-trash" label="" (click)="borrarActividad(actividad.idActividadesD)"></button>
+
+
+                    </td>
+                  </tr>
+
+                  </tbody>
+                </table>
+
+
+                <div class="d-grid gap-2 col-3 mx-auto">
+                  <button class="btn btn-primary" style="background: #5c1818; color: white;" pButton
+                          icon="pi pi-check-circle" label="ENVIAR ANEXO 9"
+                          (click)="showDialogGuardar(lista.nombre_a+' '+lista.apellido_a,listaSolicitud.convocatoria.solicitudEmpresa.empleado.empresa.nombreEmpresa,lista.nombre_t,lista.nombre_carrera,lista.id_alumno,registro.idRegistroAsistencia)"></button>
+
+                  <!--
+                      (click)="capturarActividades(lista.id_alumno)"></button>
+
+                -->
+                </div>
+
+              </mat-card>
+
+
+            </div>
+
+          </div>
+
+
+
+
+        </div>
+
+        <!--Si el estudiante ingresa por primera vez-->
+        <ng-template #registrarModulo>
+
+        </ng-template>
+
+
+        </body>
+
+      </div>
+
+
+        <!--No esta aprobado-->
+        <ng-template #noAprobado>
+          <br><br><br><br><br>
+          <h2 style="color: #1d3557; text-align: center;"> ESTIMADO ESTUDIANTE, AL MOMENTO USTED NO TIENE HABILITADO
+            ESTA SECCION </h2>
+          <br><br><br><br><br>
+          <br><br><br><br><br>
+        </ng-template>
+
+
+      </body>
+
+
+    </mat-card-content>
+  </mat-card>
+</section>
+
+<section>
+
+</section>
+
+
+
+<!----------------------------------------------------------------------------->
+<!--Dialogo Registro de actividades-->
+<section>
+  <p-dialog header="Registrar asistencia" [(visible)]="dis" [modal]="true" [style]="{width: '60vw'}"
+            [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+
+    <form [formGroup]="formValidacion">
+      <!--LINEA 1-->
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="fecha">FECHA ACTIVIDAD:</label>
+          <input type="date" class="form-control" id="fecha" formControlName="fecha"
+                 [(ngModel)]="actividadesDiarias.fecha">
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="numHoras">NÚMERO DE HORAS:</label>
+          <input type="number" class="form-control" id="numHoras" formControlName="numHoras"
+                 [(ngModel)]="actividadesDiarias.numHoras">
+        </div>
+
+      </div>
+
+      <!--LINEA 2-->
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="horaLlegada">HORA LLEGADA:</label>
+          <input type="time" class="form-control" id="horaLlegada" formControlName="horaLlegada"
+                 [(ngModel)]="actividadesDiarias.horaLlegada">
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="horaSalida">HORA SALIDA:</label>
+          <input type="time" class="form-control" id="horaSalida" formControlName="horaSalida"
+                 [(ngModel)]="actividadesDiarias.horaSalida">
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <label for="descripcion">DESCRIPCIÓN ACTIVIDAD:</label>
+        <input type="text" class="form-control" id="descripcion" formControlName="descripcion"
+               [(ngModel)]="actividadesDiarias.descripcion">
+      </div>
+
+
+
+      <div class="d-grid gap-2 col-4 mx-auto">
+        <button type="submit" pButton icon="pi pi-save" (click)="create()" label="ENVIAR" class="ui-button-secondary"
+                style="background: #223a32; color: white;"></button>
+      </div>
+
+    </form>
+
+  </p-dialog>
+</section>
+
+
+<!------------------------------------------------------------------------------------------------------------------------------------------>
+<!--Dialogo para mandar solicitud-->
+<p-dialog [(visible)]="dialogoGuardaryGenerar" [style]="{width:'37vw'}" [draggable]="false" [baseZIndex]="10000"
+          [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+
+    <mat-card class="card" style="width: 100%;">
+
+      <form [formGroup]="formGuardar">
+
+        <mat-card>
+
+          <!--LINEA 2-->
+
+
+          <div>
+            <label for="horaSalida">SELECCIONE DOCUMENTO</label>
+            <input class="form-control" type="file" (change)="onFileSelected($event)" accept=".pdf" />
+          </div>
+
+          <br>
+
+          <!--botones-->
+
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-primary me-md-2" type="button" style="background: #9f2a2a; color: white;"
+                    (click)="generate(datoEstudiante,datoEmpresa,datoTutor,datoCarrera)">DESCARGAR
+              DOCUMENTO</button>
+            <button class="btn btn-primary" type="button" style="background: #28528d; color: white;"
+                    (click)=" editarRegistro()">SUBIR
+              DOCUMENTO</button>
+          </div>
+        </mat-card>
+
+      </form>
+
+    </mat-card>
+
+  </ng-template>
+
+</p-dialog>
+<div class="text-center">
+  <button type="submit" class="btn btn-danger"style="background: #1d3557; color: white;" [routerLink]="['/consulta-registro-asistencia']">Consulta Registro de asistencia de estudiantes</button>
+</div>

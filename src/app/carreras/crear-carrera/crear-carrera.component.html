@@ -1,0 +1,35 @@
+<mat-card>
+  <mat-card-title>
+    CREAR CARRERA
+  </mat-card-title>
+
+  <div class="container-fluid">
+    <form [formGroup]="formCarrera">
+      <div class="row">
+        <div class="col col-md-6 mb-3">
+          <label for="nombre">Carrera:</label>
+          <input [(ngModel)]="carrera.nombre" type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Nombre">
+        </div>
+        <div class="col col-md-6 mb-3">
+          <label for="abreviatura">Abreviatura:</label>
+          <input [(ngModel)]="carrera.abreviatura" type="text" class="form-control" id="abreviatura" formControlName="abreviatura"
+                 placeholder="Abreviatura">
+        </div>
+        <div class="col col-md-6 mb-3">
+          <label for="modalidad">Modalidad:</label>
+          <input [(ngModel)]="carrera.modalidad" type="text" class="form-control" id="modalidad" formControlName="modalidad" placeholder="Modalidad">
+        </div>
+        <div class="col col-md-6 mb-3">
+          <label for="duracion">Duración (Ciclos):</label>
+          <input [(ngModel)]="carrera.duracion" type="number" min="1" max="10" class="form-control" id="duracion" formControlName="duracion" placeholder="Numero de ciclos">
+        </div>
+      </div>
+      <br>
+      <mat-card-actions>
+            <button (click)="crearCarrera()" mat-raised-button color="primary">Crear Carrera</button>
+            <button mat-raised-button color="warn">Regresar</button>
+      </mat-card-actions>
+    </form>
+  </div>
+
+</mat-card>

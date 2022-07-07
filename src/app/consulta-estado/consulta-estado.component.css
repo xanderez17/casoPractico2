@@ -1,0 +1,11 @@
+table tbody tr:nth-child(odd) {
+	background: #CBE1FF;
+}
+table tbody tr:nth-child(even) {
+	background: #ffffff;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}

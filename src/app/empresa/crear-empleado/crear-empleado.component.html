@@ -1,0 +1,73 @@
+<p-toast></p-toast>
+<mat-card>
+  <mat-card-title>
+    CREAR EMPLEADO
+  </mat-card-title>
+  <div class="container-fluid">
+    <form [formGroup]="formEmpleado" >
+      <div class="form-row">
+        <div class="form-group col-md-3">
+          <label for="cedula">Cédula:</label>
+          <input  type="text" class="form-control" id="cedula"
+                  formControlName="cedula" placeholder="Cédula">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="primernombre">Primer Nombre:</label>
+          <input  type="text" class="form-control" id="primerNombre"
+                  formControlName="primerNombre" placeholder="Primer Nombre">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="segundoNombre">Segundo Nombre:</label>
+          <input  type="text" class="form-control" id="segundoNombre"
+                  formControlName="segundoNombre" placeholder="Segundo Nombre">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="primerApellido">Primer Apellido:</label>
+          <input type="text" class="form-control" id="primerApellido"
+                 formControlName="primerApellido" placeholder="Primer Apellido">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="segundoApellido">Segundo Apellido:</label>
+          <input  type="text" class="form-control" id="segundoApellido"
+                  formControlName="segundoApellido" placeholder="Segundo Apellido">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="fechaNac">Fecha de Nacimiento</label>
+          <input type="date" class="form-control" id="fechaNac" formControlName="fechaNac"
+                 placeholder="Ingrese la fecha de nacimiento">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="direccion">Dirección:</label>
+          <input type="text" class="form-control" id="direccion" formControlName="direccion"
+                 placeholder="Ingrese la dirección">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="telefono">Telefono:</label>
+          <input type="text" class="form-control" id="telefono" formControlName="telefono"
+                 placeholder="123456789">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="correo">Correo:</label>
+          <input type="text" class="form-control" id="correo" formControlName="correo"
+                 placeholder="Ingrese el correo eléctronico">
+        </div>
+        <div class="form-group col-md-3">
+          <label for="cargo">Cargo:  </label>
+          <br>
+          <p-dropdown [options]="ddopcionesCargo"  formControlName="cargo" id="cargo"></p-dropdown>
+        </div>
+        <div class="form-group col-md-3">
+          <label for="abrev_titulo">Título:</label>
+          <input  type="text" class="form-control" id="abrev_titulo"
+                  formControlName="abrev_titulo" placeholder="Abreviatura Titulo">
+        </div>
+      </div>
+      <br>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="verficardATOS()" >Crear Empleado</button>
+
+      </mat-card-actions>
+    </form>
+  </div>
+
+</mat-card>

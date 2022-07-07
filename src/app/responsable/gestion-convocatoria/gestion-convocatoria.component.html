@@ -1,0 +1,243 @@
+<p-toast></p-toast>
+<mat-card>
+  <mat-card-title>
+    <div class="form-row">
+      <div class="form-group col-md-9">
+        <h1>Generar nuevas convocatorias</h1>
+      </div>
+      <div class="form-group col-md-3">
+        <button type="submit" class="btn" (click)="obtenerCovocatorias()" style="background: green; color: white;">Ver convocatarias</button>
+      </div>
+    </div>
+  </mat-card-title>
+  <div class="container-fluid">
+    <form>
+      <p-table [value]="dataSolicitudes"
+               [columns]="columnaSolicitud"
+               [paginator]="true"
+               [rows]="3"
+               [autoLayout]="true"
+               [(selection)]="dataRowSolicitud"
+               (onRowSelect)="onRowSelectSolicitud($event)"
+               (onRowUnselect)="onRowUnSelectSolicitud($event)"
+               [scrollable]="true"
+               selectionMode="single">
+        <ng-template pTemplate="header">
+          <tr>
+            <th *ngFor="let columna of columnaSolicitud">
+              {{columna.header}}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-dataSolicitudes>
+          <tr [pSelectableRow]="dataSolicitudes">
+            <td *ngFor="let col of columnaSolicitud">
+              <div [ngSwitch]="col.field">
+                <span *ngSwitchCase="'fecha_emision'"> {{dataSolicitudes[col.field] | date: 'yyyy-M-dd'}} </span>
+                <span *ngSwitchCase="'fecha_inicio'"> {{dataSolicitudes[col.field] | date: 'yyyy-M-dd'}} </span>
+                <span *ngSwitchCase="'pdf_solicitud'">
+                  <button pButton pRipple type="button" icon="pi pi-bookmark"
+                          class="p-button-rounded p-button-secondary" (click)="checkForMIMEType()">
+                      </button>
+                </span>
+                <span *ngSwitchCase="'generar_conv'">
+                  <button pButton pRipple type="button" icon="pi pi-check" class="p-button-rounded"
+                          (click)="cargarDatos()"></button>
+                </span>
+                <span *ngSwitchDefault>{{dataSolicitudes[col.field]}}</span>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+
+      </p-table>
+    </form>
+  </div>
+</mat-card>
+<p-dialog [(visible)]="dialogoDatos"
+          [style]="{width:'50vw'}"
+          [draggable]="false"
+          [baseZIndex]="10000"
+          [modal]="true"
+          styleClass="p-fluid"
+          header="Datos para generar convocatoria">
+
+  <ng-template pTemplate="content">
+    <h2>Datos generales: </h2>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <p-accordion>
+      <p-accordionTab header="Datos que debe ingresar">
+        <p-panel header="Datos adicionales">
+          <form [formGroup]="formConvocataria">
+            <h3>Ingrese fecha maxima a presentar solicitudes: </h3>
+            <input type="date" id="fechaMaxima" formControlName="fechaMaxima">
+            <h3>Ingrese ciclos que se deben estar cursando o haber pasado: </h3>
+            <input type="text" id="ciclos" formControlName="ciclos">
+            <h3>Seleccione asignaturas que debe haber cumplido: </h3>
+            <p-table [value]="dataAsignaturas"
+                     [columns]="columasAsignaturas"
+                     [paginator]="true"
+                     [rows]="10"
+                     [autoLayout]="true"
+                     [(selection)]="dataRowAsignatura"
+                     (onRowSelect)="onRowSelectAsignatura($event)"
+                     (onRowUnselect)="onRowUnSelectAsignatura($event)"
+                     [scrollable]="true"
+                     selectionMode="single">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th *ngFor="let columna of columasAsignaturas">
+                    {{columna.header}}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-dataAsignatura>
+                <tr [pSelectableRow]="dataAsignatura">
+                  <td *ngFor="let col  of columasAsignaturas">
+                    <div [ngSwitch]="col.field">
+                  <span *ngSwitchCase="'anadirA'">
+                    <button type="button" (click)="anadirAsignatura()"><mat-icon>add</mat-icon></button>
+                  </span>
+                      <span *ngSwitchCase="'quitarA'">
+                    <button type="button" (click)="quitarAsignatura()"><mat-icon>remove</mat-icon></button>
+                  </span>
+                      <span *ngSwitchDefault>
+                   {{dataAsignatura[col.field]}}
+                </span>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+            <h2>Asignaturas anadidas: </h2>
+            <p-table [value]="asiganturas"
+                     [columns]="asignColum"
+                     [paginator]="true"
+                     [rows]="10"
+                     [autoLayout]="true"
+                     [scrollable]="true"
+                     selectionMode="single">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th *ngFor="let columna of asignColum">
+                    {{columna.header}}
+                  </th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-dataAsignatura>
+                <tr>
+                  <td *ngFor="let col  of asignColum">
+                    <div [ngSwitch]="col.field">
+                  <span *ngSwitchDefault>
+                   {{dataAsignatura[col.field]}}
+                </span>
+                    </div>
+                  </td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </form>
+          <br>
+          <button pButton pRipple type="button" label="Generar Documento" (click)="lanzarConvocatoria()"></button>
+        </p-panel>
+      </p-accordionTab>
+      <p-accordionTab header="Actividades propuestas">
+        <p-panel header="Lista de actividades">
+          <p-table [value]="dataActividades"
+                   [columns]="columnasActividades"
+                   [paginator]="false"
+                   [rows]="10"
+                   [autoLayout]="true"
+                   [scrollable]="true">
+            <ng-template pTemplate="header">
+              <tr>
+                <th *ngFor="let columna of columnasActividades">
+                  {{columna.header}}
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-dataACT>
+              <tr>
+                <td *ngFor="let col  of columnasActividades">
+                  {{dataACT[col.field]}}
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </p-panel>
+      </p-accordionTab>
+      <p-accordionTab header="Documentos">
+        <p-panel header="Envio de documento">
+          <ng-template pTemplate="content">
+            <div mat-row="">
+              <h3>Ingrese el documento firmado que se genero: </h3>
+              <p-fileUpload
+                [customUpload]="true"
+                [showCancelButton]="false"
+                [multiple]="false"
+                (uploadHandler)="onFileSelected($event)"
+                chooseLabel="Seleccionar anexo"
+                uploadLabel="Cargar anexo"
+                invalidFileTypeMessageSummary="Archivo no valido"
+                invalidFileSizeMessageDetail="Solo se acepta archivos con extensiones .doc - docx."
+              >
+              </p-fileUpload>
+            </div>
+          </ng-template>
+        </p-panel>
+      </p-accordionTab>
+    </p-accordion>
+    <button pButton pRipple type="button" label="Lanzar Convocatoria" (click)="crearAnexo2()"></button>
+  </ng-template>
+</p-dialog>
+<p-dialog [(visible)]="dialogoConvocatorias"
+          [style]="{width:'50vw'}"
+          [draggable]="false"
+          [baseZIndex]="10000"
+          [modal]="true"
+          styleClass="p-fluid"
+          header="Datos para generar convocatoria">
+  <div class="form-row">
+    <div class="form-group col-md-9">
+      <h1>Lista de convocatorias generadas: </h1>
+    </div>
+  </div>
+  <p-table [value]="dataConvocatorias"
+           [columns]="columnasConvocatorias"
+           [paginator]="true"
+           [rows]="5"
+           [autoLayout]="true"
+           [(selection)]="dataRonwConvocatoria"
+           (onRowSelect)="onRowSelectConvocatoria($event)"
+           (onRowUnselect)="onRowUnSelectConvocatoria($event)"
+           [scrollable]="true"
+           selectionMode="single">
+    <ng-template pTemplate="header">
+      <tr>
+        <th *ngFor="let columna of columnasConvocatorias">
+          {{columna.header}}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-dataConvocatorias>
+      <tr [pSelectableRow]="dataConvocatorias">
+        <td *ngFor="let col of columnasConvocatorias">
+          <div [ngSwitch]="col.field">
+            <span *ngSwitchCase="'fecha_emision'"> {{dataConvocatorias[col.field] | date: 'yyyy-M-dd'}} </span>
+            <span *ngSwitchCase="'fecha_maxima'"> {{dataConvocatorias[col.field] | date: 'yyyy-M-dd'}} </span>
+            <span *ngSwitchCase="'doc_convocatoria'">
+                  <button pButton pRipple type="button" icon="pi pi-bookmark"
+                          class="p-button-rounded p-button-secondary" (click)="checkForMIMEType2()">
+                      </button>
+                </span>
+            <span *ngSwitchCase="'eliminarC'">
+                  <button button pButton pRipple type="button" icon="pi pi-times"  (click)="borrarConvocatoria()" class="p-button-rounded p-button-danger"></button>
+                </span>
+            <span *ngSwitchDefault>{{dataConvocatorias[col.field]}}</span>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-dialog>

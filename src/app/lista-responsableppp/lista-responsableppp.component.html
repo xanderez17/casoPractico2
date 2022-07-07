@@ -1,0 +1,54 @@
+<mat-card-title style="background-color:#1d3557; color:white; padding: 20px; border-radius: 5px">
+    Responsable PPP
+</mat-card-title>
+<mat-card>
+    <div>
+        <div class="card card-w-title">
+            <p-table #dt id="tresponsable" [value]="dataResponsable" [paginator]="true" [columns]="columnasResponsable"
+                [rows]="1" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true"
+                [globalFilterFields]="['primerNombre','primerApellido']">
+
+                <ng-template pTemplate="caption">
+                    <div class="p-grid">
+                        <div class="p-col" style="text-align: left;">
+                            <p>Lista de Responsable PPP</p>
+                        </div>
+                        <div class="p-col" style="text-align: right">
+                            <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                            <input type="text" pInputText size="50"
+                                placeholder="Busqueda: Nombre o Apellido del Responsable PPP"
+                                (input)="dt.filterGlobal($any($event.target).value, 'contains')" style="width:auto">
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columnasResponsable>
+                    <tr>
+                        <th *ngFor="let col of columnasResponsable">
+                            {{col.header}}
+                        </th>
+                    </tr>
+                </ng-template>
+
+                <ng-template pTemplate="body">
+                    <tr *ngFor="let responsable of dataResponsable">
+                        <td>{{responsable.idResponsablePPP}}</td>
+                        <td>{{responsable.docente.persona.primerNombre}}</td>
+                        <td>{{responsable.docente.persona.segundoNombre}}</td>
+                        <td>{{responsable.docente.persona.primerApellido}}</td>
+                        <td>{{responsable.docente.persona.segundoApellido}}</td>
+                        <td>{{responsable.docente.titulo}}</td>
+                        <td>{{responsable.docente.carrera.nombre}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td [attr.colspan]="columnasResponsable.length">No hay datos.</td>
+                    </tr>
+                </ng-template>
+
+            </p-table>
+
+        </div>
+    </div>
+
+</mat-card>

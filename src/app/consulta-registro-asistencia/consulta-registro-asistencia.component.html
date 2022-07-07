@@ -1,0 +1,48 @@
+<p-toast></p-toast>
+<section class="vh-100" style="padding: 55px;">
+  <mat-card>
+    <mat-card-title style="background-color:#1d3557; color:white; padding: 33px; border-radius: 5px">
+      Consulta Registro de Asistencia
+    </mat-card-title>
+    <h2>Buscar alumno </h2>
+    <input type="text" class="form-control"
+  placeholder="Ingrese una cedula" #cedulareg>
+    <br>
+    <button (click)="recibircedula(cedulareg.value)" style="background: #1d3557; color: white;">Buscar</button>
+         <br>
+         <br>
+          <table class="table table-borderless">
+
+            <thead>
+              <tr class="text-center">
+                <th>Fecha</th>
+                <th>Hora llegada</th>
+                <th>Hora salida</th>
+                <th>Actividades realizadas</th>
+                <th>Horas</th>
+                
+              </tr>
+            </thead>
+
+           
+              <tbody *ngFor="let actividad of listaActividades">
+              <tr *ngIf="actividad.registroA.alumno.persona.cedula==idalumnob">
+                <td>{{actividad.fecha | date:'yyyy/MM/dd'}}</td>
+                <td style="text-align: center;">{{actividad.horaLlegada}}</td>
+                <td style="text-align: center;">{{actividad.horaSalida}}</td>
+                <td>{{actividad.descripcion}}</td>
+                <td style="text-align: center;">{{actividad.numHoras}}</td>
+                <td style="text-align:center;">
+                
+                </td>
+              </tr>
+
+            </tbody>
+            
+          </table>
+
+          
+         
+            
+  </mat-card>
+</section>

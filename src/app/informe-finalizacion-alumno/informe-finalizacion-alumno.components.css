@@ -1,0 +1,15 @@
+.card {
+   
+    border: 1px solid  #0c3255;
+    border-inline: 5px solid  #0c3255;
+    writing-mode: horizontal-tb;
+  }
+  
+  
+  .card2 {
+   
+    border: 1px solid  #000000;
+    
+    writing-mode: horizontal-tb;
+  }
+  

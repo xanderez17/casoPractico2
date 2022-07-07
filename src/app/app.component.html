@@ -1,0 +1,472 @@
+<mat-toolbar>
+  <div class="container">
+    <button mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon *ngIf="!sidenav.opened">
+        menu
+      </mat-icon>
+      <mat-icon *ngIf="sidenav.opened">
+        close
+      </mat-icon>
+    </button>
+  </div>
+  <div *ngIf="isLogged">
+    <div *ngIf="notificaciones.length==0">
+      <a (click)="bannoti = true" style="padding: 20px;">
+        <i class="pi pi-bell" style="color: white;"></i>
+      </a>
+    </div>
+
+    <div *ngIf="notificaciones.length>=1">
+      <a (click)="bannoti = true" style="padding: 20px;">
+        <i class="pi pi-bell" style="color: yellow;"></i>
+      </a>
+    </div>
+
+
+  </div>
+
+  INSTITUTO TECNOLÓGICO SUPERIOR DEL AZUAY
+
+  <!--  <button *ngIf="isLogged" (click)="onLogOut()">-->
+  <!--    <mat-icon>exit_to_app</mat-icon>-->
+  <!--    Log Out-->
+  <!--  </button>-->
+
+  <!--  <button *ngIf="!isLogged" routerLink="/login">-->
+  <!--    <mat-icon>account_circle</mat-icon>-->
+  <!--    Log In-->
+  <!--  </button>-->
+
+</mat-toolbar>
+
+
+<mat-sidenav-container>
+
+
+  <mat-sidenav #sidenav="matSidenav">
+
+    <div style="text-align: center;">
+      <img class="logo" src="../assets/imagen/log.png">
+      <br><br>
+      <mat-divider></mat-divider>
+      <h2 class="text-center">Caso #2 - Grupo #1</h2>
+    </div>
+
+    <mat-divider></mat-divider>
+    <div class="divimag"><img *ngIf="isLogged" src="/assets/imagen/programmer.png"></div>
+
+
+    <div *ngFor="let persona of personas">
+      <h3 *ngIf="isLogged" style="text-align: center;">{{persona.primerNombre + " " + persona.primerApellido}}</h3>
+      <p style="text-align: center;">{{realRol}}</p>
+      <p *ngIf="isLogged" style="text-align: center;">{{persona.cedula}}</p>
+
+
+      <a class="nav-link btn mb-3 mt-3" routerLink="/login" style="color: white;" *ngIf="!isLogged">
+        <mat-icon>login</mat-icon>
+        <span>LogIn</span>
+
+      </a>
+      <a class="nav-link btn mb-3 mt-3" (click)="onLogOut()" style="color: white;" *ngIf="isLogged">
+        <mat-icon>logout</mat-icon>
+        <span>LogOut</span>
+      </a>
+
+      <mat-divider></mat-divider>
+
+
+      <!--
+      <mat-accordion multi>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-icon>book</mat-icon>
+              <span>Docentes</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <button mat-button class="button-accordion" routerLink="/registro-docente">
+            <mat-icon>add</mat-icon>
+            <span>Nuevo</span>
+          </button>
+          <button mat-button class="button-accordion" routerLink="/gestion-docentes">
+            <mat-icon>list</mat-icon>
+            <span>Listar</span>
+          </button>
+
+        </mat-expansion-panel>
+      </mat-accordion>-->
+
+
+      <!--
+            <mat-accordion multi>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title>
+                    <mat-icon>business</mat-icon>
+                    <span>Empresa</span>
+                  </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <button mat-button class="button-accordion" routerLink="/registro-empresa">
+                  <mat-icon>add</mat-icon>
+                  <span>Nuevo</span>
+                </button>
+
+
+
+              </mat-expansion-panel>
+            </mat-accordion> -->
+
+
+      <!--CIERRA COORDINADOR DE VINCULACION-->
+
+
+      <mat-accordion multi>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-icon>dashboard</mat-icon>
+              <span>Dashboard</span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <button mat-button class="button-accordion" routerLink="/consulta-convocatoria">
+            <mat-icon>description</mat-icon>
+            <span>Ver Convocatorias</span>
+          </button>
+
+          <button mat-button class="button-accordion" routerLink="/consultasppp">
+            <mat-icon>find_in_page</mat-icon>
+            <span> Procesos </span>
+          </button>
+
+
+
+          <button mat-button class="button-accordion" routerLink="/home">
+            <mat-icon>class</mat-icon>
+            <span> Carreras </span>
+          </button>
+
+          <button mat-button class="button-accordion" routerLink="/anexosde-ppp">
+            <mat-icon>file_copy</mat-icon>
+            <span>Anexos PPP </span>
+          </button>
+
+        </mat-expansion-panel>
+      </mat-accordion>
+
+      <div *ngIf="isAdmin">
+        <!--Coordinador de vinculación-->
+        <mat-accordion multi>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>history_edu</mat-icon>
+                <span>Gestión Admin</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <button mat-button class="button-accordion" routerLink="/crear-carrera">
+              <mat-icon>add</mat-icon>
+              <span> Crear Carrera </span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/registro-empresa">
+              <mat-icon>home</mat-icon>
+              <span>Gestión de empresa</span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/registro-docente">
+              <mat-icon>perm_identity</mat-icon>
+              <span>Gestión de Docentes </span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/listar-carreras">
+              <mat-icon>list</mat-icon>
+              <span>Listar </span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/gestion-empresa">
+              <mat-icon>list</mat-icon>
+              <span>Empresas</span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/informe-acreditacion/{{persona.cedula}}"
+            >
+              <mat-icon>assignment</mat-icon>
+              <span>Acreditación</span>
+              </button>
+
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <div *ngIf="isEmpleado">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>business</mat-icon>
+                <span> Gestión Empresa </span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <button mat-button class="button-accordion" routerLink="/solicitud-empresa">
+              <mat-icon>schedule_send</mat-icon>
+              <span>Generar Solicitud</span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/cons-est-asignados">
+              <mat-icon>format_list_bulleted</mat-icon>
+              <span>Estudiantes Asignados</span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/desig-tutor-empresarial">
+              <mat-icon>group</mat-icon>
+              <span>Designar Tutor</span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/crear-empleado">
+              <mat-icon>group_add</mat-icon>
+              <span>Registrar Empleado</span>
+            </button>
+
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <div *ngIf="isResponsable">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>account_tree</mat-icon>
+                <span> Gestión ResponsablePPP </span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <button mat-button class="button-accordion" routerLink="/gestion-convocatoria">
+              <mat-icon>note_add</mat-icon>
+              <span>Generar Convocatoria</span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/lista-convocatorias">
+              <mat-icon>question_answer</mat-icon>
+              <span>Postulaciones</span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/desig-tutor-academico">
+              <mat-icon>group</mat-icon>
+              <span>Designar Tutor</span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/crear-acta">
+              <mat-icon>connect_without_contact</mat-icon>
+              <span>Acta de Reunión</span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/consultas-reportes">
+              <mat-icon>flag</mat-icon>
+              <span>Consultas y Reportes</span>
+            </button>
+
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+
+      <!--ACORDION-->
+      <div *ngIf="isEstudiante">
+        <mat-accordion multi>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>person_pin</mat-icon>
+                Gestión Estudiante
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <button mat-button class="button-accordion" routerLink="/consulta-convocatoria">
+              <mat-icon>description</mat-icon>
+              <span>Ver Convocatorias</span>
+            </button>
+
+            <button mat-button class="button-accordion"
+                    routerLink="/solicitud-estudiante/{{realRol}}/{{persona.cedula}}">
+              <mat-icon>picture_as_pdf</mat-icon>
+              <span>Generar Anexo3</span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/registro-asistencia/{{persona.cedula}}"
+                    (click)="verificarSolicitud(persona.cedula)">
+              <mat-icon>how_to_reg</mat-icon>
+              <span>Registro Asistencia </span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/inf-fin-alumno/{{persona.cedula}}"
+                    (click)="verificarRequisitosInformeFinalA13(persona.cedula)">
+              <mat-icon>file_open</mat-icon>
+              <span> Informe Final </span>
+            </button>
+
+
+
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <div *ngIf="isTutorAcademico ">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <mat-icon>school</mat-icon>
+                <span>Gestión Tutor Académico</span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <button mat-button class="button-accordion">
+              <mat-icon>mark_email_unread</mat-icon>
+              <span>Notificación Designación A6</span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/notificacion-tutor-academico">
+              <mat-icon>event_note</mat-icon>
+              <span>Notificación Actividades A8.1</span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/registro-asistencia">
+              <mat-icon>assignment_turned_in</mat-icon>
+              <span>Asistencias Alumno</span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/reg-seg-alumno">
+              <mat-icon>grading</mat-icon>
+              <span>Seguimiento</span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/registro-visita">
+              <mat-icon>add_home_work</mat-icon>
+              <span>Registrar Visita</span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/evaluacion-estudiante-tutor-academico">
+              <mat-icon>assignment</mat-icon>
+              <span> Evaluación Estudiante A14</span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/informe-final-tutor">
+              <mat-icon>article</mat-icon>
+              <span>Informe A15</span>
+            </button>
+
+          </mat-expansion-panel>
+        </mat-accordion>
+
+      </div>
+
+
+      <a *ngIf="isEmpleado" class="nav-link" routerLink="/registro-empresa" style="color: white;">
+        <mat-icon>home</mat-icon>
+        <span>Gestión de empresa</span>
+      </a>
+
+      <a *ngIf="isResponsable" class="nav-link" routerLink="/consulta-convocatoria" style="color: white;">
+        <mat-icon>home</mat-icon>
+        <span>Gestión Convocatoria</span>
+      </a>
+
+
+      <a *ngIf="isResponsable" class="nav-link" routerLink="/consultasppp" style="color: white;">
+        <mat-icon>supervisor_account</mat-icon>
+        <span>Consultas PPP </span>
+      </a>
+
+      <a *ngIf="isResponsable" class="nav-link" routerLink="/desig-tutor-academico" style="color: white;">
+        <mat-icon>assignment</mat-icon>
+        <span>Designar Tutor Academico</span>
+      </a>
+
+
+
+      <a *ngIf="isEmpleado" class="nav-link" routerLink="/cons-est-asignados" style="color: white;">
+        <mat-icon>person_pin</mat-icon>
+        <span>Consulta Estudiantes Asignados </span>
+      </a>
+
+      <a *ngIf="isEmpleado" class="nav-link" routerLink="/solicitud-empresa" style="color: white;">
+        <mat-icon>person_pin</mat-icon>
+        <span>Generar solicitud empresa </span>
+      </a>
+
+      <!--    <a *ngIf="" class="nav-link" routerLink="/" style="color: white;">-->
+
+      <!--    <mat-icon>speaker_notes</mat-icon>-->
+      <!--      <span>Gestión de Caso </span>-->
+      <!--    </a>-->
+
+      <a *ngIf="isResponsable" class="nav-link" routerLink="/consulta-estado" style="color: white;">
+        <mat-icon>assignment</mat-icon>
+        <span>Estado de Solicitudes</span>
+      </a>
+
+
+      <a *ngIf="isTutorEmpresarial" class="nav-link" routerLink="/eva-est-tu-empresarial" style="color: white;">
+        <mat-icon>perm_identity</mat-icon>
+        <span>Eva. Estudiante </span>
+      </a>
+
+      <a *ngIf="isTutorEmpresarial" class="nav-link" routerLink="/cert-alumno" style="color: white;">
+        <mat-icon>perm_identity</mat-icon>
+        <span>Certificado Alumno </span>
+      </a>
+
+      <a *ngIf="isTutorEmpresarial || isEmpleado" class="nav-link" routerLink="/reg-seg-alumno" style="color: white;">
+        <mat-icon>perm_identity</mat-icon>
+        <span>Registro Seguimiento TE </span>
+      </a>
+
+      <a *ngIf="isResponsable" class="nav-link" routerLink="/registro-convocatoria" style="color: white;">
+        <mat-icon>perm_identity</mat-icon>
+        <span> Registro convocatoria </span>
+      </a>
+
+
+
+
+    </div>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content mat-elevation-z4">
+    <router-outlet></router-outlet>
+
+  </mat-sidenav-content>
+
+</mat-sidenav-container>
+<p-sidebar [(visible)]="bannoti" position="right" [baseZIndex]="10000">
+  <mat-card-title>Notificaciones</mat-card-title>
+  <br><br>
+  <div class="card">
+
+    <p-table [value]="notificaciones" responsiveLayout="scroll">
+
+      <ng-template pTemplate="body" let-noti>
+        <tr>
+          <td><i class="pi pi-times" style="font-size: 1rem" type="button"
+                 (click)="deleteNotificacion(noti.idNotificacion)"></i></td>
+          <td>{{noti.fechaNotificacion | date}}</td>
+          <td>{{noti.notificacion}}</td>
+
+        </tr>
+        <!--
+        <a *ngIf="isAdmin" class="nav-link" routerLink="/informe-acreditacion/{{persona.cedula}}"
+           style="color: white;">
+          <mat-icon>assignment</mat-icon>
+          <span>Acreditación</span>
+        </a>-->
+      </ng-template>
+    </p-table>
+  </div>
+</p-sidebar>
+<app-footer></app-footer>

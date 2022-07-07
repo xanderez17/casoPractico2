@@ -1,0 +1,238 @@
+<mat-card-title style="background-color:#1d3557; color:white; padding: 20px; border-radius: 5px">
+  Empresas
+</mat-card-title>
+<mat-card>
+  <div>
+    <div class="card card-w-title">
+      <p-table #dt id="tempresas"
+               [value]="empresas"
+               [paginator]="true"
+               [columns]="cols"
+               [rows]="10"
+               [showCurrentPageReport]="true"
+               [rowsPerPageOptions]="[10,25,50]"
+               [paginator]="true"
+               [globalFilterFields]="['nombreEmpresa','ruc']"
+      >
+
+        <ng-template pTemplate="caption">
+          <div class="p-grid">
+            <div class="p-col" style="text-align: left;">
+              <p>Lista de Empresas</p>
+            </div>
+            <div class="p-col" style="text-align: right">
+              <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+              <input type="text" pInputText size="50" placeholder="Busqueda: Nombre de empresa o ruc"
+                     (input)="dt.filterGlobal($any($event.target).value, 'contains')" style="width:auto">
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th>RUC</th>
+            <th>Empresa</th>
+            <th>Visión</th>
+            <th>Misión</th>
+            <th>Teléfono</th>
+            <th>Dirección</th>
+            <th>Naturaleza</th>
+            <th *ngIf="isResponsable">Acciones</th>
+            <th *ngIf="isResponsable">Convenio</th>
+            <th *ngIf="isResponsable" >Documento</th>
+
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-empresas>
+          <tr>
+            <td>{{empresas.ruc}}</td>
+            <td>{{empresas.nombreEmpresa}}</td>
+            <td>{{empresas.vision}}</td>
+            <td>{{empresas.mision}}</td>
+            <td>{{empresas.telefono}}</td>
+            <td>{{empresas.direccion}}</td>
+            <td>{{empresas.naturaleza}}</td>
+            <td *ngIf="isResponsable">
+              <a class="edit" title="Edit" (click)="showDialogEdit(empresas)" data-toggle="tooltip"><i
+                class="material-icons">&#xE254;</i></a>
+              <a class="delete" title="Delete" (click)="eliminarEmpresa(empresas)" data-toggle="tooltip"><i
+                class="material-icons">&#xE872;</i></a>
+
+            </td>
+            <td *ngIf="isResponsable">
+              <button pButton pRipple type="button" icon="pi pi-plus"
+                      class="p-button-rounded p-button-success" (click)="hasConvenio(empresas.idEmpresa)">
+              </button>
+            </td>
+            <td *ngIf="isResponsable">
+
+              <button pButton pRipple type="button" icon="pi pi-bookmark"
+                      class="p-button-rounded p-button-secondary" (click)="obtenerDocumento(empresas.idEmpresa)">
+              </button>
+
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td [attr.colspan]="cols.length">No hay datos.</td>
+          </tr>
+        </ng-template>
+
+      </p-table>
+      <br><br>
+      <div class="text-center">
+        <button type="submit" class="btn btn-danger" [routerLink]="['/registro-empresa']">Regresar</button>
+      </div>
+    </div>
+  </div>
+
+</mat-card>
+<p-dialog header="Editar empresa" [(visible)]="dis" [modal]="true" [style]="{width: '40vw', height: '40vw'}"
+          [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <form [formGroup]="formEmpresa">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="ruc">RUC:</label>
+        <input type="text" class="form-control" [(ngModel)]="empresa.ruc" id="ruc" formControlName="ruc"
+               placeholder="Ingrese el RUC">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="empresa">Nombre Empresa:</label>
+        <input type="text" class="form-control" id="empresa" formControlName="empresa"
+               [(ngModel)]="empresa.nombreEmpresa" placeholder="Ingrese el nombre de la empresa">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="vision">Visión:</label>
+      <input type="text" class="form-control" id="vision" formControlName="vision" [(ngModel)]="empresa.vision"
+             placeholder="Ingrese la visión de la empresa">
+    </div>
+    <div class="form-group">
+      <label for="mision">Misión:</label>
+      <input type="text" class="form-control" id="mision" formControlName="mision" [(ngModel)]="empresa.mision"
+             placeholder="Ingrese la misión de la empresa">
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="telefono">Telefono:</label>
+        <input type="text" class="form-control" id="telefono" formControlName="telefono" [(ngModel)]="empresa.telefono"
+               placeholder="123456789">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="direccion">Direccion:</label>
+        <input type="text" class="form-control" id="direccion" formControlName="direccion"
+               [(ngModel)]="empresa.direccion" placeholder="Apartamento, ciudad y provincia">
+      </div>
+    </div>
+
+  </form>
+  <p-footer>
+    <button type="button" pButton icon="pi pi-save" (click)="editarEmpresa()" label="Editar"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="dis=false" label="Cancelar"
+            class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Generar Convenio" [(visible)]="createConvenio" [modal]="true" [style]="{width: '40%', height: '50%'}"
+          [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <form [formGroup]="formConvenio">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="duracion">Duración:</label>
+        <input type="text" class="form-control" [(ngModel)]="convenio.duracion" id="duracion" formControlName="duracion"
+               placeholder="Ingrese la duración">
+      </div>
+      <div class="col-md-6">
+        <label for="fechaEmision">Fecha de Emisión</label>
+        <input type="date" class="form-control" id="fechaEmision" formControlName="fechaEmision"
+               [(ngModel)]="convenio.fechaEmision"
+               placeholder="Ingrese la fecha de emisión">
+      </div>
+    </div>
+
+  </form>
+
+  <p-footer>
+    <button type="button" pButton icon="pi pi-save" (click)="guardarConvenio()" label="Crear Convenio"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="createConvenio=false" label="Cancelar"
+            class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
+
+<p-dialog header="Registro de Actividades" [(visible)]="createActividades" [modal]="true"
+          [style]="{width: '50%', height: '40vw'}"
+          [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <form [formGroup]="formActividades">
+    <div class="form-row">
+      <div class="form-group col-md-8">
+        <label for="descripcion">Descripción:</label>
+        <input type="text" class="form-control" [(ngModel)]="actividad.descripcion" id="descripcion"
+               formControlName="descripcion" placeholder="Ingrese la descripción">
+      </div>
+      <div class="col-md-4">
+        <button type="button" pButton icon="pi pi-save" (click)="agregarActividad()" label="agregar"></button>
+      </div>
+    </div>
+
+  </form>
+  <div>
+    <p-table [value]="actividades"
+             [paginator]="true"
+             [columns]="cols"
+             [rows]="10"
+             [showCurrentPageReport]="true"
+             [rowsPerPageOptions]="[10,25,50]"
+             [paginator]="true" *ngIf="refresh">
+
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of colsAct">
+            {{col.header}}
+          </th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-actividades>
+        <tr>
+          <td>{{actividades.idActividad}}</td>
+          <td>{{actividades.descripcion}}</td>
+          <td>
+            <a class="delete" title="Delete" (click)="eliminarActividad(actividades.idActividad)" data-toggle="tooltip"><i
+              class="material-icons">&#xE872;</i></a>
+
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="cols.length">No hay datos.</td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+  </div>
+  <button type="button" pButton icon="pi pi-print" label="Generar Documento" (click)="generarDoc()"></button>
+  <div>
+    <h3>Subir archivo de convenio firmado y en pdf</h3>
+    <p-fileUpload
+      [customUpload]="true"
+      [showCancelButton]="false"
+      [multiple]="false"
+      (uploadHandler)="onFileSelected($event)"
+      chooseLabel="Seleccionar anexo"
+      uploadLabel="Cargar anexo"
+      invalidFileTypeMessageSummary="Archivo no valido"
+      invalidFileSizeMessageDetail="Solo se acepta archivos con extensiones .doc - docx."
+    >
+    </p-fileUpload>
+  </div>
+
+  <p-footer>
+    <button type="button" pButton icon="pi pi-save" label="Crear Convenio" (click)="updateConvenio()"></button>
+    <button type="button" pButton icon="pi pi-times" (click)="cancelarConvenio()" label="Cancelar"
+            class="ui-button-secondary"></button>
+  </p-footer>
+</p-dialog>
+
+

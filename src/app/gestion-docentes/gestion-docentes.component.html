@@ -1,0 +1,195 @@
+<mat-card-title style="background-color:#1d3557; color:white; padding: 20px; border-radius: 5px">
+   Docentes
+  </mat-card-title>
+  <mat-card>
+    <div>
+      <div class="card card-w-title" >
+        <p-table #dt id="tdocentes"
+            dataKey="idDocente"
+            [value]="docentes"
+            [paginator]="true"
+            [rows]="10"
+            [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10,25,50]"
+            [paginator]="true"
+            styleClass="p-datatable-customers p-datatable-gridlines"
+            [globalFilterFields]="['cedula','primer_nombre']"
+            >
+
+            <ng-template pTemplate="caption">
+                <div class="p-grid">
+                    <div class="p-col" style="text-align: left;">
+                        <p>Lista de Docentes</p>
+                    </div>
+                    <div class="p-col" style="text-align: right">
+                        <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                        <input type="text" pInputText size="50" placeholder="Busqueda: ingrese el numero de cédula"
+                            (input)="dt.filterGlobal($any($event.target).value, 'contains')" style="width:auto">
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+
+                <tr>
+                    <th style="width: 80px;">Abr.</th>
+                    <th>Titulo</th>
+                    <th>Area</th>
+                    <th>Carrera</th>
+                    <th>Nombre</th>
+                    <th>Cedula</th>
+                    <th style="width: 100px;">Acciones</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-doc>
+                <tr>
+                  <td>{{doc.abrev_titulo}}</td>
+                  <td>{{doc.titulo}}</td>
+                  <td>{{doc.area}}</td>
+                  <td>{{doc.carrera}}</td>
+                  <td>{{doc.primer_nombre}} {{doc.segundo_nombre}} {{doc.primer_apellido}} {{doc.segundo_apellido}} </td>
+                  <td >{{doc.cedula}}</td>
+                  <td>
+                      <a class="edit" title="Edit" (click)="showDialogEdit(doc)" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                      <a class="delete" title="Delete" (click)="eliminarDocente(doc)" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                  </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td >No hay datos.</td>
+                </tr>
+            </ng-template>
+
+        </p-table>
+        <br><br>
+        <div class="text-center">
+            <button type="submit" class="btn btn-danger" [routerLink]="['/registro-docente']">Regresar</button>
+        </div>
+      </div>
+    </div>
+
+  </mat-card>
+  <p-dialog header="Editar docente" [(visible)]="dis" [modal]="true" [style]="{width: '50vw', height: '40vw'}"
+          [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+
+        <mat-card *ngIf="this.banpersona == true">
+
+            <div class="container-fluid" >
+            <h1>Datos Personales</h1>
+            <form [formGroup]="formPersona">
+                <div class="form-row">
+                <div class="form-group col-md-3">
+                    <label for="pnombre">Primer nombre</label>
+                    <input type="text" class="form-control" [(ngModel)]="persona.primerNombre" id="pnombre"  formControlName="pnombre" placeholder="Ingrese el primer nombre">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="snombre">Segundo nombre</label>
+                    <input type="text" class="form-control" [(ngModel)]="persona.segundoNombre" id="snombre"  formControlName="snombre" placeholder="Ingrese el segundo nombre">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="papellido">Primer apellido</label>
+                    <input type="text" class="form-control" id="papellido"  formControlName="papellido" [(ngModel)]="persona.primerApellido" placeholder="Ingrese el primer apellido">
+                </div><div class="form-group col-md-3">
+                    <label for="sapellido">Segundo apellido</label>
+                    <input type="text" class="form-control" id="sapellido"  formControlName="sapellido" [(ngModel)]="persona.segundoApellido" placeholder="Ingrese el segundo apellido">
+                </div>
+                </div><div class="form-row">
+                <div class="form-group col-md-9">
+                    <label for="cedula">Cédula:</label>
+                <input type="text" class="form-control" id="cedula" formControlName="cedula" [(ngModel)]="persona.cedula"  placeholder="Ingrese la cédula">
+
+                </div>
+                <div class="form-group col-md-3">
+
+                    <label for="fechan">Fecha de nacimiento</label>
+                    <input type="text" class="form-control" id="fechan"  formControlName="fechan" [(ngModel)]="persona.fechaNac" placeholder="Ingrese la fecha de nacimiento" >
+                </div>
+                </div>
+                <div class="form-group">
+                <label for="direccion">Dirección:</label>
+                <input type="text" class="form-control" id="direccion" formControlName="direccion" [(ngModel)]="persona.direccion"  placeholder="Ingrese la dirección" >
+                </div>
+                <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="telefono">Telefono:</label>
+                    <input type="text" class="form-control"  id="telefono" formControlName="telefono" [(ngModel)]="persona.telefono"  placeholder="123456789">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="correo">Correo:</label>
+                    <input type="text" class="form-control" id="correo" formControlName="correo" [(ngModel)]="persona.correo"  placeholder="Ingrese el correo eléctronico">
+                </div>
+
+                </div>
+                <br><br>
+                <div class="row text-center">
+                <div class="col">
+                </div>
+                <div class="col">
+                    <button type="submit" (click)='SiguienteDatos()' class="btn" style="background: #1d3557; color: white;">Siguiente</button>
+                </div>
+
+                </div>
+
+            </form>
+            </div>
+        </mat-card>
+        <mat-card *ngIf="this.bantitulo == true">
+
+        <div class="container-fluid" >
+            <h1>Datos academicos</h1>
+            <form [formGroup]="formDocente" >
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                <label for="abrevtitulo">Abreviación del Titulo</label>
+                <input type="text" class="form-control" [(ngModel)]="docente.abrevTitulo" id="abrevtitulo"  formControlName="abrevtitulo" placeholder="Abreviación del titulo">
+                </div>
+                <div class="form-group col-md-8">
+                <label for="titulo">Titulo</label>
+                <input type="text" class="form-control" [(ngModel)]="docente.titulo" id="titulo"  formControlName="titulo" placeholder="Ingrese el titulo">
+                </div>
+
+
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                <label for="area">Area</label>
+                <input type="text" class="form-control" id="area" formControlName="area" [(ngModel)]="docente.area"  placeholder="Ingrese la area">
+
+                </div>
+                <div class="form-group col-md-6">
+
+                    <label for="carrera">Carrera</label><br>
+
+                    <span><p-dropdown
+                        [options]="carreras"
+                        [(ngModel)]="dropselect"
+                        placeholder="Seleccione una opción"
+                        optionLabel="nombre"
+                        [showClear]="true"
+                        (onChange)="OnChange($event)"
+                        [(ngModel)]="docente.carrera" >
+                    </p-dropdown></span>
+
+                    </div>
+
+            </div>
+
+            <br><br>
+            <div class="row text-center">
+                <div class="col">
+                </div>
+                <div class="col">
+                <button type="submit" (click)='actualizar()' class="btn" style="background: #1d3557; color: white;">Actualizar Docente</button>
+                </div>
+
+            </div>
+
+            </form>
+        </div>
+        </mat-card>
+    <p-footer>
+
+        <button type="button" pButton icon="pi pi-times" (click)="dis=false" label="Cancelar" class="ui-button-secondary"></button>
+    </p-footer>
+</p-dialog>

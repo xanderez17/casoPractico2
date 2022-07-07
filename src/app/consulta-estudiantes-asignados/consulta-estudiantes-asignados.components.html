@@ -1,0 +1,79 @@
+<section class="vh-100">
+  <div class="container-fluid" style="padding: 55px;">
+    <mat-card-title style="background-color:#1d3557; color:white; padding: 20px; border-radius: 5px">
+      {{titulo}}
+    </mat-card-title>
+    
+    <mat-card>
+      <h2 style="color: #1d3557;">{{convocatoriaTitulo}}</h2>
+
+      <div>
+        <select class="form-control" [(ngModel)]="opcionSeleccionado" (change)="capturarConvocatoria()">
+          <option>Seleccione una convocatoria </option>
+          <option *ngFor="let convocatoria of convocatorias">
+            {{convocatoria.nombreConvocatoria}}</option>
+        </select>
+      </div>
+
+      <br><br>
+      <h2 style="color: #1d3557;">{{listaTitulo}}</h2>
+      <form>
+        <h3>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Apellidos</th>
+                <th scope="col">Nombres</th>
+                <th scope="col">Paralelo</th>
+                <th scope="col">H. Practicas</th>
+                <th scope="col">Eliminar</th>
+              </tr>
+
+            </thead>
+            <tbody *ngFor="let asignado of asignados">
+              
+              <tr *ngIf="asignado.estado==false; else login">
+              </tr>
+
+              
+              <ng-template #login>
+                <tr *ngIf="asignado.convocatoria.nombreConvocatoria==verSeleccion">
+                  <td>{{asignado.alumno.persona.primerApellido}} {{asignado.alumno.persona.segundoApellido}}</td>
+                  <td>{{asignado.alumno.persona.primerNombre}} {{asignado.alumno.persona.segundoNombre}}</td>
+                  <td>{{asignado.alumno.paralelo}}</td>
+                  <td>{{asignado.estado}}</td>
+                  <td><a class="btn btn-danger btn-xs" style="color: white">Eliminar</a></td>
+                </tr>
+              </ng-template>
+            </tbody>
+
+
+            <tbody *ngFor="let asignado of asignados">  
+              <tr *ngIf="asignado.estado==false; else login">
+              </tr>
+
+              <ng-template #login>
+                <tr *ngIf="verSeleccion=='Seleccione una convocatoria'">
+                  <td>{{asignado.alumno.persona.primerApellido}} {{asignado.alumno.persona.segundoApellido}}</td>
+                  <td>{{asignado.alumno.persona.primerNombre}} {{asignado.alumno.persona.segundoNombre}}</td>
+                  <td>{{asignado.alumno.paralelo}}</td>
+                  <td>{{asignado.estado}}</td>
+                  <td><a class="btn btn-danger btn-xs" style="color: white">Eliminar</a></td>
+                </tr>
+              </ng-template>
+            </tbody>
+            
+          </table>
+        </h3>
+
+        
+
+        <div class="d-grid gap-2 col-6 mx-auto">
+          <button class="btn btn-primary" type="button">Generar Documento</button>
+        </div>
+
+      </form>
+    </mat-card>
+
+  </div>
+</section>

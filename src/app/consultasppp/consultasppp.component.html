@@ -1,0 +1,66 @@
+
+<mat-card id="CardP">
+  <mat-card-title style="background-color:#1d3557; color:white; padding: 33px; border-radius: 5px">
+    Practicas Pre-Profecionales | Consultas
+  </mat-card-title>
+
+
+  <mat-card-content>
+    <p-orderList [value]="convocatorias" [listStyle]="{'max-height':'30rem'}" header="Lista" filterBy="idConvocatoria" filterPlaceholder="Busqueda por el numero de convocatoria" [dragdrop]="true">
+      <ng-template let-conv pTemplate="item">
+          <div class="product-item">
+              <div class="image-container">
+                      <img src="assets/imagen/log.png" [alt]="conv.nombreConvocatoria" class="product-image" />
+              </div>
+              <div class="product-list-detail">
+                  <h5 class="mb-2">{{conv.nombreConvocatoria}}</h5>
+                  <h5 class="mb-2">Carrera: {{conv.solicitudEmpresa.carrera.nombre}}</h5>
+                  <i class="pi pi-user product-category-icon"></i>
+                  <span class="product-category">  {{conv.solicitudEmpresa.responsablePPP.docente.persona.primerNombre}} {{conv.solicitudEmpresa.responsablePPP.docente.persona.segundoNombre}} {{conv.solicitudEmpresa.responsablePPP.docente.persona.primerApellido}} {{conv.solicitudEmpresa.responsablePPP.docente.persona.segundoApellido}}</span>
+              </div>
+              <div class="product-list-action">
+                  <h6 class="mb-2">Número de convocatoria:{{conv.idConvocatoria}}</h6>
+                  <span class="product-category" style="width: 100px;" *ngIf="conv.estado == 'CERRADA'">
+
+                    <p-message severity="error" text="Cursando"></p-message>
+
+                  </span>
+                  <span class="product-category" style="width: 100px;" *ngIf="conv.estado == 'ABIERTO'">
+
+                    <p-message severity="success" text="Abierta"></p-message>
+
+                  </span>
+              </div>
+          </div>
+          <div class="product-item text-center">
+
+            <p-table [value]="alumnosolicitud" responsiveLayout="scroll">
+              <ng-template pTemplate="header">
+                  <tr>
+                      <th>Nombres</th>
+                      <th>Apellidos</th>
+                      <th>Cedula</th>
+                      <th>Correo</th>
+                      <th>Numero de contacto</th>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-alum>
+                  <tr *ngIf="conv.idConvocatoria == alum.convocatoria.idConvocatoria && alum.estado =='Aceptado' ">
+                      <td>{{alum.alumno.persona.primerNombre}} {{alum.alumno.persona.segundoNombre}} </td>
+                      <td>{{alum.alumno.persona.primerApellido}} {{alum.alumno.persona.segundoApellido}} </td>
+                      <td>{{alum.alumno.persona.cedula}} </td>
+                      <td>{{alum.alumno.persona.correo}} </td>
+                      <td>{{alum.alumno.persona.telefono}} </td>
+                  </tr>
+              </ng-template>
+              <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td  colspan="5">No existen estudiantes asignados</td>
+                </tr>
+            </ng-template>
+          </p-table>
+          </div>
+      </ng-template>
+  </p-orderList>
+  </mat-card-content>
+</mat-card>

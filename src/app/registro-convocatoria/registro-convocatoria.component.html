@@ -1,0 +1,73 @@
+<section class="vh-100">
+  <div class="container-fluid" style="padding: 55px;">
+    <mat-card-title style="background-color:#1d3557; color:white; padding: 20px; border-radius: 5px">
+     REGISTRO CONVOCATORIA
+    </mat-card-title>
+
+    <br><br>
+
+    <mat-card>
+      <h2 style="color: #1d3557;">CARRERA</h2>
+      <div>
+        <select class="form-control" >
+          <option>Seleccione carrera</option>
+          <option >Opcion1</option>
+          <option >Opcion2</option>
+        </select>
+      </div>
+
+
+      <h2 style="color: #1d3557;">CICLO</h2>
+      <div>
+        <select class="form-control" >
+          <option>Seleccione ciclo</option>
+          <option >Opcion1</option>
+          <option >Opcion2</option>
+        </select>
+      </div>
+
+      <h2 style="color: #1d3557;">EMPRESA</h2>
+      <div>
+        <select class="form-control" >
+          <option>Seleccione empresa</option>
+          <option >Opcion1</option>
+          <option >Opcion2</option>
+        </select>
+      </div>
+
+      <h2 style="color: #1d3557;">ACTIVIDADES</h2>
+      <div>
+        <input class="form-control mr-sm-2" type="search" placeholder="Lista de actividades" aria-label="Search" [disabled]="true">
+      </div>
+
+      <h2 style="color: #1d3557;">FECHA MAXIMA SOLICITUD</h2>
+      <div>
+        <input class="form-control mr-sm-2" type="search" placeholder="Seleccione Fecha" aria-label="Search">
+      </div>
+
+
+      <h2 style="color: #1d3557;">MATERIAS</h2>
+      <div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          <label class="form-check-label" for="flexCheckDefault">
+            Materia 1
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+          <label class="form-check-label" for="flexCheckChecked">
+            Materia 2
+          </label>
+        </div>
+      </div>
+
+
+      <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-primary" type="button">GENERAR CONVOCATORIA</button>
+        </div>
+
+    </mat-card>
+
+  </div>
+</section>

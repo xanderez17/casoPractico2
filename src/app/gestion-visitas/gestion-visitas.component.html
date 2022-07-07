@@ -1,0 +1,116 @@
+<div class="card card-w-title" style="padding: 55px;">
+    <h1>Visitas</h1>
+    <p-table #d id="tvisitas" [value]="dataInformes" [paginator]="true" [columns]="cols" [rows]="10"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true"
+        [globalFilterFields]="['asunto','fecha']" styleClass="p-datatable-customers p-datatable-gridlines">
+
+        <ng-template pTemplate="caption">
+            <div class="p-grid">
+                <div class="p-col" style="text-align: left;">
+                    <p>Lista de Visitas</p>
+                </div>
+                <div class="p-col" style="text-align: right">
+                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                    <input type="text" pInputText size="50" placeholder="Busqueda: Por fecha"
+                        (input)="d.filterGlobal($any($event.target).value, 'contains')" style="width:auto">
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th *ngFor="let col of cols">
+                    {{col.header}}
+                </th>
+            </tr>
+        </ng-template>
+        <tbody style="font-size:20px;">
+            <tr *ngFor="let visita of dataInformes">
+                <td *ngFor="let col1 of cols">
+                    <div [ngSwitch]="col1.field">
+                        <span *ngSwitchDefault>{{visita[col1.field]}}</span>
+                    </div>
+                </td>
+                <td>
+                    <a class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                    <a class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                </td>
+            </tr>
+        </tbody>
+        <ng-template pTemplate="body" let-visita>
+            <tr>
+                <td>{{visita.fecha | date}}</td>
+                <td>{{visita.horaInicio}}</td>
+                <td>{{visita.horaFin}}</td>
+                <td>{{visita.asunto}}</td>
+                <td>{{visita.actividades}}</td>
+                <td>{{visita.observaciones}}</td>
+
+                <td>
+                    <a class="edit" title="Edit" (click)="showDialogEdit(visita)" data-toggle="tooltip"><i
+                            class="material-icons">&#xE254;</i></a>
+                    <a class="delete" title="Delete" (click)="eliminarInforme(visita)" data-toggle="tooltip"><i
+                            class="material-icons">&#xE872;</i></a>
+                </td>
+                <td>
+                    <button type="submit"
+                        (click)=' generate(visita.alumno.persona.primerNombre,visita.alumno.persona.primerNombre+" "+visita.alumno.persona.segundoNombre+" "+visita.alumno.persona.primerApellido+" "+visita.alumno.persona.segundoApellido,visita.alumno.persona.nombreEmpresa,visita.empresa.tutorempresarial.persona.primerApellido,visita.alumno.ciclo,visita.asunto,visita.observacion,visita.registroVisitaEmpresa.observaciones,visita.horainicion,visita.horaf,visita.fecha,visita.alumno.carrera.abreviatura)'
+                        class="btn" pButton icon="pi pi-download" label="DESCARGAR DOCUMENTO"
+                        style="background: #5c1818; color: white;"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td [attr.colspan]="cols.length">No hay datos.</td>
+            </tr>
+        </ng-template>
+
+    </p-table>
+    <br><br>
+    <div class="text-center">
+        <button type="submit" class="btn btn-danger" [routerLink]="['/registro-visita']">Regresar</button>
+    </div>
+</div>
+<p-dialog header="Editar informe" [(visible)]="dis" [modal]="true" [style]="{width: '50vw', height: '40vw'}"
+    [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <form [formGroup]="formInforme">
+        <h3 class="titulo"><strong>Informe</strong></h3>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="fecha">Fecha de Visita:</label>
+                <input type="text" class="form-control" [(ngModel)]="informe.fecha" id="fecha" formControlName="fecha"
+                    placeholder="Ingrese la Fecha de Visita">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="horainicio">Hora Inicio:</label>
+                <input type="time" class="form-control" id="horainicio" formControlName="horainicio"
+                    [(ngModel)]="informe.horaInicio">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="horafin">Hora Fin:</label>
+                <input type="time" class="form-control" id="horafin" formControlName="horafin"
+                    [(ngModel)]="informe.horaFin">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="asunto">Asunto a tratar:</label>
+                <textarea type="text" class="form-control" id="asunto" formControlName="asunto"
+                    [(ngModel)]="informe.asunto" placeholder="Ingrese el Asunto de la Reunion"></textarea>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="actividades">Actividades:</label>
+                <textarea type="text" class="form-control" id="actividades" formControlName="actividades"
+                    [(ngModel)]="informe.actividades" placeholder="Ingrese las activiades que se realizo"></textarea>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="observaciones">Observaciones:</label>
+                <textarea type="text" class="form-control" id="observaciones" formControlName="observaciones"
+                    [(ngModel)]="informe.observaciones" placeholder="Observaciones de la Visita"></textarea>
+            </div>
+        </div>
+    </form>
+    <p-footer>
+        <button type="button" pButton icon="pi pi-save" (click)="editarInforme()" label="Editar"></button>
+        <button type="button" pButton icon="pi pi-times" (click)="dis=false" label="Cancelar"
+            class="ui-button-secondary"></button>
+    </p-footer>
+</p-dialog>

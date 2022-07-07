@@ -1,0 +1,143 @@
+<mat-card>
+  <mat-card-title>
+    LISTA DE CARRERAS
+  </mat-card-title>
+  <p-table [value]="carreras" *ngIf="refresh">
+    <ng-template pTemplate="header">
+        <tr>
+            <th *ngFor="let col of cols">
+                {{col.header}}
+            </th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-carrera>
+        <tr>
+            <td *ngFor="let col of cols">
+              <div [ngSwitch]="col.field">
+                <span *ngSwitchCase="'acciones'" >
+                  
+                  <button (click)="showDialogEdit(carrera)">Editar</button>
+                </span>
+                <span *ngSwitchCase="'coordinador'" style="align-items: flex-start;">
+                  <div *ngFor="let docente of docentes">
+                    <div *ngIf="docente.coordinador == true && docente.carrera.idCarrera == carrera.idCarrera">
+                      <span >{{docente.persona.primerNombre}} {{docente.persona.primerApellido}}</span>
+                      
+                    </div>
+                      
+                  </div>
+                    <button class="btn btn-primary" (click)="showDialogDocente(carrera)">Seleccionar</button>
+                 
+                  
+                </span>
+                <span *ngSwitchDefault>{{carrera[col.field]}}</span>
+              </div>
+                
+            </td>
+        </tr>
+    </ng-template>
+</p-table>
+</mat-card>
+
+<p-dialog header="Editar docente" [(visible)]="editar" [modal]="true" [style]="{width: '50vw', height: '40vw'}"
+          [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+        <mat-card>
+
+        <div class="container-fluid" >
+            <h1>Editar Carrera</h1>
+            <form [formGroup]="formCarrera">
+              <div class="row">
+                <div class="col col-md-6 mb-3">
+                  <label for="nombre">Carrera:</label>
+                  <input [(ngModel)]="carrera.nombre" type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Nombre">
+                </div>
+                <div class="col col-md-6 mb-3">
+                  <label for="abreviatura">Abreviatura:</label>
+                  <input [(ngModel)]="carrera.abreviatura" type="text" class="form-control" id="abreviatura" formControlName="abreviatura"
+                         placeholder="Abreviatura">
+                </div>
+                <div class="col col-md-6 mb-3">
+                  <label for="modalidad">Modalidad:</label>
+                  <input [(ngModel)]="carrera.modalidad" type="text" class="form-control" id="modalidad" formControlName="modalidad" placeholder="Modalidad">
+                </div>
+                <div class="col col-md-6 mb-3">
+                  <label for="duracion">Duración (Ciclos):</label>
+                  <input [(ngModel)]="carrera.duracion" type="number" min="1" max="10" class="form-control" id="duracion" formControlName="duracion" placeholder="Numero de ciclos">
+                </div>
+              </div>
+              <br>
+          
+            </form>
+        </div>
+        </mat-card>
+    <p-footer style="align-items: center;">
+        <button type="button" pButton icon="pi pi-check" (click)="updateCarrera()" label="Editar" class="ui-button-secondary"></button>            
+        <button type="button" pButton icon="pi pi-times" (click)="editar=false" label="Cancelar" class="ui-button-secondary"></button>
+    </p-footer>
+</p-dialog>
+
+<p-dialog header="Seleccionar docente" [(visible)]="coordinador" [modal]="true" [style]="{width: '50vw', height: '40vw'}"
+[maximizable]="false" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <mat-card>
+      <p-table #dt id="tdocentes"
+            dataKey="idDocente"
+            [value]="docentes"
+            [paginator]="true"
+            [rows]="10"
+            [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10,25,50]"
+            [paginator]="true"
+            styleClass="p-datatable-customers p-datatable-gridlines"
+            [globalFilterFields]="['cedula','primer_nombre']"
+            >
+
+            <ng-template pTemplate="caption">
+                <div class="p-grid">
+                    <div class="p-col" style="text-align: left;">
+                        <p>Lista de Docentes</p>
+                    </div>
+                    <div class="p-col" style="text-align: right">
+                        <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                        <input type="text" pInputText size="50" placeholder="Busqueda: ingrese el numero de cédula"
+                            (input)="dt.filterGlobal($any($event.target).value, 'contains')" style="width:auto">
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+
+                <tr>
+                    
+                    <th>Titulo</th>
+                    <th>Area</th>
+                    <th>Carrera</th>
+                    <th>Nombre</th>
+                    <th>Cedula</th>
+                    <th style="width: 100px;">Acciones</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-doc>
+                <tr *ngIf="doc.carrera.idCarrera==carrera.idCarrera && doc.coordinador!=true">
+                  
+                  <td>{{doc.titulo}}</td>
+                  <td>{{doc.area}}</td>
+                  <td>{{doc.carrera.nombre}}</td>
+                  <td>{{doc.persona.primerNombre}} {{doc.persona.segundoNombre}} {{doc.persona.primerApellido}} {{doc.persona.segundoApellido}} </td>
+                  <td >{{doc.persona.cedula}}</td>
+                  <td>
+                      <a class="edit" title="Edit" data-toggle="tooltip" (click)="seleccionarDocente(doc)"><i class="material-icons">&#xE254;</i></a>
+                  </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td >No hay datos.</td>
+                </tr>
+            </ng-template>
+
+        </p-table>
+    </mat-card>
+    <p-footer>
+
+    </p-footer>
+</p-dialog>

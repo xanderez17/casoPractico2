@@ -1,0 +1,206 @@
+<p-toast></p-toast>
+<section class="vh-100" style="padding: 55px;">
+  <mat-card>
+    <mat-card-title style="background-color:#1d3557; color:white; padding: 33px; border-radius: 5px">
+      Tutores academicos
+    </mat-card-title>
+    <mat-card-content>
+      <button pButton pRipple type="button" label="Generar nueva designacion" (click)="generarDesignacion()"
+              class="p-button-rounded"></button>
+    </mat-card-content>
+    <form>
+      <br>
+      <h1>Lista de tutores academicos existentes</h1>
+      <p-table [value]="dataTutores"
+               [columns]="columnasTutoresA"
+               [paginator]="true"
+               [rows]="3"
+               [autoLayout]="true"
+               [(selection)]="dataRowTutor"
+               (onRowSelect)="onRowSelectTutor($event)"
+               (onRowUnselect)="onRowUnSelectTutor($event)"
+               [scrollable]="true"
+               selectionMode="single">
+        <ng-template pTemplate="header">
+          <tr>
+            <th *ngFor="let columna of columnasTutoresA">
+              {{columna.header}}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-dataTutores>
+          <tr [pSelectableRow]="dataTutores">
+            <td *ngFor="let col of columnasTutoresA">
+              <div [ngSwitch]="col.field">
+                  <span *ngSwitchCase="'eliminarta'">
+                      <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
+                              (click)="eliminarTutor()"></button>
+                  </span>
+                <span *ngSwitchCase="'doc_asignacion'">
+                      <button pButton pRipple type="button" icon="pi pi-bookmark"
+                              class="p-button-rounded p-button-secondary" (click)="checkForMIMEType()">
+                      </button>
+                  </span>
+                <span *ngSwitchDefault>{{dataTutores[col.field]}}</span>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+    </form>
+  </mat-card>
+</section>
+<p-dialog
+  [(visible)]="dialogoAsignar"
+  [style]="{width:'50vw'}"
+  [draggable]="false"
+  [baseZIndex]="10000"
+  [modal]="true"
+  styleClass="p-fluid"
+>
+  <ng-template pTemplate="content">
+    <p-panel>
+      <ng-template pTemplate="header">
+        <h2>Asignacion de tutor academico</h2>
+      </ng-template>
+      <ng-template pTemplate="content">
+        <p>Designe el tutor academico de la lista de docentes: </p>
+        <p-table [value]="dataDocentes"
+                 [columns]="conlumnasDocentes"
+                 [paginator]="true"
+                 [rows]="3"
+                 [autoLayout]="true"
+                 [(selection)]="dataRowDocente"
+                 (onRowSelect)="onRowSelectDocente($event)"
+                 (onRowUnselect)="onRowUnSelectDocente($event)"
+                 [scrollable]="true"
+                 selectionMode="single">
+          <ng-template pTemplate="header">
+            <tr>
+              <th *ngFor="let columna of conlumnasDocentes">
+                {{columna.header}}
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-dataDocentes>
+            <tr [pSelectableRow]="dataDocentes">
+              <td *ngFor="let col of conlumnasDocentes">
+                <div [ngSwitch]="col.field">
+                  <span *ngSwitchCase="'designarC'">
+                    <button type="button" class="btn btn-primary" (click)="designarDocente()">Asignar</button>
+                  </span>
+                  <span *ngSwitchDefault>{{dataDocentes[col.field]}}</span>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </ng-template>
+    </p-panel>
+  </ng-template>
+</p-dialog>
+<p-dialog [(visible)]="dialogoPasos"
+          [style]="{width:'50vw'}"
+          [draggable]="false"
+          [baseZIndex]="10000"
+          [modal]="true"
+          styleClass="p-fluid">
+  <ng-template pTemplate="header">
+    <h2>Verificacion de datos seleccionados</h2>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <h2>Datos recoletados: </h2>
+    <p-accordion>
+      <p-accordionTab header="Informacion de alumno">
+        <p-panel header="Alumno">
+          <ng-template pTemplate="content">
+            <div mat-row="">
+              <h3>Nombres:  {{ObjetoAlumno['nombres']}} {{ObjetoAlumno['apellidos']}}</h3>
+              <h3>Carrera: {{ObjetoAlumno['carrera']}}</h3>
+              <h3>Empresa: {{ObjetoAlumno['nombre_empresa']}}</h3>
+            </div>
+          </ng-template>
+        </p-panel>
+      </p-accordionTab>
+      <p-accordionTab header="Informacion de docente">
+        <p-panel header="Docente">
+          <ng-template pTemplate="content">
+            <div mat-row="">
+              <h3>
+                Nombres:  {{ObjetoDocente['primer_nombre']}} {{ObjetoAlumno['segundo_nombre']}} {{ObjetoDocente['primer_apellido']}} {{ObjetoAlumno['segundo_apellido']}}</h3>
+              <h3>Titulo: {{ObjetoDocente['titulo']}} </h3>
+            </div>
+          </ng-template>
+        </p-panel>
+      </p-accordionTab>
+
+      <p-accordionTab header="Documentos">
+        <p-panel header="Envio de documento">
+          <ng-template pTemplate="content">
+            <div mat-row="">
+              <h3>Ingrese el documento firmado que se genero: </h3>
+              <p-fileUpload
+                [customUpload]="true"
+                [showCancelButton]="false"
+                [multiple]="false"
+                (uploadHandler)="onFileSelected($event)"
+                chooseLabel="Seleccionar anexo"
+                uploadLabel="Cargar anexo"
+                invalidFileTypeMessageSummary="Archivo no valido"
+                invalidFileSizeMessageDetail="Solo se acepta archivos con extensiones .doc - docx."
+              >
+              </p-fileUpload>
+            </div>
+          </ng-template>
+        </p-panel>
+      </p-accordionTab>
+    </p-accordion>
+    <button pButton pRipple type="button" label="Terminar designacion" (click)="crearTutorAcademico()"></button>
+  </ng-template>
+</p-dialog>
+<p-dialog [(visible)]="dialogoAlumnos"
+          [style]="{width:'50vw'}"
+          [draggable]="false"
+          [baseZIndex]="10000"
+          [modal]="true"
+          styleClass="p-fluid"
+>
+  <form>
+    <h2>Ingrese cedula: </h2>
+    <input class="form-control mr-sm-2" type="search" placeholder="Buscar alumno" aria-label="Search">
+    <br>
+    <p-table [value]="dataAlumnos"
+             [columns]="columnasEstudiantes"
+             [paginator]="true"
+             [rows]="3"
+             [autoLayout]="true"
+             [(selection)]="dataRowAlumno"
+             (onRowSelect)="onRowSelectAlumno($event)"
+             (onRowUnselect)="onRowUnSelectAlumno($event)"
+             [scrollable]="true"
+             selectionMode="single">
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let columna of columnasEstudiantes">
+            {{columna.header}}
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-dataAlumnos>
+        <tr [pSelectableRow]="dataAlumnos">
+          <td *ngFor="let col of columnasEstudiantes">
+            <div [ngSwitch]="col.field">
+              <span *ngSwitchCase="'fecha_nac'">{{dataAlumnos[col.field]}}</span>
+              <span *ngSwitchCase="'aginarta'">
+                    <button type="button" class="btn btn-primary" (click)="asignarTutor()">Designar</button>
+                  </span>
+              <span *ngSwitchDefault>{{dataAlumnos[col.field]}}</span>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </form>
+
+</p-dialog>
