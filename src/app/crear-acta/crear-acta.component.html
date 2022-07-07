@@ -11,12 +11,18 @@
                 <div class="form-row">
                     <div class="form-group col-md-9">
                         <label for="lugar">Lugar de la reunión:</label>
-                        <input type="text" class="form-control" id="lugar"  formControlName="lugar" placeholder="Ingrese el lugar en donde se llevara acabo la reunión" >
+                        <input type="text" class="form-control" id="lugar"  formControlName="lugar" placeholder="Ingrese el lugar en donde se llevara acabo la reunión" onkeydown="return /[a-z, ]/i.test(event.key)">
+                        <div *ngIf="formActa.get('lugar').errors && formActa.get('lugar').dirty || formActa.controls['lugar'].touched">
+                          <p-message *ngIf="formActa.get('lugar').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
+                        </div>
                             
                     </div>
                     <div class="form-group col-md-3">
                         <label for="fecha">Fecha</label>
-                        <input type="date" class="form-control"  id="fecha" formControlName="fecha" [(ngModel)]="actareunion.fechaEmision"  >
+                        <input type="date" class="form-control"  id="fecha" formControlName="fecha" [(ngModel)]="actareunion.fechaEmision" >
+                        <div *ngIf="formActa.get('fecha').errors && formActa.get('fecha').dirty || formActa.controls['fecha'].touched">
+                          <p-message *ngIf="formActa.get('fecha').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
+                        </div>
     
                     </div>
                    
@@ -143,11 +149,17 @@
                         <label for="hinicio">Horario de entrada:</label>
                         
                         <input type="text" class="form-control"  id="hinicio"  formControlName="hinicio" placeholder="Ingrese la hora de entrada">
+                        <div *ngIf="formActa.get('hinicio').errors && formActa.get('hinicio').dirty || formActa.controls['hinicio'].touched">
+                          <p-message *ngIf="formActa.get('hinicio').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
+                        </div>
                         
                     </div>
                     <div class="form-group col-md-6">
                         <label for="hfinal">Horario de salida:</label>
                         <input type="text" class="form-control"  id="hfinal"  formControlName="hfinal" placeholder="Ingrese la hora de la salida">
+                        <div *ngIf="formActa.get('hfinal').errors && formActa.get('lugar').dirty || formActa.controls['hfinal'].touched">
+                          <p-message *ngIf="formActa.get('hfinal').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
+                        </div>
                     </div>
 
                 </div>
@@ -169,6 +181,9 @@
                         <label for="horas">Horas a cumplir:</label>
                         
                         <input type="text" class="form-control"  id="horas"  formControlName="horas" placeholder="Ingrese las horas de las practicas pre-profesionales">
+                        <div *ngIf="formActa.get('horas').errors && formActa.get('horas').dirty || formActa.controls['horas'].touched">
+                          <p-message *ngIf="formActa.get('horas').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
+                        </div>
                         
                     </div>
                     <div class="form-group col-md-6">

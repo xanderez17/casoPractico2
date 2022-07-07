@@ -8,28 +8,43 @@
       <div class="form-row">
         <div class="form-group col-md-3">
           <label for="cedula">Cédula:</label>
-          <input  type="text" class="form-control" id="cedula"
+          <input  type="number" class="form-control" id="cedula"
                   formControlName="cedula" placeholder="Cédula">
+            <div *ngIf="formEmpleado.get('cedula').errors && formEmpleado.get('cedula').dirty || formEmpleado.controls['cedula'].touched">
+              <p-message *ngIf="formEmpleado.get('cedula').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
+            </div>
         </div>
         <div class="form-group col-md-3">
           <label for="primernombre">Primer Nombre:</label>
           <input  type="text" class="form-control" id="primerNombre"
-                  formControlName="primerNombre" placeholder="Primer Nombre">
+                  formControlName="primerNombre" placeholder="Primer Nombre" onkeydown="return /[a-z, ]/i.test(event.key)">
+              <div *ngIf="formEmpleado.get('primerNombre').errors && formEmpleado.get('primerNombre').dirty || formEmpleado.controls['primerNombre'].touched">
+                <p-message *ngIf="formEmpleado.get('primerNombre').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
+              </div>
         </div>
         <div class="form-group col-md-3">
           <label for="segundoNombre">Segundo Nombre:</label>
           <input  type="text" class="form-control" id="segundoNombre"
-                  formControlName="segundoNombre" placeholder="Segundo Nombre">
+                  formControlName="segundoNombre" placeholder="Segundo Nombre" onkeydown="return /[a-z, ]/i.test(event.key)">
+            <div *ngIf="formEmpleado.get('segundoNombre').errors && formEmpleado.get('segundoNombre').dirty || formEmpleado.controls['segundoNombre'].touched">
+              <p-message *ngIf="formEmpleado.get('segundoNombre').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
+            </div>
         </div>
         <div class="form-group col-md-3">
           <label for="primerApellido">Primer Apellido:</label>
           <input type="text" class="form-control" id="primerApellido"
-                 formControlName="primerApellido" placeholder="Primer Apellido">
+                 formControlName="primerApellido" placeholder="Primer Apellido" onkeydown="return /[a-z, ]/i.test(event.key)">
+                 <div *ngIf="formEmpleado.get('primerApellido').errors && formEmpleado.get('primerApellido').dirty || formEmpleado.controls['primerApellido'].touched">
+                   <p-message *ngIf="formEmpleado.get('primerApellido').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
+                 </div>
         </div>
         <div class="form-group col-md-3">
           <label for="segundoApellido">Segundo Apellido:</label>
           <input  type="text" class="form-control" id="segundoApellido"
-                  formControlName="segundoApellido" placeholder="Segundo Apellido">
+                  formControlName="segundoApellido" placeholder="Segundo Apellido" onkeydown="return /[a-z, ]/i.test(event.key)">
+                  <div *ngIf="formEmpleado.get('segundoApellido').errors && formEmpleado.get('segundoApellido').dirty || formEmpleado.controls['segundoApellido'].touched">
+                    <p-message *ngIf="formEmpleado.get('segundoApellido').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
+                  </div>
         </div>
         <div class="form-group col-md-3">
           <label for="fechaNac">Fecha de Nacimiento</label>
@@ -39,16 +54,22 @@
         <div class="form-group col-md-3">
           <label for="direccion">Dirección:</label>
           <input type="text" class="form-control" id="direccion" formControlName="direccion"
-                 placeholder="Ingrese la dirección">
+                 placeholder="Ingrese la dirección" onkeydown="return /[a-z, ]/i.test(event.key)">
+                 <div *ngIf="formEmpleado.get('direccion').errors && formEmpleado.get('direccion').dirty || formEmpleado.controls['direccion'].touched">
+                   <p-message *ngIf="formEmpleado.get('direccion').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
+                 </div>
         </div>
         <div class="form-group col-md-3">
           <label for="telefono">Telefono:</label>
-          <input type="text" class="form-control" id="telefono" formControlName="telefono"
-                 placeholder="123456789">
+          <input type="number" class="form-control" id="telefono" formControlName="telefono"
+                 placeholder="123456789" >
+            <div *ngIf="formEmpleado.get('telefono').errors && formEmpleado.get('telefono').dirty || formEmpleado.controls['telefono'].touched">
+              <p-message *ngIf="formEmpleado.get('telefono').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
+            </div>
         </div>
         <div class="form-group col-md-3">
           <label for="correo">Correo:</label>
-          <input type="text" class="form-control" id="correo" formControlName="correo"
+          <input type="email" ngModel email="true" class="form-control" id="correo" formControlName="correo"
                  placeholder="Ingrese el correo eléctronico">
         </div>
         <div class="form-group col-md-3">
@@ -59,7 +80,10 @@
         <div class="form-group col-md-3">
           <label for="abrev_titulo">Título:</label>
           <input  type="text" class="form-control" id="abrev_titulo"
-                  formControlName="abrev_titulo" placeholder="Abreviatura Titulo">
+                  formControlName="abrev_titulo" placeholder="Abreviatura Titulo" onkeydown="return /[a-z, ]/i.test(event.key)">
+                  <div *ngIf="formEmpleado.get('abrev_titulo').errors && formEmpleado.get('abrev_titulo').dirty || formEmpleado.controls['abrev_titulo'].touched">
+                    <p-message *ngIf="formEmpleado.get('abrev_titulo').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
+                  </div>
         </div>
       </div>
       <br>

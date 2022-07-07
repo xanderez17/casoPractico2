@@ -2,34 +2,44 @@
   <mat-card-title>
     CREAR CARRERA
   </mat-card-title>
-
   <div class="container-fluid">
-    <form [formGroup]="formCarrera">
+    <form [formGroup]="formCarrera" (ngSubmit)="crearCarrera()">
       <div class="row">
         <div class="col col-md-6 mb-3">
           <label for="nombre">Carrera:</label>
-          <input [(ngModel)]="carrera.nombre" type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Nombre">
+          <input  [(ngModel)]="carrera.nombre" type="text" class="form-control" id="nombre" formControlName="nombre" placeholder="Nombre" onkeydown="return /[a-z, ]/i.test(event.key)">
+          <div *ngIf="formCarrera.get('nombre').errors && formCarrera.get('nombre').dirty || formCarrera.controls['nombre'].touched">
+            <p-message *ngIf="formCarrera.get('nombre').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
+          </div>
         </div>
         <div class="col col-md-6 mb-3">
           <label for="abreviatura">Abreviatura:</label>
           <input [(ngModel)]="carrera.abreviatura" type="text" class="form-control" id="abreviatura" formControlName="abreviatura"
-                 placeholder="Abreviatura">
+                 placeholder="Abreviatura" onkeydown="return /[a-z, ]/i.test(event.key)">
+            <div *ngIf="formCarrera.get('abreviatura').errors && formCarrera.get('abreviatura').dirty || formCarrera.controls['abreviatura'].touched">
+              <p-message *ngIf="formCarrera.get('abreviatura').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
+            </div>
         </div>
         <div class="col col-md-6 mb-3">
           <label for="modalidad">Modalidad:</label>
-          <input [(ngModel)]="carrera.modalidad" type="text" class="form-control" id="modalidad" formControlName="modalidad" placeholder="Modalidad">
+          <input [(ngModel)]="carrera.modalidad" type="text" class="form-control" id="modalidad" formControlName="modalidad" placeholder="Modalidad" onkeydown="return /[a-z, ]/i.test(event.key)">
+          <div *ngIf="formCarrera.get('modalidad').errors && formCarrera.get('modalidad').dirty || formCarrera.controls['modalidad'].touched">
+            <p-message *ngIf="formCarrera.get('modalidad').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
+          </div>
         </div>
         <div class="col col-md-6 mb-3">
           <label for="duracion">Duración (Ciclos):</label>
           <input [(ngModel)]="carrera.duracion" type="number" min="1" max="10" class="form-control" id="duracion" formControlName="duracion" placeholder="Numero de ciclos">
+          <div *ngIf="formCarrera.get('duracion').errors && formCarrera.get('duracion').dirty || formCarrera.controls['duracion'].touched">
+            <p-message *ngIf="formCarrera.get('duracion').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
+          </div>
         </div>
       </div>
       <br>
       <mat-card-actions>
-            <button (click)="crearCarrera()" mat-raised-button color="primary">Crear Carrera</button>
-            <button mat-raised-button color="warn">Regresar</button>
+            <button type="submit" mat-raised-button color="primary" >Crear Carrera</button>
+            
       </mat-card-actions>
     </form>
   </div>
-
 </mat-card>

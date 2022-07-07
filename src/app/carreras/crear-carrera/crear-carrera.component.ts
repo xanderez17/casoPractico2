@@ -21,16 +21,16 @@ export class CrearCarreraComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private carreraService: CarreraService
   ) {
-    this.formCarrera = this.formBuilder.group({
-      nombre: ['', Validators.required],
-      abreviatura: ['', Validators.required],
-      modalidad: ['', Validators.required],
-      duracion: ['', Validators.required]
-    });
+   
   }
 
   ngOnInit(): void {
-
+    this.formCarrera = this.formBuilder.group({
+      nombre: ['', [Validators.required]],
+      abreviatura: ['', [Validators.required]],
+      modalidad: ['', [Validators.required]],
+      duracion: ['', Validators.required]
+    });
 
   }
 
@@ -65,4 +65,7 @@ export class CrearCarreraComponent implements OnInit {
     this.carrera.idCarrera = null;
   }
 
+  get f(){
+    return this.formCarrera.controls;
+  }
 }

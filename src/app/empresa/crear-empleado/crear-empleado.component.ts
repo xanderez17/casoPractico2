@@ -66,13 +66,13 @@ export class CrearEmpleadoComponent implements OnInit {
   verficardATOS() {
     if (this.formEmpleado.valid) {
       let objetoPersona: any = {
-        cedula: this.formEmpleado.value.cedula,
+        cedula:"0"+ this.formEmpleado.value.cedula,
         primerNombre: this.formEmpleado.value.primerNombre,
         segundoNombre: this.formEmpleado.value.segundoNombre,
         primerApellido: this.formEmpleado.value.primerApellido,
         segundoApellido: this.formEmpleado.value.segundoApellido,
         fechaNac: this.formEmpleado.value.fechaNac,
-        telefono: this.formEmpleado.value.telefono,
+        telefono: "0"+ this.formEmpleado.value.telefono,
         direccion: this.formEmpleado.value.direccion,
         correo: this.formEmpleado.value.correo,
       }
