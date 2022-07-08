@@ -28,7 +28,7 @@ export class RegistroEmpresasComponent implements OnInit {
 
   rempleado: boolean;
   ddopcionesCargo: any = ['Gerente'];
-  
+  cedulacorrecta :boolean = false;
 
   constructor(
     private router: Router,
@@ -119,30 +119,43 @@ export class RegistroEmpresasComponent implements OnInit {
     if (this.formEmpleado.valid) {
       console.log("FORM VALIDO")
   
-
-      this.personaService.crearPersona(this.persona).then(value => {
-        console.log(this.persona)
-        console.log(this.empleado);
-        this.empleado.cargo="gerente"     
-        this.empleadoService.crearEmpleado(this.persona.cedula, this.empresaData[0].idEmpresa, this.empleado).then(value1 => {
-          this.mostarMensajeCorrecto('El empleado fue registrado exitosamente')
-          this.formEmpleado.reset();
-          this.rempleado = false
-        })
-          .catch((err) => {
-            this.personaService.getPersonasByCedula(this.persona.cedula).subscribe(value1 => {
-              var personael = value1 ['data']
-              this.personaService.deletePersona(personael[0].idPersona).then(value2 => {
-                this.mostrarMensajeError('SE CREO PERSONA PERO COMO NO SE CREO PERSONAL SE ELIMINO')
-              })
+      this.validarCedula("0"+this.formEmpleado.value.cedula);
+      if(this.cedulacorrecta){ 
+        if (this.validarEmail(this.formEmpleado.value.correo)) { 
+          this.persona.cedula = "0"+ this.formEmpleado.value.cedula;
+          this.persona.telefono = "0"+this.formEmpleado.value.telefono;
+          this.empresa.ruc = "0"+ this.formEmpresa.value.ruc;
+          this.personaService.crearPersona(this.persona).then(value => {
+            console.log(this.persona)
+            console.log(this.empleado);
+            this.empleado.cargo="gerente"     
+            this.empleadoService.crearEmpleado(this.persona.cedula, this.empresaData[0].idEmpresa, this.empleado).then(value1 => {
+              this.mostarMensajeCorrecto('El empleado fue registrado exitosamente')
+              this.formEmpleado.reset();
+              this.rempleado = false
             })
+              .catch((err) => {
+                this.personaService.getPersonasByCedula(this.persona.cedula).subscribe(value1 => {
+                  var personael = value1 ['data']
+                  this.personaService.deletePersona(personael[0].idPersona).then(value2 => {
+                    this.mostrarMensajeError('SE CREO PERSONA PERO COMO NO SE CREO PERSONAL SE ELIMINO')
+                  })
+                })
+              })
+            console.log(value['mensaje'])
+          }).catch((err) => {
+            console.log('ERROR AL CREAR PERSONA', err)
+            this.mostrarMensajeError('ERROR AL CREAR PERSONA')
           })
-        console.log(value['mensaje'])
-      }).catch((err) => {
-        console.log('ERROR AL CREAR PERSONA', err)
-        this.mostrarMensajeError('ERROR AL CREAR PERSONA')
-      })
-
+    
+        }else{
+          swal.fire('Correo incorrecto','Ingrese un correo electrónico valido','error');
+          return;
+        }
+      }else{
+        swal.fire('Cedula incorrecta','Ingrese un numero de cedula valida','error');
+        return;
+      }
     } else {
       console.log("FORM INVALIDO");
       
@@ -161,6 +174,16 @@ export class RegistroEmpresasComponent implements OnInit {
     });
   }
 
+  validarEmail(email: string):boolean {
+    let mailValido = false;
+      'use strict';
+      var EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+      if (email.match(EMAIL_REGEX)){
+        mailValido = true;
+      }
+    return mailValido;
+  }
+
 
   mostarMensajeCorrecto(mensaje: String): void {
     this._messageService.add({
@@ -171,4 +194,34 @@ export class RegistroEmpresasComponent implements OnInit {
     });
   }
 
+  validarCedula(cedula: String) {
+    let cedulaCorrecta = false;
+    if (cedula.length == 10) {
+      let tercerDigito = parseInt(cedula.substring(2, 3));
+      if (tercerDigito < 6) {
+        // El ultimo digito se lo considera dígito verificador
+        let coefValCedula = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+        let verificador = parseInt(cedula.substring(9, 10));
+        let suma: number = 0;
+        let digito: number = 0;
+        for (let i = 0; i < (cedula.length - 1); i++) {
+          digito = parseInt(cedula.substring(i, i + 1)) * coefValCedula[i];
+          suma += ((parseInt((digito % 10) + '') + (parseInt((digito / 10) + ''))));
+        }
+        suma = Math.round(suma);
+        if ((Math.round(suma % 10) == 0) && (Math.round(suma % 10) == verificador)) {
+          cedulaCorrecta = true;
+        } else if ((10 - (Math.round(suma % 10))) == verificador) {
+          cedulaCorrecta = true;
+        } else {
+          cedulaCorrecta = false;
+        }
+      } else {
+        cedulaCorrecta = false;
+      }
+    } else {
+      cedulaCorrecta = false;
+    }
+    this.cedulacorrecta = cedulaCorrecta;
+  }
 }
