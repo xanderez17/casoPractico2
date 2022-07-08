@@ -24,6 +24,7 @@ export class RegistroDocentesComponent implements OnInit {
   carreras : Carrera[];
   carrera :Carrera;
 
+  cedulacorrecta:boolean =false;
   banpersona :boolean =true;
   bantitulo:boolean =false;
 
@@ -100,19 +101,35 @@ export class RegistroDocentesComponent implements OnInit {
       )
       return;
     }
-    
-    this.personaservice.createPersona(this.persona).subscribe(
-      Response => {
-        this.banpersona=false;
-        this.bantitulo=true;
-        this.BuscarPersonaCedula();
-        swal.fire(
-          'Datos personales',
-          `Persona con CI: ${this.persona.cedula} creada con exito!`,
-          'success'
+
+    this.validarCedula("0"+this.formPersona.value.cedula);
+    if(this.cedulacorrecta){
+      
+      if (this.validarEmail(this.formPersona.value.correo)) {
+           
+        this.persona.cedula = "0"+ this.formPersona.value.cedula;
+        this.persona.telefono = "0"+this.formPersona.value.telefono;
+        this.personaservice.createPersona(this.persona).subscribe(
+          Response => {
+            this.banpersona=false;
+            this.bantitulo=true;
+            this.BuscarPersonaCedula();
+            swal.fire(
+              'Datos personales',
+              `Persona con CI: ${"0"+this.persona.cedula} creada con exito!`,
+              'success'
+            )
+        }
         )
+      }else{
+        swal.fire('Correo incorrecto','Ingrese un correo electronico valido','error');
+        return;
+      }
+    }else{
+      swal.fire('Cedula incorrecta','Ingrese un numero de cedula valida','error');
+      return;
     }
-    )
+    
   }
 
   public BuscarPersonaCedula(): void {
@@ -152,6 +169,50 @@ export class RegistroDocentesComponent implements OnInit {
     this.carreraservice.getCarreras().subscribe(value => {
       this.carreras=value['data'];
     })
+  }
+
+
+  validarEmail(email: string):boolean {
+    let mailValido = false;
+      'use strict';
+
+      var EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+      if (email.match(EMAIL_REGEX)){
+        mailValido = true;
+      }
+    return mailValido;
+  }
+
+  validarCedula(cedula: String) {
+    let cedulaCorrecta = false;
+    if (cedula.length == 10) {
+      let tercerDigito = parseInt(cedula.substring(2, 3));
+      if (tercerDigito < 6) {
+        // El ultimo digito se lo considera dígito verificador
+        let coefValCedula = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+        let verificador = parseInt(cedula.substring(9, 10));
+        let suma: number = 0;
+        let digito: number = 0;
+        for (let i = 0; i < (cedula.length - 1); i++) {
+          digito = parseInt(cedula.substring(i, i + 1)) * coefValCedula[i];
+          suma += ((parseInt((digito % 10) + '') + (parseInt((digito / 10) + ''))));
+        }
+        suma = Math.round(suma);
+        if ((Math.round(suma % 10) == 0) && (Math.round(suma % 10) == verificador)) {
+          cedulaCorrecta = true;
+        } else if ((10 - (Math.round(suma % 10))) == verificador) {
+          cedulaCorrecta = true;
+        } else {
+          cedulaCorrecta = false;
+        }
+      } else {
+        cedulaCorrecta = false;
+      }
+    } else {
+      cedulaCorrecta = false;
+    }
+    this.cedulacorrecta = cedulaCorrecta;
   }
 
 

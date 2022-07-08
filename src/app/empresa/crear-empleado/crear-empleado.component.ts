@@ -7,6 +7,7 @@ import {Persona} from "../../models/Persona";
 import {TokenService} from "../../services/token.service";
 import {PersonaService} from "../../services/persona.service";
 import {MessageService} from "primeng/api";
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-crear-empleado',
@@ -18,7 +19,7 @@ export class CrearEmpleadoComponent implements OnInit {
   empleado: any;
   formEmpleado: FormGroup;
   empresaData: any;
-
+  cedulacorrecta: boolean =false;
   persona: Persona;
 
   ddopcionesCargo: any = ['Gerente', 'Secretario', 'Empleado', 'Desarrollador'];
@@ -58,12 +59,13 @@ export class CrearEmpleadoComponent implements OnInit {
       this.empresaData = value['data'];
       console.log('empresa', this.empresaData[0].idEmpresa)
     }).catch((err) => {
-      console.log('ERRO')
+      console.log('ERROR')
     })
   }
 
 
   verficardATOS() {
+  
     if (this.formEmpleado.valid) {
       let objetoPersona: any = {
         cedula:"0"+ this.formEmpleado.value.cedula,
@@ -83,31 +85,83 @@ export class CrearEmpleadoComponent implements OnInit {
 
       console.log(objetoEmpleado)
       console.log(objetoPersona)
-
-      this.personaService.crearPersona(objetoPersona).then(value => {
-        this.empleadoService.crearEmpleado(objetoPersona.cedula, this.empresaData[0].idEmpresa, objetoEmpleado).then(value1 => {
-          this.mostarMensajeCorrecto('El empleado fue registrado exitosamente')
-          this.formEmpleado.reset();
-        })
-          .catch((err) => {
-            this.personaService.getPersonasByCedula(objetoPersona.cedula).subscribe(value1 => {
-              this.personaService.deletePersona(value1[0].idPersona).then(value2 => {
-                this.mostrarMensajeError('SE CREO PERSONA PERO COMO NO SE CREO PERSONAL SE ELIMINO')
-              })
+      this.validarCedula("0"+ this.formEmpleado.value.cedula);
+      if(this.cedulacorrecta==true){
+        if (this.validarEmail(this.formEmpleado.value.correo)) {
+          this.personaService.crearPersona(objetoPersona).then(value => {
+            this.empleadoService.crearEmpleado(objetoPersona.cedula, this.empresaData[0].idEmpresa, objetoEmpleado).then(value1 => {
+              this.mostarMensajeCorrecto('El empleado fue registrado exitosamente')
+              this.formEmpleado.reset();
             })
+              .catch((err) => {
+                this.personaService.getPersonasByCedula(objetoPersona.cedula).subscribe(value1 => {
+                  this.personaService.deletePersona(value1[0].idPersona).then(value2 => {
+                    this.mostrarMensajeError('SE CREO PERSONA PERO COMO NO SE CREO PERSONAL SE ELIMINO')
+                  })
+                })
+              })
+            console.log(value['mensaje'])
+          }).catch((err) => {
+            console.log('ERROR AL CREAR PERSONA', err)
+            this.mostrarMensajeError('ERROR AL CREAR PERSONA')
           })
-        console.log(value['mensaje'])
-      }).catch((err) => {
-        console.log('ERROR AL CREAR PERSONA', err)
-        this.mostrarMensajeError('ERROR AL CREAR PERSONA')
-      })
-
+        }else{
+          Swal.fire('Correo incorrecto','Ingrese un correo electronico valido','error');
+          return;
+        }
+      }else{
+        Swal.fire('Cedula incorrecta','Ingrese un numero de cedula valida','error');
+        return;
+      }
     } else {
-      this.mostrarMensajeError('NO ESTAN INGRESADOS TODOS LOS DATOS, VERIFICAR!')
+      this.mostrarMensajeError('NO ESTAN INGRESADOS TODOS LOS DATOS, VERIFICAR!');
+      return;
     }
-
   }
 
+
+  validarEmail(email: string):boolean {
+    let mailValido = false;
+      'use strict';
+
+      var EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+      if (email.match(EMAIL_REGEX)){
+        mailValido = true;
+      }
+    return mailValido;
+  }
+
+  validarCedula(cedula: String) {
+    let cedulaCorrecta = false;
+    if (cedula.length == 10) {
+      let tercerDigito = parseInt(cedula.substring(2, 3));
+      if (tercerDigito < 6) {
+        // El ultimo digito se lo considera dígito verificador
+        let coefValCedula = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+        let verificador = parseInt(cedula.substring(9, 10));
+        let suma: number = 0;
+        let digito: number = 0;
+        for (let i = 0; i < (cedula.length - 1); i++) {
+          digito = parseInt(cedula.substring(i, i + 1)) * coefValCedula[i];
+          suma += ((parseInt((digito % 10) + '') + (parseInt((digito / 10) + ''))));
+        }
+        suma = Math.round(suma);
+        if ((Math.round(suma % 10) == 0) && (Math.round(suma % 10) == verificador)) {
+          cedulaCorrecta = true;
+        } else if ((10 - (Math.round(suma % 10))) == verificador) {
+          cedulaCorrecta = true;
+        } else {
+          cedulaCorrecta = false;
+        }
+      } else {
+        cedulaCorrecta = false;
+      }
+    } else {
+      cedulaCorrecta = false;
+    }
+    this.cedulacorrecta = cedulaCorrecta;
+  }
 
 
   //metodos para mensajes en pantalla

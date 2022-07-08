@@ -12,6 +12,7 @@
                   formControlName="cedula" placeholder="Cédula">
             <div *ngIf="formEmpleado.get('cedula').errors && formEmpleado.get('cedula').dirty || formEmpleado.controls['cedula'].touched">
               <p-message *ngIf="formEmpleado.get('cedula').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
+              
             </div>
         </div>
         <div class="form-group col-md-3">
@@ -69,7 +70,7 @@
         </div>
         <div class="form-group col-md-3">
           <label for="correo">Correo:</label>
-          <input type="email" ngModel email="true" class="form-control" id="correo" formControlName="correo"
+          <input type="text" class="form-control" id="correo" formControlName="correo"
                  placeholder="Ingrese el correo eléctronico">
         </div>
         <div class="form-group col-md-3">

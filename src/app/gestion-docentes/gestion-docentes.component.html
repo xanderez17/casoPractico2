@@ -81,18 +81,18 @@
                 <div class="form-row">
                 <div class="form-group col-md-3">
                     <label for="pnombre">Primer nombre</label>
-                    <input type="text" class="form-control" [(ngModel)]="persona.primerNombre" id="pnombre"  formControlName="pnombre" placeholder="Ingrese el primer nombre">
+                    <input onkeydown="return /[a-z, ]/i.test(event.key)" type="text" class="form-control" [(ngModel)]="persona.primerNombre" id="pnombre"  formControlName="pnombre" placeholder="Ingrese el primer nombre">
                 </div>
                 <div class="form-group col-md-3">
                     <label for="snombre">Segundo nombre</label>
-                    <input type="text" class="form-control" [(ngModel)]="persona.segundoNombre" id="snombre"  formControlName="snombre" placeholder="Ingrese el segundo nombre">
+                    <input onkeydown="return /[a-z, ]/i.test(event.key)" type="text" class="form-control" [(ngModel)]="persona.segundoNombre" id="snombre"  formControlName="snombre" placeholder="Ingrese el segundo nombre">
                 </div>
                 <div class="form-group col-md-3">
                     <label for="papellido">Primer apellido</label>
-                    <input type="text" class="form-control" id="papellido"  formControlName="papellido" [(ngModel)]="persona.primerApellido" placeholder="Ingrese el primer apellido">
+                    <input onkeydown="return /[a-z, ]/i.test(event.key)"  type="text" class="form-control" id="papellido"  formControlName="papellido" [(ngModel)]="persona.primerApellido" placeholder="Ingrese el primer apellido">
                 </div><div class="form-group col-md-3">
                     <label for="sapellido">Segundo apellido</label>
-                    <input type="text" class="form-control" id="sapellido"  formControlName="sapellido" [(ngModel)]="persona.segundoApellido" placeholder="Ingrese el segundo apellido">
+                    <input onkeydown="return /[a-z, ]/i.test(event.key)" type="text" class="form-control" id="sapellido"  formControlName="sapellido" [(ngModel)]="persona.segundoApellido" placeholder="Ingrese el segundo apellido">
                 </div>
                 </div><div class="form-row">
                 <div class="form-group col-md-9">
@@ -142,11 +142,11 @@
             <div class="form-row">
                 <div class="form-group col-md-4">
                 <label for="abrevtitulo">Abreviación del Titulo</label>
-                <input type="text" class="form-control" [(ngModel)]="docente.abrevTitulo" id="abrevtitulo"  formControlName="abrevtitulo" placeholder="Abreviación del titulo">
+                <input onkeydown="return /[a-z, ]/i.test(event.key)"  type="text" class="form-control" [(ngModel)]="docente.abrevTitulo" id="abrevtitulo"  formControlName="abrevtitulo" placeholder="Abreviación del titulo">
                 </div>
                 <div class="form-group col-md-8">
                 <label for="titulo">Titulo</label>
-                <input type="text" class="form-control" [(ngModel)]="docente.titulo" id="titulo"  formControlName="titulo" placeholder="Ingrese el titulo">
+                <input onkeydown="return /[a-z, ]/i.test(event.key)"  type="text" class="form-control" [(ngModel)]="docente.titulo" id="titulo"  formControlName="titulo" placeholder="Ingrese el titulo">
                 </div>
 
 
@@ -154,7 +154,7 @@
             <div class="form-row">
                 <div class="form-group col-md-6">
                 <label for="area">Area</label>
-                <input type="text" class="form-control" id="area" formControlName="area" [(ngModel)]="docente.area"  placeholder="Ingrese la area">
+                <input onkeydown="return /[a-z, ]/i.test(event.key)"  type="text" class="form-control" id="area" formControlName="area" [(ngModel)]="docente.area"  placeholder="Ingrese la area">
 
                 </div>
                 <div class="form-group col-md-6">

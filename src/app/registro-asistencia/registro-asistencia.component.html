@@ -50,7 +50,7 @@
 
                     <div class="form-group col-md-6">
                       <label>ESTUDIANTE:</label>
-                      <input type="text" class="form-control"
+                      <input onkeydown="return /[a-z, ]/i.test(event.key)"  type="text" class="form-control"
                              placeholder="{{lista.nombre_a|uppercase}} {{lista.apellido_a|uppercase}}" [disabled]="true">
                     </div>
 
@@ -71,7 +71,7 @@
 
                     <div class="form-group col-md-6">
                       <label>TUTOR EMPRESARIAL:</label>
-                      <input type="text" class="form-control" placeholder="{{lista.nombre_t|uppercase}}"
+                      <input onkeydown="return /[a-z, ]/i.test(event.key)"  type="text" class="form-control" placeholder="{{lista.nombre_t|uppercase}}"
                              [disabled]="true">
                     </div>
 
