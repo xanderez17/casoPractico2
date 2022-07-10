@@ -14,7 +14,6 @@ export class Visita {
 export class InformeVisita {
   idInformeVisita: number;
   asunto?: String;
-  actividades?: String;
   observaciones?: String;
   horaInicio?: String;
   horaFin?: String;

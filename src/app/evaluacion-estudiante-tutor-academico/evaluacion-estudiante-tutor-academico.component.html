@@ -54,7 +54,7 @@
   </div>
 </section>
 -----------------------------------------------
-<p-dialog [visible]="dialogoCrearEvaluacion" [style]="{width:'60vw'}" [draggable]="false" [baseZIndex]="10000"
+<p-dialog [(visible)]="dialogoCrearEvaluacion" [style]="{width:'60vw'}" [draggable]="false" [baseZIndex]="10000"
   [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <mat-card>
@@ -66,22 +66,24 @@
           <div class="form-row">
             <div class="form-group col-md-6">
               <label>CÉDULA:</label>
-              <input class="form-control" placeholder="{{alumno.persona.cedula |uppercase}}">
+              <input class="form-control" placeholder="{{alumno.persona.cedula |uppercase}}" disabled="true">
             </div>
             <div class="form-group col-md-6">
               <label for="horasPPP">ALUMNO:</label>
               <input class="form-control"
-                placeholder="{{alumno.persona.primerApellido |uppercase}} {{alumno.persona.segundoApellido |uppercase}} {{alumno.persona.primerNombre |uppercase}} {{alumno.persona.segundoNombre |uppercase}}">
+                placeholder="{{alumno.persona.primerApellido |uppercase}} {{alumno.persona.segundoApellido |uppercase}} {{alumno.persona.primerNombre |uppercase}} {{alumno.persona.segundoNombre |uppercase}}"
+                disabled="true">
             </div>
             <div class="form-group col-md-6">
               <label for="horasPPP">CARRERA:</label>
-              <input class="form-control" placeholder="{{alumno.carrera.nombre |uppercase}}">
+              <input class="form-control" placeholder="{{alumno.carrera.nombre |uppercase}}" disabled="true">
             </div>
           </div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label>CURSO:</label>
-              <input class="form-control" placeholder="{{alumno.ciclo |uppercase}} {{alumno.paralelo |uppercase}}">
+              <input class="form-control" placeholder="{{alumno.ciclo |uppercase}} {{alumno.paralelo |uppercase}}"
+                disabled="true">
             </div>
 
             <div class="form-group col-md-6">
@@ -152,7 +154,7 @@
           <div class="d-grid gap-2 col-6 mx-auto" style="background-color:#f9f9f7">
             <br>
             <label for="puntajeTotal">PUNTAJE TOTAL:</label>
-            <input type="text" placeholder="{{puntajeTotal}}" [disabled]="true">
+            <input type="text" placeholder="{{puntajeTotal}}" disabled="true">
             <br>
             <label>Número de horas: </label>
             <input type="number" class="form-control" id="numHoras" formControlName="numHoras"
