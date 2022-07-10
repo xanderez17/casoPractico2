@@ -64,13 +64,13 @@ export class RegistroVisitaComponent implements OnInit {
     });
 
     this.columnasTutor = [
-      { field: 'idtutor', header: 'Idtutor' },
-      { field: 'primer_nombre', header: 'Nombre del Tutor' },
-      { field: 'segundo_apellido', header: 'Apellido del TutoraA' },
-      { field: 'idalumno', header: 'IdAlumno' },
-      { field: 'primer_nombre_alumno', header: 'Nombre del Alumno' },
-      { field: 'segundo_apellido_alumno', header: 'Segundo Apellido' },
-      { field: 'size', header: 'Acciones' },
+      { field: 'idtutor', header: 'Cédula Tutor' },
+      { field: 'primer_nombre', header: 'Nombre TutorA' },
+      { field: 'segundo_apellido', header: 'Apellido TutorA' },
+      { field: 'idalumno', header: 'Cédula Alumno' },
+      { field: 'primer_nombre_alumno', header: 'Nombre Alumno' },
+      { field: 'segundo_apellido_alumno', header: 'Apellido Alumno' },
+      { field: 'size', header: 'Generar' },
     ];
     this.ngOnInitd();
   }
