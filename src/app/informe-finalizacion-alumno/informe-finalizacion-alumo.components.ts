@@ -169,6 +169,7 @@ export class InformeFinalAlumnoComponent implements OnInit {
 
     this.informeFinal.fechaEmision = null;
     this.informeFinal.docInformeFinal = docubas;
+    this.informeFinal.estado="NO APROBADO"
 
 
     try {
