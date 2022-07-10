@@ -11,7 +11,7 @@ mat-toolbar {
     border-radius: 0;
     padding: 10px;
     text-align:initial;
-    
+
   }
 
 
@@ -23,6 +23,11 @@ mat-toolbar {
     background: #1d3557;
     border-radius: 10px;
     border-right: 2px solid white; /*ESPACIO*/
+  }
+
+  .texto{
+    margin: auto;
+    text-align: center;
   }
 
   .logo{
@@ -47,7 +52,7 @@ mat-toolbar {
   }
 
   mat-sidenav-container{
-    
+
   height: calc(100vh - 65px);
   }
 
@@ -60,7 +65,7 @@ mat-toolbar {
     font-size: 1rem;
     color:white;
     background: #1177d1;
-    
+
   }
 
 .divimag{
@@ -81,8 +86,8 @@ mat-toolbar {
     color: white;
     border-radius: 0;
     box-shadow: none !important;
-    
-    
+
+
   }
 
   mat-panel-title {
@@ -91,12 +96,12 @@ mat-toolbar {
     padding: 0;
     margin-left: 6px;
     padding-left: 0px !important;
-    
+
   }
 
   mat-expansion-panel-header {
     padding-left: 10px !important;
-    
+
   }
 
   mat-expansion-panel:hover {
@@ -116,4 +121,3 @@ mat-toolbar {
   }
 
 
-  
