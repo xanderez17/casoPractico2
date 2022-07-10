@@ -12,7 +12,7 @@
             <div *ngIf="formEmpresa.get('ruc').errors && formEmpresa.get('ruc').dirty || formEmpresa.controls['ruc'].touched">
               <p-message *ngIf="formEmpresa.get('ruc').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
             </div>
-          
+
           </div>
           <div class="form-group col-md-3">
             <label for="naturaleza">Naturaleza:</label>
@@ -53,7 +53,7 @@
           </div>
           <div class="form-group col-md-4">
             <label for="direccion">Direccion:</label>
-            <input type="text" class="form-control" id="direccion" formControlName="direccion" [(ngModel)]="empresa.direccion"  placeholder="Apartamento, ciudad y provincia">
+            <input type="text" class="form-control" id="direccion" formControlName="direccion" [(ngModel)]="empresa.direccion"  placeholder="Ubicación">
             <div *ngIf="formEmpresa.get('direccion').errors && formEmpresa.get('direccion').dirty || formEmpresa.controls['direccion'].touched">
               <p-message *ngIf="formEmpresa.get('direccion').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
             </div>
@@ -95,7 +95,7 @@
                       <div *ngIf="formEmpleado.get('primerNombre').errors && formEmpleado.get('primerNombre').dirty || formEmpleado.controls['primerNombre'].touched">
                         <p-message *ngIf="formEmpleado.get('primerNombre').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
                       </div>
-                
+
             </div>
             <div class="form-group col-md-3">
               <label for="segundoNombre">Segundo Nombre:</label>
@@ -150,7 +150,7 @@
                        <p-message *ngIf="formEmpleado.get('correo').hasError('required')" severity="warn" text="El campo NO debe estar esta vacio" styleClass="mr-2"></p-message>
                      </div>
             </div>
-            
+
             <div class="form-group col-md-3">
               <label for="abrev_titulo">Título:</label>
               <input  type="text" class="form-control" id="abrev_titulo"
@@ -162,11 +162,11 @@
           </div>
           <br>
           <mat-card-actions>
-            
-    
+
+
           </mat-card-actions>
         </form>
-       
+
         <p-footer>
           <button mat-raised-button color="primary" (click)="verficardATOS()" >Crear Empleado</button>
             <button type="button" pButton icon="pi pi-times" (click)="rempleado=false" label="Cancelar" class="ui-button-secondary"></button>

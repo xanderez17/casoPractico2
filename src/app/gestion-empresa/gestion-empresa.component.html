@@ -1,5 +1,5 @@
 <mat-card-title style="background-color:#1d3557; color:white; padding: 20px; border-radius: 5px">
-  Empresas
+  Lista de Empresas
 </mat-card-title>
 <mat-card>
   <div>
@@ -8,7 +8,7 @@
                [value]="empresas"
                [paginator]="true"
                [columns]="cols"
-               [rows]="10"
+               [rows]="3"
                [showCurrentPageReport]="true"
                [rowsPerPageOptions]="[10,25,50]"
                [paginator]="true"
@@ -17,12 +17,9 @@
 
         <ng-template pTemplate="caption">
           <div class="p-grid">
-            <div class="p-col" style="text-align: left;">
-              <p>Lista de Empresas</p>
-            </div>
             <div class="p-col" style="text-align: right">
               <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
-              <input type="text" pInputText size="50" placeholder="Busqueda: Nombre de empresa o ruc"
+              <input type="text" pInputText size="50" placeholder="Nombre de empresa o RUC"
                      (input)="dt.filterGlobal($any($event.target).value, 'contains')" style="width:auto">
             </div>
           </div>
@@ -82,7 +79,7 @@
       </p-table>
       <br><br>
       <div class="text-center">
-        <button type="submit" class="btn btn-danger" [routerLink]="['/registro-empresa']">Regresar</button>
+        <button type="submit" class="btn btn-danger" [routerLink]="['/']">Regresar</button>
       </div>
     </div>
   </div>

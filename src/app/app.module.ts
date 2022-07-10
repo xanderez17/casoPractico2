@@ -93,6 +93,7 @@ import { GenerarCertificadoEmpresaComponent } from './tutor-empresarial/generar-
 import { NotificacionCronogramaComponent } from './notificacion-cronograma/notificacion-cronograma.component';
 import { ConsultaRegistroAsistenciaComponent } from './consulta-registro-asistencia/consulta-registro-asistencia.component';
 import {ListaConvocatoriasComponent} from "./responsable/lista-convocatorias/lista-convocatorias.component";
+import { CertificadoEmpresaComponent } from './empresa/certificado-empresa/certificado-empresa.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -175,7 +176,8 @@ SolicitudEmpresaComponent,
     NotificacionCronogramaComponent,
     GestionConvocatoriaComponent,
     ListaConvocatoriasComponent,
-    ConsultaRegistroAsistenciaComponent
+    ConsultaRegistroAsistenciaComponent,
+    CertificadoEmpresaComponent
   ],
   imports: [
     BrowserModule,

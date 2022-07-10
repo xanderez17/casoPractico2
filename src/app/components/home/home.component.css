@@ -6,6 +6,10 @@ mat-card-title{
   text-align: center;
 }
 
+.info{
+  color: #999999;
+}
+
 .card-tittle{
     font-size: 2rem;
 }

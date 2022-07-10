@@ -20,7 +20,7 @@ export class ListarCarrerasComponent implements OnInit {
   coordinador: boolean;
   editar: boolean;
 
-  
+
   carrera = new Carrera();
   docente: any;
   formCarrera: FormGroup;
@@ -50,8 +50,8 @@ export class ListarCarrerasComponent implements OnInit {
       {field: 'abreviatura', header: 'Abreviatura'},
       {field: 'modalidad', header: 'Modalidad'},
       {field: 'duracion', header: 'Duración'},
-      {field: 'acciones', header: 'Acciones'},
-      {field: 'coordinador', header: 'Coordinador de Carrera'}
+      {field: 'acciones', header: 'Editar'},
+      {field: 'coordinador', header: 'Asignar Coordinador'}
     ];
 
 
@@ -85,7 +85,7 @@ export class ListarCarrerasComponent implements OnInit {
 
   seleccionarDocente(docente:any){
     this.docente=docente;
-    console.log("SE ASIGNO DOCENTE")
+    console.log("SE ASIGNÓ DOCENTE")
     this.docente.coordinador = true
     console.log(this.docente.coordinador)
     this.docenteService.updateDocente(this.docente,this.docente.persona.cedula).subscribe(
@@ -94,21 +94,21 @@ export class ListarCarrerasComponent implements OnInit {
         console.log(Response)
         swal.fire(
           'Docente Guardado',
-          `Docente ${this.carrera.nombre} editado con exito!`,
+          `Docente ${this.docente.persona.primerNombre} editado con exito!`,
           'success'
         )
       }
     )
 
-    
+
     this.coordinador=false;
     //window.location.reload();
 
     //this.docenteService.updateDocente(docente,docente.persona.cedula)
-    
+
   }
 
-  updateCarrera(){  
+  updateCarrera(){
     if (this.formCarrera.invalid) {
       swal.fire(
         'Error de entrada',
@@ -116,31 +116,30 @@ export class ListarCarrerasComponent implements OnInit {
         'error'
       )
       this.carrera=new Carrera();
-      
+
       return;
     }
     this.carreraService.updateCarrera(this.carrera.idCarrera,this.carrera).subscribe(
       Response => {
         console.log("edicion carrera")
         console.log(Response)
+        console.log(this.carrera.nombre)
         swal.fire(
           'Carrera Guardada',
           `Carrera ${this.carrera.nombre} editada con exito!`,
           'success'
         )
-        
+
       }
     )
     this.updateVisibility();
     this.editar=false
-    this.carrera=new Carrera();
-    
   }
 
   updateVisibility(): void {
     this.refresh = false;
     setTimeout(() => this.refresh = true, 0);
   }
-  
+
 
 }

@@ -19,7 +19,7 @@ export class EmpresaService {
   private urlDelete: string = this.url_mater+'GestionEmpresa/EliminarEmpresa';
   private urlUpdate: string = this.url_mater+'GestionEmpresa/EditarEmpresa';
   private urlSearch: string = this.url_mater+'GestionEmpresa/ListaEmpresas';
-  
+
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
 
@@ -66,4 +66,6 @@ export class EmpresaService {
       })
     );
   }
+
+
 }

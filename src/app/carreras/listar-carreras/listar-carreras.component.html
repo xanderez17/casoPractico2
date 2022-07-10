@@ -15,31 +15,31 @@
             <td *ngFor="let col of cols">
               <div [ngSwitch]="col.field">
                 <span *ngSwitchCase="'acciones'" >
-                  
-                  <button (click)="showDialogEdit(carrera)">Editar</button>
+
+                  <button  class="ui-button-secondary" type="button" pButton icon="pi pi-user-edit" (click)="showDialogEdit(carrera)"></button>
                 </span>
                 <span *ngSwitchCase="'coordinador'" style="align-items: flex-start;">
                   <div *ngFor="let docente of docentes">
                     <div *ngIf="docente.coordinador == true && docente.carrera.idCarrera == carrera.idCarrera">
                       <span >{{docente.persona.primerNombre}} {{docente.persona.primerApellido}}</span>
-                      
+
                     </div>
-                      
+
                   </div>
-                    <button class="btn btn-primary" (click)="showDialogDocente(carrera)">Seleccionar</button>
-                 
-                  
+                    <button label="Designar" class="p-button-secondary" type="button" pButton icon="pi pi-arrow-up-right" iconPos="right" (click)="showDialogDocente(carrera)"></button>
+
+
                 </span>
                 <span *ngSwitchDefault>{{carrera[col.field]}}</span>
               </div>
-                
+
             </td>
         </tr>
     </ng-template>
 </p-table>
 </mat-card>
 
-<p-dialog header="Editar docente" [(visible)]="editar" [modal]="true" [style]="{width: '50vw', height: '40vw'}"
+<p-dialog header="Modificar" [(visible)]="editar" [modal]="true" [style]="{width: '50vw', height: '40vw'}"
           [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
         <mat-card>
 
@@ -66,26 +66,26 @@
                 </div>
               </div>
               <br>
-          
+
             </form>
         </div>
         </mat-card>
     <p-footer style="align-items: center;">
-        <button type="button" pButton icon="pi pi-check" (click)="updateCarrera()" label="Editar" class="ui-button-secondary"></button>            
+        <button type="button" pButton icon="pi pi-check" (click)="updateCarrera()" label="Editar" class="ui-button-secondary"></button>
         <button type="button" pButton icon="pi pi-times" (click)="editar=false" label="Cancelar" class="ui-button-secondary"></button>
     </p-footer>
 </p-dialog>
 
-<p-dialog header="Seleccionar docente" [(visible)]="coordinador" [modal]="true" [style]="{width: '50vw', height: '40vw'}"
+<p-dialog appendTo="body" header="Seleccionar docente" [(visible)]="coordinador" [modal]="true" [style]="{width: '80vw', height: '40vw'}"
 [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
     <mat-card>
       <p-table #dt id="tdocentes"
             dataKey="idDocente"
             [value]="docentes"
             [paginator]="true"
-            [rows]="10"
+            [rows]="3"
             [showCurrentPageReport]="true"
-            [rowsPerPageOptions]="[10,25,50]"
+            [rowsPerPageOptions]="[5,10,15]"
             [paginator]="true"
             styleClass="p-datatable-customers p-datatable-gridlines"
             [globalFilterFields]="['cedula','primer_nombre']"
@@ -106,7 +106,7 @@
             <ng-template pTemplate="header">
 
                 <tr>
-                    
+
                     <th>Titulo</th>
                     <th>Area</th>
                     <th>Carrera</th>
@@ -118,14 +118,16 @@
 
             <ng-template pTemplate="body" let-doc>
                 <tr *ngIf="doc.carrera.idCarrera==carrera.idCarrera && doc.coordinador!=true">
-                  
+
                   <td>{{doc.titulo}}</td>
                   <td>{{doc.area}}</td>
                   <td>{{doc.carrera.nombre}}</td>
                   <td>{{doc.persona.primerNombre}} {{doc.persona.segundoNombre}} {{doc.persona.primerApellido}} {{doc.persona.segundoApellido}} </td>
                   <td >{{doc.persona.cedula}}</td>
                   <td>
-                      <a class="edit" title="Edit" data-toggle="tooltip" (click)="seleccionarDocente(doc)"><i class="material-icons">&#xE254;</i></a>
+                    <button class="p-button-success p-button-rounded" type="button" pButton icon="pi pi-angle-right" iconPos="right" (click)="seleccionarDocente(doc)"></button>
+
+                    <a class="edit" title="Edit" data-toggle="tooltip" (click)="seleccionarDocente(doc)"><i class="material-icons">&#xE254;</i></a>
                   </td>
                 </tr>
             </ng-template>

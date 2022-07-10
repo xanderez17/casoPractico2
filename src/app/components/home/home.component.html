@@ -6,7 +6,7 @@
   <div class="row justify-content-center" >
     <div class="card p-3 m-4 col-sm-4" *ngFor="let carrera of carreras">
 
-      <mat-icon (click)="showDialog(carrera)">info</mat-icon>
+      <mat-icon class="info" (click)="showDialog(carrera)">info</mat-icon>
 
 
       <h4 class="carrera-titulo">{{carrera.nombre}}</h4>
