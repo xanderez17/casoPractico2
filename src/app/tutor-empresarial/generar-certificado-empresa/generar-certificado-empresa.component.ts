@@ -138,13 +138,22 @@ export class GenerarCertificadoEmpresaComponent implements OnInit {
     this.datoCedulaTempresarial=cedTutorE;
     this.datoEmpresa=empresa;
     this.certificadoEmpresa.tutorE.idTutorEmpresarial=idTutor;
-    //this.dialogoGuardaryGenerar = true;
+    
 
 
 
   }
 
-  showGuarda(){
+  showGuarda(carrera: any ,tutorE:any, estudiante:any,cedEstudiante:any,cedTutorE:any,horas:any,emp:any,idTu:any){
+    this.datoCarrera = carrera;
+    this.datoNombreEstudiante=estudiante;
+    this.datoCedulaEstudiante=cedEstudiante;
+    this.datoNumeroHoras=horas;
+    this.datoNombreTuEmpresarial=tutorE;
+    this.datoCedulaTempresarial=cedTutorE;
+    this.datoEmpresa=emp;
+    this.certificadoEmpresa.tutorE.idTutorEmpresarial=idTu;
+    //alert(this.certificadoEmpresa.tutorE.idTutorEmpresarial);
     this.dialogoGuardaryGenerar = true;
   }
 
