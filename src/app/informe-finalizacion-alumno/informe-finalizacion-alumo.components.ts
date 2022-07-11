@@ -52,6 +52,7 @@ export class InformeFinalAlumnoComponent implements OnInit {
   public datoActividadDocumento: String = "";
   public valor: Array<any> = [1];
   public identificador:any=0;
+  public botonEliminar:boolean;
 
   formGuardar: FormGroup;
 
@@ -259,9 +260,8 @@ export class InformeFinalAlumnoComponent implements OnInit {
 
       if (this.informeFinalDatos[i].alumno.idAlumno == this.informeFinal.alumno.idAlumno) {
         this.identificador=this.informeFinal.alumno.idAlumno;
-        //alert(this.informeFinal.alumno.idAlumno);
-        //alert(this.identificador);
         con = 1;
+
         break;
       }
 
