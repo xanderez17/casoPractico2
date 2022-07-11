@@ -17,6 +17,7 @@ import { ResponsablepppService } from 'src/app/services/responsableppp.service';
 import { CertificadoEmpresaService } from 'src/app/services/certificadoEmpresa.service';
 import { CertificadoEmpresa } from 'src/app/models/CertificadoEmpresa';
 import { TutorE } from 'src/app/models/TutorE';
+import { ThisReceiver } from '@angular/compiler';
 
 function loadFile(url, callback) {
   PizZipUtils.getBinaryContent(url, callback);
@@ -45,7 +46,7 @@ export class GenerarCertificadoEmpresaComponent implements OnInit {
 
 
   public dialogoGuardaryGenerar: boolean;
-  public dialogoGuardarxd:boolean;
+  public dialogoGuardarxd: boolean;
 
   public datoCarrera: String;
   public datoNombreEstudiante: String;
@@ -53,13 +54,15 @@ export class GenerarCertificadoEmpresaComponent implements OnInit {
   public datoNumeroHoras: String;
   public datoNombreTuEmpresarial: String;
   public datoCedulaTempresarial: String;
-  public datoEmpresa:String;
+  public datoEmpresa: String;
+  public datoIdPersonalxd: String;
+  public datoIdAlumno: String;
 
   formGuardar: FormGroup;
   formGuardarxd: FormGroup;
 
   certificadoEmpresa: CertificadoEmpresa = new CertificadoEmpresa();
-  tutorE: TutorE=new TutorE();
+  tutorE: TutorE = new TutorE();
 
 
 
@@ -92,6 +95,7 @@ export class GenerarCertificadoEmpresaComponent implements OnInit {
   //METODOS LISTAR
   listarTutorEmpresarial() {
     this.tutorEmpresarialService.getTutorEmpresarial().subscribe((resp: any) => {
+      console.log("lista tutores");
       console.log(resp.data)
       this.listaTutorEmpresarial = resp.data
     }
@@ -124,28 +128,44 @@ export class GenerarCertificadoEmpresaComponent implements OnInit {
   }
 
 
+  buscarDatoPaModificar() {
+    for (var i = 0; i < this.listaTutorEmpresarial.length; i++) {
+
+
+      if (this.listaTutorEmpresarial[i].idTutorEmpresarial == this.certificadoEmpresa.tutorE.idTutorEmpresarial) {
+
+        this.tutorE.idTutorEmpresarial = this.listaTutorEmpresarial[i].idTutorEmpresarial;
+        this.tutorE.docAsignacion = this.listaTutorEmpresarial[i].docAsignacion;
+        this.tutorE.personalEmpresa.persona.cedula = this.cedula;
+        this.tutorE.alumno.persona.cedula = this.datoIdAlumno;
+        this.tutorE.control = "matutino1";
+
+      }
+
+    }
+  }
+
   listarPersona() {
   }
 
 
-  showDialogGuardar(carrera: any ,tutorE:any, estudiante:any,cedEstudiante:any,cedTutorE:any,horas:any,empresa:any,idTutor:any) {
+
+
+  showGuarda(carrera: any, tutorE: any, estudiante: any, cedEstudiante: any, cedTutorE: any, horas: any, emp: any, idTu: any, idPer: any, idAlu: any) {
+
 
     this.datoCarrera = carrera;
-    this.datoNombreEstudiante=estudiante;
-    this.datoCedulaEstudiante=cedEstudiante;
-    this.datoNumeroHoras=horas;
-    this.datoNombreTuEmpresarial=tutorE;
-    this.datoCedulaTempresarial=cedTutorE;
-    this.datoEmpresa=empresa;
-    this.certificadoEmpresa.tutorE.idTutorEmpresarial=idTutor;
-    //this.dialogoGuardaryGenerar = true;
-
-
-
-  }
-
-  showGuarda(){
+    this.datoNombreEstudiante = estudiante;
+    this.datoCedulaEstudiante = cedEstudiante;
+    this.datoIdAlumno = cedEstudiante;
+    this.datoIdPersonalxd = idPer;
+    this.datoNumeroHoras = horas;
+    this.datoNombreTuEmpresarial = tutorE;
+    this.datoCedulaTempresarial = cedTutorE;
+    this.datoEmpresa = emp;
+    this.certificadoEmpresa.tutorE.idTutorEmpresarial = idTu;
     this.dialogoGuardaryGenerar = true;
+    this.buscarDatoPaModificar();
   }
 
   //Metodo para subir documento en base 64
@@ -168,40 +188,45 @@ export class GenerarCertificadoEmpresaComponent implements OnInit {
 
 
 
+  //
   //editar estado
-  editarRegistro() {
-    try {
-      if (this.tutorE.docAsignacion.length != 0) {
-        this.certificadoEmpresaService.updateReAsistencia(this.tutorE).subscribe(tutorE => {
-          swal.fire('Registro documento', 'El documento se ha actualizadp.', 'success')
-          location.reload();
-        })
-      }
+  editaRegustro() {
+    this.certificadoEmpresaService.createTuEmpresarial(this.tutorE).subscribe(
+      Response => {
+        location.reload();
+        swal.fire(
+          'Enviado',
+          `Actividad creada con exito!`,
+          'success'
+        )
 
-    } catch (error) {
-      swal.fire(
-        'Error de entrada',
-        'Revise que los campos no esten vacios',
-        'error'
-      )
-    }
+      }
+    )
   }
+
+
 
   //metodo para generar documento
 
   generate() {
+
+    var numPosibilidades = 100 - 70;
+    var aleatorio = Math.random() * (numPosibilidades + 1);
+    aleatorio = Math.floor(aleatorio);
+    var nume= 70 + aleatorio;
+
 
 
     var carr = this.datoCarrera;
     var fech = this.datoAFecha;
 
 
-    var noes=this.datoNombreEstudiante;
-    var cedest=this.datoCedulaEstudiante;
-    var nuhor= this.datoNumeroHoras;
-    var nomtuem=this.datoNombreTuEmpresarial;
-    var cedte=this.datoCedulaTempresarial;
-    var emp =this.datoEmpresa;
+    var noes = this.datoNombreEstudiante;
+    var cedest = this.datoCedulaEstudiante;
+    var nuhor = this.datoNumeroHoras;
+    var nomtuem = this.datoNombreTuEmpresarial;
+    var cedte = this.datoCedulaTempresarial;
+    var emp = this.datoEmpresa;
 
     let arr = fech.split('/');
     var dia = arr[0];
@@ -275,19 +300,19 @@ export class GenerarCertificadoEmpresaComponent implements OnInit {
         mes: mes,
         anio: anio,
         carrera_rp: carr,
-        nom_est:noes,
-        cedula_est:cedest,
-        num_horas:nuhor,
-        nombre_te:nomtuem,
-        cedula_te:cedte,
-        empresa:emp,
-        carrera_est:carr,
-        titutlo_r:'LIC',
-        nombre_rp:'KARLA NIEVES',
-        fecha_i:'30-05-2022',
-        fecha_f:'15-07-2022',
-        clfc:'87',
-        descripcion:'ASVAV',
+        nom_est: noes,
+        cedula_est: cedest,
+        num_horas: nuhor,
+        nombre_te: nomtuem,
+        cedula_te: cedte,
+        empresa: emp,
+        carrera_est: carr,
+        titutlo_r: 'LIC',
+        nombre_rp: 'KARLA NIEVES',
+        fecha_i: '30-05-2022',
+        fecha_f: '15-07-2022',
+        clfc: nume,
+        descripcion: 'ASVAV',
 
 
       });
@@ -354,6 +379,8 @@ export class GenerarCertificadoEmpresaComponent implements OnInit {
           }
         )
       }
+      this.editaRegustro();
+
 
 
     } catch (error) {
@@ -370,7 +397,7 @@ export class GenerarCertificadoEmpresaComponent implements OnInit {
   capturarFecha() {
     let date = new Date();
     this.datoAFecha = String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear();
-    this.certificadoEmpresa.fechaEmision=date.getFullYear()+ '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' +String(date.getDate()).padStart(2, '0');
+    this.certificadoEmpresa.fechaEmision = date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
   }
 
 }

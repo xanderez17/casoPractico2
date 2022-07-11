@@ -35,7 +35,18 @@ export class CertificadoEmpresaService{
       }
 
 
+      createTuEmpresarial(act: TutorE): Observable<TutorE> {
+        return this.http.post<TutorE>(environment.URL_APP + 'GestionTutorEmpresarial/CrearTutorEmpresarial/'+act.personalEmpresa.persona.cedula+'/'+act.alumno.persona.cedula, act, { headers: this.httpHeaders }).pipe(
+            catchError(e => {
+                Swal.fire('Error al guardar', 'NO se puede guardar registro de tutor', 'error')
+                return throwError(e);
+            })
+        );
+    }
+
+
       updateReAsistencia(reg: TutorE): Observable<TutorE> {
+        alert(reg.idTutorEmpresarial);
         return this.http.put<TutorE>(`${this.urlUpdate}/${reg.idTutorEmpresarial}`, reg, { headers: this.httpHeaders }).pipe(
             catchError(e => {
                 Swal.fire('Error', 'NO se puede subir el documento', 'error')
@@ -43,5 +54,7 @@ export class CertificadoEmpresaService{
             })
         );
     }
+
+
 
 }
