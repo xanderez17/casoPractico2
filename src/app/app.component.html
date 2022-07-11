@@ -195,9 +195,19 @@
             <button mat-button class="button-accordion" routerLink="/informe-acreditacion/{{persona.cedula}}"
             >
               <mat-icon>assignment</mat-icon>
-              <span>Acreditación</span>
+              <span>Informe  de Acreditación para Estudiantes</span>
               </button>
 
+            <button mat-button class="button-accordion" routerLink="/consulta-estado"
+            >
+              <mat-icon>search</mat-icon>
+              <span>Consultar Estado de Convocatorias</span>
+            </button>
+            <button mat-button class="button-accordion" routerLink="/historial"
+            >
+              <mat-icon>toc</mat-icon>
+              <span>Historial de Procesos</span>
+            </button>
           </mat-expansion-panel>
         </mat-accordion>
       </div>
@@ -406,10 +416,6 @@
       <!--      <span>Gestión de Caso </span>-->
       <!--    </a>-->
 
-      <a *ngIf="isResponsable" class="nav-link" routerLink="/consulta-estado" style="color: white;">
-        <mat-icon>assignment</mat-icon>
-        <span>Estado de Solicitudes</span>
-      </a>
 
 
       <a *ngIf="isTutorEmpresarial" class="nav-link" routerLink="/eva-est-tu-empresarial" style="color: white;">
