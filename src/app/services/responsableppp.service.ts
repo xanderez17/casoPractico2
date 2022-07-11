@@ -20,5 +20,15 @@ export class ResponsablepppService {
     ).toPromise();
   }
 
+  getResponsablesMFrank() {
+    let header = new HttpHeaders()
+      .set('Type-content', 'aplication/json')
+    return this.http.get(environment.URL_APP + `GestionResponsablePPP/ListarResponsablesVista`, {
+      headers: header
+
+    });
+  }
+
+
 
 }

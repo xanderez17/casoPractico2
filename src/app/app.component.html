@@ -247,7 +247,7 @@
               <span>Evaluación a Estudiante</span>
             </button>
 
-            <button mat-button class="button-accordion" routerLink="/generar-certificado-empresa">
+            <button mat-button class="button-accordion" routerLink="/generar-certificado-empresa/{{persona.cedula}}">
               <mat-icon>contact_emergency</mat-icon>
               <span>Certificar a Estudiante</span>
             </button>
@@ -399,7 +399,7 @@
         <span>Eva. Estudiante </span>
       </a>
 
-      <a *ngIf="isTutorEmpresarial" class="nav-link" routerLink="/cert-alumno" style="color: white;">
+      <a *ngIf="isTutorEmpresarial" class="nav-link" routerLink="/generar-certificado-empresa/{{persona.cedula}}" style="color: white;">
         <mat-icon>perm_identity</mat-icon>
         <span>Certificado Alumno </span>
       </a>

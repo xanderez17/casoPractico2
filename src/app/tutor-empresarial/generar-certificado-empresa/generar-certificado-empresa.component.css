@@ -1,8 +1,12 @@
-mat-card-title {
-  background-color: #1d3557;
-  color: white;
-  padding: 20px;
-  border-radius: 5px;
-  text-align: center;
+.card {
+  width: 360px;
+  float: left;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  border: 1px solid  #0c3255;
+  border-inline: 5px solid  #0c3255;
+  writing-mode: horizontal-tb;
 }
-
+.spacer {
+  flex: 1 1 auto;
+}

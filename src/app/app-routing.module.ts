@@ -78,7 +78,7 @@ const routes: Routes = [
   {path: 'registro-asistencia/:cedula', component: RegistroAsistenciaComponent},
   {path: 'seleccion-estudiantes', component: SeleccionEstudiantesComponent},
   {path: 'consulta-convocatoria', component: ConsultaConvocatoriaComponent},
-  {path: 'generar-certificado-empresa', component: GenerarCertificadoEmpresaComponent},
+  {path: 'generar-certificado-empresa/:cedula', component: GenerarCertificadoEmpresaComponent},
   {
     path: 'cons-est-asignados',
     component: ConsultasEstudiantesAsignadosComponent,

@@ -5,6 +5,8 @@ import { catchError, map, Observable, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
 import {environment} from "../../environments/environment";
 import { ActaReunion } from '../models/ActaReunion';
+
+
 import { Docente } from '../models/Docente';
 
 @Injectable({
@@ -15,6 +17,7 @@ export class ActaReunionService {
   _url =  environment.URL_APP+'GestionActaDeReunion'
 
   private urlCreate: string = this._url+'/CrearActaDeReunion';
+
   private urlDelete: string = this._url+'/EliminarActaDeReunion';
   private urlSearch: string = this._url+'/ListaActaDeReunion';
   private urlUpdate: string = this._url+'/EditarActaDeReunion';
@@ -43,6 +46,8 @@ export class ActaReunionService {
     );
   }
 
+
+
   deleteActa(empid: String): Observable<ActaReunion> {
     return this.http.delete<ActaReunion>(`${this.urlDelete}/${empid}`, { headers: this.httpHeaders }).pipe(
       catchError(e => {
@@ -60,4 +65,6 @@ export class ActaReunionService {
       })
     );
   }
+
+
 }
