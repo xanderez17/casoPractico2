@@ -55,11 +55,12 @@
   </div>
 </mat-card>
 <p-dialog [(visible)]="dialogoDatos"
-          [style]="{width:'50vw'}"
+          [style]="{width: '40vw', height: '40vw'}"
           [draggable]="false"
           [baseZIndex]="10000"
           [modal]="true"
           styleClass="p-fluid"
+          appendTo="body"
           header="Datos para generar convocatoria">
 
   <ng-template pTemplate="content">
@@ -192,11 +193,12 @@
   </ng-template>
 </p-dialog>
 <p-dialog [(visible)]="dialogoConvocatorias"
-          [style]="{width:'50vw'}"
+          [style]="{width: '80vw', height: '40vw'}"
           [draggable]="false"
           [baseZIndex]="10000"
           [modal]="true"
           styleClass="p-fluid"
+          appendTo="body"
           header="Datos para generar convocatoria">
   <div class="form-row">
     <div class="form-group col-md-9">
