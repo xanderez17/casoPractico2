@@ -1,5 +1,5 @@
 table tbody tr:nth-child(odd) {
-	background: #CBE1FF;
+	background: #ffffff;
 }
 table tbody tr:nth-child(even) {
 	background: #ffffff;

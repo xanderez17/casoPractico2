@@ -17,7 +17,8 @@
           <table class="table table-striped">
             <thead class="bg-warning" >
             <tr>
-              <th scope="col">Nombre</th>
+              <th scope="col"># Convocatoria</th>
+              <th scope="col">Nombre Convocatoria</th>
               <th scope="col">Estado</th>
               <th scope="col">Empresa</th>
               <th scope="col">Carrera</th>
@@ -26,6 +27,7 @@
 
             <tbody >
             <tr *ngFor="let historial of ConsultaEstado | filter:searchText">
+              <td>{{historial.idConvocatoria}}</td>
               <td>{{historial.nombreConvocatoria}}</td>
               <td>{{historial.estado}}</td>
               <td>{{historial.solicitudEmpresa.empleado.empresa.nombreEmpresa}}</td>
