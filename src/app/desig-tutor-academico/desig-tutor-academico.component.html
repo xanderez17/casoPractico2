@@ -1,16 +1,15 @@
 <p-toast></p-toast>
-<section class="vh-100" style="padding: 55px;">
   <mat-card>
-    <mat-card-title style="background-color:#1d3557; color:white; padding: 33px; border-radius: 5px">
-      Tutores academicos
+    <mat-card-title>
+      Designar Tutor Académico
     </mat-card-title>
     <mat-card-content>
-      <button pButton pRipple type="button" label="Generar nueva designacion" (click)="generarDesignacion()"
+      <button pButton pRipple type="button" label="Generar nueva designación" (click)="generarDesignacion()"
               class="p-button-rounded"></button>
     </mat-card-content>
     <form>
       <br>
-      <h1>Lista de tutores academicos existentes</h1>
+      <h1>Lista de tutores académicos existentes</h1>
       <p-table [value]="dataTutores"
                [columns]="columnasTutoresA"
                [paginator]="true"
@@ -33,7 +32,7 @@
             <td *ngFor="let col of columnasTutoresA">
               <div [ngSwitch]="col.field">
                   <span *ngSwitchCase="'eliminarta'">
-                      <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
+                      <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"
                               (click)="eliminarTutor()"></button>
                   </span>
                 <span *ngSwitchCase="'doc_asignacion'">
@@ -50,22 +49,23 @@
 
     </form>
   </mat-card>
-</section>
+
 <p-dialog
   [(visible)]="dialogoAsignar"
-  [style]="{width:'50vw'}"
+  [style]="{width:'70vw'}"
   [draggable]="false"
   [baseZIndex]="10000"
   [modal]="true"
   styleClass="p-fluid"
+  appendTo="body"
 >
   <ng-template pTemplate="content">
     <p-panel>
       <ng-template pTemplate="header">
-        <h2>Asignacion de tutor academico</h2>
+        <h2>Asignación de tutor académico</h2>
       </ng-template>
       <ng-template pTemplate="content">
-        <p>Designe el tutor academico de la lista de docentes: </p>
+        <p>Designe el tutor académico de la lista de docentes: </p>
         <p-table [value]="dataDocentes"
                  [columns]="conlumnasDocentes"
                  [paginator]="true"
@@ -105,12 +105,13 @@
           [draggable]="false"
           [baseZIndex]="10000"
           [modal]="true"
-          styleClass="p-fluid">
+          styleClass="p-fluid"
+          appendTo="body">
   <ng-template pTemplate="header">
-    <h2>Verificacion de datos seleccionados</h2>
+    <h2>Verificación de datos seleccionados</h2>
   </ng-template>
   <ng-template pTemplate="content">
-    <h2>Datos recoletados: </h2>
+    <h2>Datos recolectados: </h2>
     <p-accordion>
       <p-accordionTab header="Informacion de alumno">
         <p-panel header="Alumno">
@@ -129,7 +130,7 @@
             <div mat-row="">
               <h3>
                 Nombres:  {{ObjetoDocente['primer_nombre']}} {{ObjetoAlumno['segundo_nombre']}} {{ObjetoDocente['primer_apellido']}} {{ObjetoAlumno['segundo_apellido']}}</h3>
-              <h3>Titulo: {{ObjetoDocente['titulo']}} </h3>
+              <h3>Título: {{ObjetoDocente['titulo']}} </h3>
             </div>
           </ng-template>
         </p-panel>
@@ -139,7 +140,7 @@
         <p-panel header="Envio de documento">
           <ng-template pTemplate="content">
             <div mat-row="">
-              <h3>Ingrese el documento firmado que se genero: </h3>
+              <h3>Ingrese el documento firmado que se generó: </h3>
               <p-fileUpload
                 [customUpload]="true"
                 [showCancelButton]="false"
@@ -147,7 +148,7 @@
                 (uploadHandler)="onFileSelected($event)"
                 chooseLabel="Seleccionar anexo"
                 uploadLabel="Cargar anexo"
-                invalidFileTypeMessageSummary="Archivo no valido"
+                invalidFileTypeMessageSummary="Archivo no válido"
                 invalidFileSizeMessageDetail="Solo se acepta archivos con extensiones .doc - docx."
               >
               </p-fileUpload>
@@ -156,18 +157,19 @@
         </p-panel>
       </p-accordionTab>
     </p-accordion>
-    <button pButton pRipple type="button" label="Terminar designacion" (click)="crearTutorAcademico()"></button>
+    <button pButton pRipple type="button" label="Terminar designación" (click)="crearTutorAcademico()"></button>
   </ng-template>
 </p-dialog>
 <p-dialog [(visible)]="dialogoAlumnos"
-          [style]="{width:'50vw'}"
+          [style]="{width:'70vw'}"
+          appendTo="body"
           [draggable]="false"
           [baseZIndex]="10000"
           [modal]="true"
           styleClass="p-fluid"
 >
   <form>
-    <h2>Ingrese cedula: </h2>
+    <h2>Ingrese cédula: </h2>
     <input class="form-control mr-sm-2" type="search" placeholder="Buscar alumno" aria-label="Search">
     <br>
     <p-table [value]="dataAlumnos"

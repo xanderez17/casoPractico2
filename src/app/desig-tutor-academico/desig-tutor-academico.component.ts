@@ -74,14 +74,12 @@ export class DesigTutorAcademicoComponent implements OnInit {
 
   ngOnInit(): void {
     this.columnasEstudiantes = [
-      {field: 'cedula', header: 'Cedula'},
-      {field: 'nombres', header: 'Primer nombre'},
-      {field: 'apellidos', header: 'Segundo Nombre'},
-      {field: 'ciclo', header: 'Primer apellido'},
-      {field: 'paralelo', header: 'Segundo Apellido'},
-      {field: 'promedio', header: 'Correo'},
+      {field: 'cedula', header: 'Cédula'},
+      {field: 'nombres', header: 'Nombres'},
+      {field: 'apellidos', header: 'Apellidos'},
+      {field: 'paralelo', header: 'Paralelo'},
       {field: 'carrera', header: 'Carrera'},
-      {field: 'nombre_empresa', header: 'Solicitud a empresa'},
+      {field: 'nombre_empresa', header: 'Empresa'},
       {field: 'aginarta', header: 'Asignar tutor'},
 
     ];
@@ -124,6 +122,7 @@ export class DesigTutorAcademicoComponent implements OnInit {
   obtenerAlumnos(): void {
     this._alumnoCrud.getAlumnosST().then(value => {
       this.dataAlumnos = value['data'];
+      console.log(value['data'])
       this.mostarMensajeCorrecto("Lista de alumnos generada exitosamente");
     })
       .catch(((err) => {

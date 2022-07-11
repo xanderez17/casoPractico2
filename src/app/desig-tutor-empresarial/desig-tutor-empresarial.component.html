@@ -1,8 +1,7 @@
 <p-toast></p-toast>
 
-<section class="vh-100" style="padding: 55px;">
   <mat-card>
-    <mat-card-title style="background-color:#1d3557; color:white; padding: 33px; border-radius: 5px">
+    <mat-card-title>
       Designar Tutor Empresarial
     </mat-card-title>
     <mat-card-content>
@@ -11,7 +10,7 @@
     </mat-card-content>
     <form>
       <br>
-      <h1>Tutores empresariales de la empresa: </h1>
+      <h1>Lista de tutores empresariales existentes </h1>
       <br>
       <p-table [value]="dataTutores"
                [columns]="columnasTutores"
@@ -40,7 +39,7 @@
                       </button>
                   </span>
                 <span *ngSwitchCase="'eliminarta'">
-                      <button pButton pRipple type="button" icon="pi pi-times" class="p-button-rounded p-button-danger"
+                      <button pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger"
                               (click)="eliminarTutorEmp()"></button>
                   </span>
                 <span *ngSwitchDefault>{{dataTutores[col.field]}}</span>
@@ -52,7 +51,6 @@
       </p-table>
     </form>
   </mat-card>
-</section>
 <!--Dialogo de empleados-->
 <p-dialog [(visible)]="dialogoGenerar"
           [style]="{width:'80vw'}"
