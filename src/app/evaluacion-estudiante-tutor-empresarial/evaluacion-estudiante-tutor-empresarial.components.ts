@@ -55,12 +55,12 @@ export class EvaluacionEstudianteTutorEmpresarialComponent implements OnInit {
      this.rol = this.route.snapshot.paramMap.get('rol');
 
      this.columnasTutorEm = [
-       { field: 'idtuto', header: 'CI tutor' },
-       { field: 'primer_nombr', header: 'Nombres del Tutor' },
-       { field: 'segundo_apellid', header: 'Apellidos del Tutor' },
+       { field: 'idtuto', header: 'CI Tutor' },
+       { field: 'primer_nombr', header: 'Nom.Tutor' },
+       { field: 'segundo_apellid', header: 'Ape.Tutor' },
        { field: 'idalumn', header: 'CI Alumno' },
-       { field: 'primer_nombre_alumn', header: 'Nombres del Alumno' },
-       { field: 'segundo_apellido_alumn', header: 'Apellidos del Alumno' },
+       { field: 'primer_nombre_alumn', header: 'Nom.Alumno' },
+       { field: 'segundo_apellido_alumn', header: 'Ape.Alumno' },
        { field: 'size', header: 'Acciones' },
      ];
      this.formEva = this.formBuilder.group({

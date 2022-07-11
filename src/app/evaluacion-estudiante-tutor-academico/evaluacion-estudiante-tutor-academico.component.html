@@ -1,61 +1,65 @@
-<section class="vh-100">
-  <div class="container-fluid" style="padding: 55px;">
-    <mat-card-title>
-      Evaluación Tutor Académico
-    </mat-card-title>
+<div class="container-fluid" style="padding: 55px;">
+  <mat-card-title>
+    Evaluación Tutor Académico
+  </mat-card-title>
 
-    <mat-card>
-      <div>
-        <div class="card card-w-title">
-          <p-table #dt id="ttutorE" [value]="tutorE" [paginator]="true" [columns]="columnasTutorE" [rows]="1"
-            [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true"
-            [globalFilterFields]="['primerNombre','primerApellido']">
+  <mat-card>
+    <div>
+      <div class="card card-w-title">
+        <p-table #dt id="ttutorE" [value]="tutorE" [paginator]="true" [columns]="columnasTutorE" [rows]="1"
+                 [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]"
+                 [globalFilterFields]="['primerNombre','primerApellido']">
+          <ng-template pTemplate="header" let-columnasTutorE>
+            <tr>
+              <th *ngFor="let col of columnasTutorE">
+                {{col.header}}
+              </th>
+            </tr>
+          </ng-template>
 
-            <ng-template pTemplate="caption">
-              <div class="p-grid">
-                <div class="p-col" style="text-align: left;">
-                  <p>Lista de Tutor para la Evaluacion</p>
-                </div>
-              </div>
-            </ng-template>
-            <ng-template pTemplate="header" let-columnasTutorE>
-              <tr>
-                <th *ngFor="let col of columnasTutorE">
-                  {{col.header}}
-                </th>
-              </tr>
-            </ng-template>
+          <ng-template pTemplate="body">
+            <tr *ngFor="let tutore of tutorE">
+              <td>{{tutore.docente.persona.cedula}}</td>
+              <td>{{tutore.docente.persona.primerNombre+" "+tutore.docente.persona.segundoNombre}}</td>
+              <td>{{tutore.docente.persona.primerApellido+" "+tutore.docente.persona.segundoApellido}}</td>
+              <td>{{tutore.alumno.persona.cedula}}</td>
+              <td>{{tutore.alumno.persona.primerNombre+" "+tutore.alumno.persona.segundoNombre}}</td>
+              <td>{{tutore.alumno.persona.segundoNombre+" "+tutore.alumno.persona.segundoApellido}}</td>
+              <td>
+                <button class="p-button-warning"
+                        type="button"
+                        pButton
+                        icon="pi pi-chart-line"
+                        pTooltip="Evaluar"
+                        iconPos="right"
+                        (click)="miEvaluacion(tutore.alumno.idAlumno,tutore.idTutorAcademico,tutore.docente.persona.primerNombre+' '+tutore.docente.persona.primerApellido)">
+                </button>
 
-            <ng-template pTemplate="body">
-              <tr *ngFor="let tutore of tutorE">
-                <td>{{tutore.idTutorAcademico}}</td>
-                <td>{{tutore.docente.persona.primerNombre}}</td>
-                <td>{{tutore.docente.persona.segundoNombre}}</td>
-                <td>{{tutore.alumno.idAlumno}}</td>
-                <td>{{tutore.alumno.persona.primerNombre}}</td>
-                <td>{{tutore.alumno.persona.segundoNombre}}</td>
-                <td>
-                  <button class="btn btn-sm btn-primary"
-                    (click)="miEvaluacion(tutore.alumno.idAlumno,tutore.idTutorAcademico,tutore.docente.persona.primerNombre+' '+tutore.docente.persona.primerApellido)">Seleccionar</button>
-                </td>
-              </tr>
-            </ng-template>
-            <ng-template pTemplate="emptymessage">
-              <tr>
-                <td [attr.colspan]="columnasTutorE.length">No hay datos.</td>
-              </tr>
-            </ng-template>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td [attr.colspan]="columnasTutorE.length">No hay datos.</td>
+            </tr>
+          </ng-template>
 
-          </p-table>
+        </p-table>
 
-        </div>
       </div>
-    </mat-card>
-  </div>
-</section>
------------------------------------------------
-<p-dialog [(visible)]="dialogoCrearEvaluacion" [style]="{width:'60vw'}" [draggable]="false" [baseZIndex]="10000"
-  [modal]="true" styleClass="p-fluid">
+    </div>
+  </mat-card>
+</div>
+
+
+<p-dialog [(visible)]="dialogoCrearEvaluacion"
+          [style]="{width:'60vw'}"
+          appendTo="body"
+          [draggable]="false"
+          [baseZIndex]="10000"
+          [modal]="true"
+          styleClass="p-fluid">
+
   <ng-template pTemplate="content">
     <mat-card>
       <form [formGroup]="formEvaluacion" *ngFor="let alumno of alumnos">
@@ -71,8 +75,8 @@
             <div class="form-group col-md-6">
               <label for="horasPPP">ALUMNO:</label>
               <input class="form-control"
-                placeholder="{{alumno.persona.primerApellido |uppercase}} {{alumno.persona.segundoApellido |uppercase}} {{alumno.persona.primerNombre |uppercase}} {{alumno.persona.segundoNombre |uppercase}}"
-                disabled="true">
+                     placeholder="{{alumno.persona.primerApellido |uppercase}} {{alumno.persona.segundoApellido |uppercase}} {{alumno.persona.primerNombre |uppercase}} {{alumno.persona.segundoNombre |uppercase}}"
+                     disabled="true">
             </div>
             <div class="form-group col-md-6">
               <label for="horasPPP">CARRERA:</label>
@@ -83,23 +87,23 @@
             <div class="form-group col-md-6">
               <label>CURSO:</label>
               <input class="form-control" placeholder="{{alumno.ciclo |uppercase}} {{alumno.paralelo |uppercase}}"
-                disabled="true">
+                     disabled="true">
             </div>
 
             <div class="form-group col-md-6">
               <label for="numHoras">SUBIR DOCUMENTO:</label>
-              <input class="form-control" type="file" (change)="onFileSelected($event)" accept=".pdf" />
+              <input class="form-control" type="file" (change)="onFileSelected($event)" accept=".pdf"/>
             </div>
             <div class="form-group col-md-6">
               <label>DESDE:</label>
               <input type="date" class="form-control" id="desde" formControlName="desde"
-                [(ngModel)]="evaluacionTa.desde">
+                     [(ngModel)]="evaluacionTa.desde">
             </div>
 
             <div class="form-group col-md-6">
               <label>HASTA:</label>
               <input type="date" class="form-control" id="hasta" formControlName="hasta"
-                [(ngModel)]="evaluacionTa.hasta">
+                     [(ngModel)]="evaluacionTa.hasta">
             </div>
           </div>
           <h2 style="color: #000000; text-align:center;">
@@ -111,40 +115,41 @@
           <form>
             <table class="table table-striped" id="tablaCalificacion">
               <thead>
-                <tr>
-                  <th>Parametros</th>
-                  <th>
-                    <p>Calificación</p>
-                  </th>
-                </tr>
+              <tr>
+                <th>Parametros</th>
+                <th>
+                  <p>Calificación</p>
+                </th>
+              </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>a. Asistencia y Puntualidad.</td>
-                  <td> <input type="text" name="opcionA" required [(ngModel)]="opcionA">
-                  </td>
-                </tr>
-                <tr>
-                  <td> b. Cumplimiento de normas establecidad por la entidad receptora.</td>
-                  <td> <input type="text" name="opcionB" required [(ngModel)]="opcionB">
-                  </td>
-                </tr>
-                <tr>
-                  <td> c. Compromiso y responsabilidad frente al trabajo.</td>
-                  <td> <input type="text" name="opcionC" required [(ngModel)]="opcionC">
-                  </td>
-                </tr>
-                <tr>
-                  <td> d. Integración y actitud de colaboración con los miembros del equipo de la empresa.</td>
-                  <td> <input type="text" name="opcionD" required [(ngModel)]="opcionD">
-                  </td>
-                </tr>
-                <tr>
-                  <td> e. Valoración de los resultados tomando como base las actividades encomendadas al estudiante, así
-                    como el cumplimiento en los plazos establecidos. </td>
-                  <td> <input type="text" name="opcionE" required [(ngModel)]="opcionE">
-                  </td>
-                </tr>
+              <tr>
+                <td>a. Asistencia y Puntualidad.</td>
+                <td><input type="text" name="opcionA" required [(ngModel)]="opcionA">
+                </td>
+              </tr>
+              <tr>
+                <td> b. Cumplimiento de normas establecidad por la entidad receptora.</td>
+                <td><input type="text" name="opcionB" required [(ngModel)]="opcionB">
+                </td>
+              </tr>
+              <tr>
+                <td> c. Compromiso y responsabilidad frente al trabajo.</td>
+                <td><input type="text" name="opcionC" required [(ngModel)]="opcionC">
+                </td>
+              </tr>
+              <tr>
+                <td> d. Integración y actitud de colaboración con los miembros del equipo de la empresa.</td>
+                <td><input type="text" name="opcionD" required [(ngModel)]="opcionD">
+                </td>
+              </tr>
+              <tr>
+                <td> e. Valoración de los resultados tomando como base las actividades encomendadas al estudiante, así
+                  como el cumplimiento en los plazos establecidos.
+                </td>
+                <td><input type="text" name="opcionE" required [(ngModel)]="opcionE">
+                </td>
+              </tr>
               </tbody>
             </table>
           </form>
@@ -158,7 +163,7 @@
             <br>
             <label>Número de horas: </label>
             <input type="number" class="form-control" id="numHoras" formControlName="numHoras"
-              [(ngModel)]="evaluacionTa.numHoras">
+                   [(ngModel)]="evaluacionTa.numHoras">
             <br>
           </div>
           <br><br>
@@ -171,14 +176,15 @@
           <div class="row">
             <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
               <button type="submit"
-                (click)=' generate(alumno.persona.cedula,alumno.persona.primerNombre+" "+alumno.persona.segundoNombre+" "+alumno.persona.primerApellido+" "
+                      (click)=' generate(alumno.persona.cedula,alumno.persona.primerNombre+" "+alumno.persona.segundoNombre+" "+alumno.persona.primerApellido+" "
               +alumno.persona.segundoApellido,alumno.persona.cedula,alumno.carrera.nombre,evaluacionTa.desde,evaluacionTa.hasta,opcionA,opcionB,opcionC,opcionD,opcionE,puntajeTotal,evaluacionTa.numHoras,alumno.carrera.nombreu)'
-                class="btn" pButton icon="pi pi-download" label="DESCARGAR DOCUMENTO"
-                style="background: #5c1818; color: white;"></button>
+                      class="btn" pButton icon="pi pi-download" label="DESCARGAR DOCUMENTO"
+                      style="background: #5c1818; color: white;"></button>
             </div>
             <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
               <button type="submit" (click)='create(puntajeTotal)' class="btn"
-                style="background: #1d3557; color: white;" pButton icon="pi pi-save" label="ENVIAR SOLICITUD"></button>
+                      style="background: #1d3557; color: white;" pButton icon="pi pi-save"
+                      label="ENVIAR SOLICITUD"></button>
             </div>
           </div>
         </div>

@@ -57,12 +57,12 @@ export class EvaluacionEstudianteTutorAcademicoComponent implements OnInit {
     this.rol = this.route.snapshot.paramMap.get('rol');
 
     this.columnasTutorE = [
-      { field: 'idtuto', header: 'Idtutor' },
-      { field: 'primer_nombr', header: 'Nombre del Tutor' },
-      { field: 'segundo_apellid', header: 'Apellido del Tutor' },
-      { field: 'idalumn', header: 'IdAlumno' },
-      { field: 'primer_nombre_alumn', header: 'Nombre del Alumno' },
-      { field: 'segundo_apellido_alumn', header: 'Segundo Apellido' },
+      { field: 'idtuto', header: 'CI Tutor' },
+      { field: 'primer_nombr', header: 'Nom.Tutor' },
+      { field: 'segundo_apellid', header: 'Ape.Tutor' },
+      { field: 'idalumn', header: 'CI Alumno' },
+      { field: 'primer_nombre_alumn', header: 'Nom.Alumno' },
+      { field: 'segundo_apellido_alumn', header: 'Ape.Alumno' },
       { field: 'size', header: 'Acciones' },
     ];
     this.formEvaluacion = this.formBuilder.group({
@@ -120,7 +120,7 @@ export class EvaluacionEstudianteTutorAcademicoComponent implements OnInit {
     this.evaluacionService
       .createEvaluacion(this.evaluacionTa)
       .subscribe((Response) => {
-        swal.fire('Enviado', `Evaluacion creada con exito!`, 'success');
+        swal.fire('Enviado', `Evaluación creada con éxito!`, 'success');
         this.dialogoCrearEvaluacion = false;
       });
   }

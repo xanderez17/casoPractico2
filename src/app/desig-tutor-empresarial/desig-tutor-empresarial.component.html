@@ -6,7 +6,7 @@
       Designar Tutor Empresarial
     </mat-card-title>
     <mat-card-content>
-      <button pButton pRipple type="button" label="Generar nueva designacion"
+      <button pButton pRipple type="button" label="Generar nueva designación"
               (click)="generarDesignacion()" class="p-button-rounded"></button>
     </mat-card-content>
     <form>
@@ -55,7 +55,8 @@
 </section>
 <!--Dialogo de empleados-->
 <p-dialog [(visible)]="dialogoGenerar"
-          [style]="{width:'50vw'}"
+          [style]="{width:'80vw'}"
+          appendTo="body"
           [draggable]="false"
           [baseZIndex]="10000"
           [modal]="true"
@@ -64,7 +65,7 @@
   <ng-template pTemplate="content">
     <p-panel>
       <ng-template pTemplate="header">
-        <h2>Asignacion de tutor empresarial</h2>
+        <h2>Asignación de tutor empresarial</h2>
       </ng-template>
       <ng-template pTemplate="content">
         <p>Designe el tutor empresarial de la lista de empleados: </p>

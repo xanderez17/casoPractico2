@@ -1,4 +1,4 @@
-<section class="vh-100">
+
   <div class="container-fluid" style="padding: 55px;">
     <mat-card-title  style="background-color:#1d3557; color:white; padding: 20px; border-radius: 5px">
       Evaluación Tutor Empresarial
@@ -11,16 +11,9 @@
                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true"
                    [globalFilterFields]="['primerNombre','primerApellido']">
 
-            <ng-template pTemplate="caption">
-              <div class="p-grid" >
-                <div class="p-col" style="text-align: left;" >
-                  <p >Información</p>
-                </div>
-              </div>
-            </ng-template>
             <ng-template pTemplate="header" let-columnasTutorEm>
               <tr>
-                <th class="bg-warning" *ngFor="let col of columnasTutorEm">
+                <th *ngFor="let col of columnasTutorEm">
                   {{col.header}}
                 </th>
               </tr>
@@ -35,8 +28,14 @@
                 <td  >{{tutorem.alumno.persona.primerNombre+" "+tutorem.alumno.persona.segundoNombre}}</td>
                 <td>{{tutorem.alumno.persona.primerApellido+" "+tutorem.alumno.persona.segundoApellido}}</td>
                 <td>
-                  <button class="btn btn-sm btn-primary"
-                          (click)="Evaluacion(tutorem.alumno.idAlumno,tutorem.idTutorEmpresarial,tutorem.personalEmpresa.persona.primerNombre+' '+tutorem.personalEmpresa.persona.primerApellido)">Evaluar</button>
+                  <button
+                          class="p-button-warning"
+                          type="button"
+                          pButton
+                          icon="pi pi-chart-line"
+                          pTooltip="Evaluar"
+                          iconPos="right" (click)="Evaluacion(tutorem.alumno.idAlumno,tutorem.idTutorEmpresarial,tutorem.personalEmpresa.persona.primerNombre+' '+tutorem.personalEmpresa.persona.primerApellido)"></button>
+
                 </td>
               </tr>
             </ng-template>
@@ -52,10 +51,15 @@
       </div>
     </mat-card>
   </div>
-</section>
------------------------------------------------
-<p-dialog [visible]="dialogoCrearEva" [style]="{width:'60vw'}" [draggable]="false" [baseZIndex]="10000"
-          [modal]="true" styleClass="p-fluid">
+
+<p-dialog [(visible)]="dialogoCrearEva"
+          appendTo="body"
+          [style]="{width:'60vw'}"
+          [draggable]="false"
+          [baseZIndex]="10000"
+          [modal]="true"
+          styleClass="p-fluid">
+
   <ng-template pTemplate="content">
     <mat-card>
       <form [formGroup]="formEva" *ngFor="let alumno of alumnos">

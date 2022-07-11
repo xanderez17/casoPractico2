@@ -242,6 +242,16 @@
               <span>Registrar Empleado</span>
             </button>
 
+            <button mat-button class="button-accordion" routerLink="/evaluacion-estudiante-tutor-empresarial">
+              <mat-icon>contact_page</mat-icon>
+              <span>Evaluación a Estudiante</span>
+            </button>
+
+            <button mat-button class="button-accordion" routerLink="/generar-certificado-empresa">
+              <mat-icon>contact_emergency</mat-icon>
+              <span>Certificar a Estudiante</span>
+            </button>
+
           </mat-expansion-panel>
         </mat-accordion>
       </div>
@@ -376,23 +386,6 @@
 
       </div>
 
-
-      <a *ngIf="isEmpleado" class="nav-link" routerLink="/registro-empresa" style="color: white;">
-        <mat-icon>home</mat-icon>
-        <span>Gestión de empresa</span>
-      </a>
-
-
-      <a *ngIf="isEmpleado" class="nav-link" routerLink="/cons-est-asignados" style="color: white;">
-        <mat-icon>person_pin</mat-icon>
-        <span>Consulta Estudiantes Asignados </span>
-      </a>
-
-      <a *ngIf="isEmpleado" class="nav-link" routerLink="/solicitud-empresa" style="color: white;">
-        <mat-icon>person_pin</mat-icon>
-        <span>Generar solicitud empresa </span>
-      </a>
-
       <!--    <a *ngIf="" class="nav-link" routerLink="/" style="color: white;">-->
 
       <!--    <mat-icon>speaker_notes</mat-icon>-->
@@ -411,7 +404,7 @@
         <span>Certificado Alumno </span>
       </a>
 
-      <a *ngIf="isTutorEmpresarial || isEmpleado" class="nav-link" routerLink="/reg-seg-alumno" style="color: white;">
+      <a *ngIf="isTutorEmpresarial" class="nav-link" routerLink="/reg-seg-alumno" style="color: white;">
         <mat-icon>perm_identity</mat-icon>
         <span>Registro Seguimiento TE </span>
       </a>

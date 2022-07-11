@@ -88,10 +88,10 @@ export class DesigTutorEmpresarialComponent implements OnInit {
 
     this.columnasEmpleados = [
       {field: 'id_personal', header: 'ID'},
-      {field: 'cedula', header: 'Cedula '},
+      {field: 'cedula', header: 'Cédula '},
       {field: 'p_nombres', header: 'Nom. Empleado'},
       {field: 'p_apellidos', header: 'Ape. Empleado'},
-      {field: 'abrev_titulo', header: 'Titulo'},
+      {field: 'abrev_titulo', header: 'Título'},
       {field: 'cargo', header: 'Cargo'},
       {field: 'designarC', header: 'Asignar'},
     ];
