@@ -17,6 +17,7 @@ export class InformeFinalAlumnoService {
   _url = 'https://backendg1c2.herokuapp.com/GestionInformeFinal'
   private url_mater: string = environment.URL_APP;
   private urlDelete: string = this.url_mater + 'GestionInformeFinal/EliminarInformeFinal';
+  private urlUpdate: string = this.url_mater + 'GestionInformeFinal/EditarInformeFinal';
 
   constructor(
     private http: HttpClient
@@ -62,6 +63,16 @@ export class InformeFinalAlumnoService {
       })
     );
   }
+
+
+  updateInformeFinal(act: InformeFinal): Observable<InformeFinal> {
+    return this.http.put<InformeFinal>(`${this.urlUpdate}/${act.idInformeFinal}`, act, { headers: this.httpHeaders }).pipe(
+        catchError(e => {
+            swal.fire('Error', 'NO se puede editar informe final', 'error')
+            return throwError(e);
+        })
+    );
+}
 
 
 }

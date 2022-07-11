@@ -13,6 +13,7 @@ import { Acreditacion } from '../models/Acreditacion';
 import swal from 'sweetalert2';
 import { AcreditacionService } from '../services/acreditacion.service';
 import { PersonaService } from '../services/persona.service';
+import { InformeFinal } from '../models/InformeFinal';
 
 function loadFile(url, callback) {
   PizZipUtils.getBinaryContent(url, callback);
@@ -28,6 +29,7 @@ function loadFile(url, callback) {
 
 export class InformeAcreditacionComponent implements OnInit {
   public informeFinalDatos: Array<any> = [];
+  public listainformeFinalFD: Array<any> = [];
   public solicitudes: Array<any> = [];
   public listaPersonas: Array<any> = [];
   public listaAcreditados: Array<any> = [];
@@ -45,6 +47,7 @@ export class InformeAcreditacionComponent implements OnInit {
   formGuardar: FormGroup;
 
   acreditacion: Acreditacion = new Acreditacion();
+  informeF: InformeFinal = new InformeFinal();
 
   constructor(
     private informeFinalAlumnoService: InformeFinalAlumnoService,
@@ -58,6 +61,7 @@ export class InformeAcreditacionComponent implements OnInit {
 
   ngOnInit(): void {
     this.listarInformeFinalAcreditacion();
+    this.listarInformeFinal();
     this.listarSolicitudAlumnos();
     this.capturarFecha();
     this.listarPersonas();
@@ -73,6 +77,14 @@ export class InformeAcreditacionComponent implements OnInit {
       this.informeFinalDatos = resp.data
     })
   }
+
+  public listarInformeFinal() {
+    this.informeFinalAlumnoService.getInformeFinalAlumno().subscribe((resp: any) => {
+      console.log(resp.data)
+      this.listainformeFinalFD = resp.data
+    })
+  }
+
 
 
   listarSolicitudAlumnos() {
@@ -106,6 +118,7 @@ export class InformeAcreditacionComponent implements OnInit {
     this.acreditacion.alumno.persona.cedula = ced;
     this.dialogoGuardaryGenerar = true;
     this.capturarPersona();
+    this.capturarEditarInformeFinal();
   }
 
   capturarPersona() {
@@ -116,17 +129,53 @@ export class InformeAcreditacionComponent implements OnInit {
     }
   }
 
+  
+  capturarEditarInformeFinal(){
+    for(var j=0; j <this.listainformeFinalFD.length; j++){
+        
+      if(this.listainformeFinalFD[j].alumno.persona.cedula===this.datoACedula){
+        this.informeF.idInformeFinal=this.listainformeFinalFD[j].idInformeFinal;
+        this.informeF.docInformeFinal=this.listainformeFinalFD[j].docInformeFinal;
+        this.informeF.alumno.idAlumno=this.listainformeFinalFD[j].alumno.idAlumno;
+        this.informeF.estado="ACREDITADO"
+        this.informeF.fechaEmision=this.listainformeFinalFD[j].fechaEmision;
+      }
+
+    }
+  }
 
   capturarFecha() {
     let date = new Date();
     this.datoAFecha = String(date.getDate()).padStart(2, '0') + '/' + String(date.getMonth() + 1).padStart(2, '0') + '/' + date.getFullYear();
   }
 
+  //sobre el informe final
+
+   //Metodo para crear
+
+   public createInforme(): void {
+
+   
+        this.informeFinalAlumnoService.createInformeFinal(this.informeF).subscribe(
+          Response => {
+           
+            
+            //location.reload();
+
+          }
+        )
+      
+
+    }
+
+
+  
+
+
   //Metodo para crear
 
   public create(): void {
-
-
+   
     var docubas = this.acreditacion.documento;
 
     try {
@@ -138,55 +187,14 @@ export class InformeAcreditacionComponent implements OnInit {
               `Acreditacion creado con exito!`,
               'success'
             )
-            this.dialogoGuardaryGenerar = false;
-
-            //location.reload();
-
-          }
-        )
-      }
-    } catch (error) {
-      swal.fire(
-        'Error de entrada',
-        'Seleccione documento',
-        'error'
-      )
-      return;
-    }
-
-    /*
-    this.acreditacionService.createAcreditacion(this.acreditacion).subscribe(
-      Response => {
-        swal.fire(
-          'Enviado',
-          `Acreditacion creado con exito!`,
-          'success'
-        )
-        this.dialogoGuardaryGenerar = false;
-        location.reload();
-
-      }
-    )*/
-
-
-    /*
-    try {
-      if (docubas.length != 0) {
-        this.acreditacionService.createAcreditacion(this.acreditacion).subscribe(
-          Response => {
-            swal.fire(
-              'Enviado',
-              `Acreditacion creado con exito!`,
-              'success'
-            )
+           //this.editarRegistro();
+           this.createInforme();
             this.dialogoGuardaryGenerar = false;
             location.reload();
 
           }
         )
       }
-
-
     } catch (error) {
       swal.fire(
         'Error de entrada',
@@ -195,9 +203,20 @@ export class InformeAcreditacionComponent implements OnInit {
       )
       return;
     }
-*/
 
+   
   }
+
+  //metodoEditarEstado
+  editarRegistro() {
+
+
+    this.informeFinalAlumnoService.updateInformeFinal(this.informeF).subscribe(informeF => {
+      swal.fire('Registro documento', 'El documento se ha subido con exito.', 'success')
+      
+    })
+    }
+
 
 
   //Metodo para subir documento en base 64

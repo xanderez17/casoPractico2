@@ -72,7 +72,7 @@ export class InformeFinalTutorAcademicoComponent implements OnInit {
   ){ }
 
   ngOnInit(): void {
-    
+
     this.docentePPP = new Docente();
     this.alumnoPPP = new Alumno();
     this.tutor = new TutorA();
@@ -89,10 +89,10 @@ export class InformeFinalTutorAcademicoComponent implements OnInit {
       notaA: ['', Validators.required],
       notaE: ['', Validators.required]
 
-      
+
     });
 
-    
+
     this.listaDocentes();
     this.listaEmpresas();
     this.listaTutoresAcademicos();
@@ -130,7 +130,7 @@ export class InformeFinalTutorAcademicoComponent implements OnInit {
     this.alumnoservice.getAlumnoByCedula(this.alumnoPPP.cedula).subscribe((resp: any)=>{
       console.log(resp.data[0])
       this.informeFinal.alumno = resp.data[0];
-      
+
     });
   }
 
@@ -185,12 +185,12 @@ export class InformeFinalTutorAcademicoComponent implements OnInit {
     var tutor= this.tutord.primer_nombre+" "+this.tutord.segundo_nombre+" "+this.tutord.primer_apellido+" "+this.tutord.segundo_apellido;
     var empresa=this.empresaPPP.nombreEmpresa;
     var alumno=this.alumnoPPP.primer_nombre+" "+this.alumnoPPP.segundo_nombre+" "+this.alumnoPPP.primer_apellido+" "+this.alumnoPPP.segundo_apellido;
-    var carrera = this.docentePPP.carrera; 
+    var carrera = this.docentePPP.carrera;
     var ciclo=this.alumnoPPP.ciclo;
     var horas = this.formActa.get('horas').value;
     var periodo = this.formActa.get('periodo').value;
     var notaA = this.formActa.get('notaA').value;
-    var notaE = (this.formActa.get('notaE').value);
+    var notaE = this.formActa.get('notaE').value;
     var naF =((this.formActa.get('notaA').value)*0.40).toString();
     var neF = ((this.formActa.get('notaE').value)*0.60).toString();
     var notaF = (((this.formActa.get('notaA').value)*0.40)+((this.formActa.get('notaE').value)*0.60));
@@ -200,22 +200,22 @@ export class InformeFinalTutorAcademicoComponent implements OnInit {
     }else{
       estado="NO APROBADAs";
     }
-    
+
 
     this.generardocumento(fecha,abrevR,responsable,tutor,empresa,alumno,carrera,horas,periodo,notaA,notaE,naF,neF,notaF,ciclo,estado);
-   
+
   }
-  
+
 
   crearInformefinal(){
-    
+
     this.informeFinal.docInformeFinal=this.formActa.get('fecha').value;
     if ((((this.formActa.get('notaA').value)*0.40)+((this.formActa.get('notaE').value)*0.60))>70) {
       this.informeFinal.estado="APROBADA";
     }else{
       this.informeFinal.estado="NO APROBADA";
     }
-    
+
     console.log(this.informeFinal);
     this.informefinalservice.createInformeFinal(this.informeFinal).subscribe(
       Response => {
@@ -225,23 +225,23 @@ export class InformeFinalTutorAcademicoComponent implements OnInit {
       }
     )
   }
-  
+
 
   generardocumento(
     fecha:String,
     abrevR :String,
-    responsable:String, 
-    tutor:String, 
-    empresa:String, 
-    alumno :String, 
-    carrera:String, 
-    horas:String, 
-    periodo:String, 
-    notaA:String, 
-    notaE:String, 
-    naF:String, 
-    neF:String, 
-    notaF:number, 
+    responsable:String,
+    tutor:String,
+    empresa:String,
+    alumno :String,
+    carrera:String,
+    horas:String,
+    periodo:String,
+    notaA:String,
+    notaE:String,
+    naF:String,
+    neF:String,
+    notaF:number,
     ciclo:String,
     estado:String, ) {
     loadFile("https://backendg1c2.herokuapp.com/files/anexo15.docx", function(
@@ -263,9 +263,9 @@ export class InformeFinalTutorAcademicoComponent implements OnInit {
         carrera: carrera,
         horas: horas,
         periodo:periodo,
-        notaA:notaA, 
+        notaA:notaA,
         notaE:notaE,
-        naF:naF, 
+        naF:naF,
         neF:neF,
         notaF:notaF,
         ciclo: ciclo,
@@ -305,10 +305,10 @@ export class InformeFinalTutorAcademicoComponent implements OnInit {
         mimeType:
           "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       });
-      saveAs(out, "anexo15" +fecha+alumno+".docx");
-      
+      saveAs(out, "anexo15" +alumno+".docx");
+
     });
-    
+
   }
 
   // Subir archivos a la base de datos
@@ -334,7 +334,7 @@ export class InformeFinalTutorAcademicoComponent implements OnInit {
 
       this.informeFinal.docInformeFinal=base64;
       this.crearInformefinal();
-      
+
     });
   }
 
@@ -345,7 +345,7 @@ export class InformeFinalTutorAcademicoComponent implements OnInit {
     reader.onload = (event) => result.next(btoa(event.target.result.toString()));
     console.log(result)
     return result;
-  } 
+  }
 
 }
 function loadFile(url, callback) {
