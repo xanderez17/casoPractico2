@@ -63,7 +63,7 @@ export class RegistroEmpresasComponent implements OnInit {
       telefono: ['', Validators.required],
       direccion: ['', Validators.required],
       correo: ['', Validators.required],
-      
+
       abrev_titulo: ['', Validators.required]
     });
 
@@ -85,7 +85,7 @@ export class RegistroEmpresasComponent implements OnInit {
       Response => {
         this.empresaData = Response['data']
         console.log(this.empresa);
-        
+
         swal.fire(
           'Empresa Guardada',
           `Empresa ${this.empresa.nombreEmpresa} creada con exito!`,
@@ -94,7 +94,7 @@ export class RegistroEmpresasComponent implements OnInit {
         this.dialogGerente()
       }
     )
-      
+
 
   }
 
@@ -118,17 +118,17 @@ export class RegistroEmpresasComponent implements OnInit {
     console.log("INGRESA METODO")
     if (this.formEmpleado.valid) {
       console.log("FORM VALIDO")
-  
+
       this.validarCedula("0"+this.formEmpleado.value.cedula);
-      if(this.cedulacorrecta){ 
-        if (this.validarEmail(this.formEmpleado.value.correo)) { 
+      if(this.cedulacorrecta){
+        if (this.validarEmail(this.formEmpleado.value.correo)) {
           this.persona.cedula = "0"+ this.formEmpleado.value.cedula;
           this.persona.telefono = "0"+this.formEmpleado.value.telefono;
           this.empresa.ruc = "0"+ this.formEmpresa.value.ruc;
           this.personaService.crearPersona(this.persona).then(value => {
             console.log(this.persona)
             console.log(this.empleado);
-            this.empleado.cargo="gerente"     
+            this.empleado.cargo="gerente"
             this.empleadoService.crearEmpleado(this.persona.cedula, this.empresaData[0].idEmpresa, this.empleado).then(value1 => {
               this.mostarMensajeCorrecto('El empleado fue registrado exitosamente')
               this.formEmpleado.reset();
@@ -147,7 +147,7 @@ export class RegistroEmpresasComponent implements OnInit {
             console.log('ERROR AL CREAR PERSONA', err)
             this.mostrarMensajeError('ERROR AL CREAR PERSONA')
           })
-    
+
         }else{
           swal.fire('Correo incorrecto','Ingrese un correo electrónico valido','error');
           return;
@@ -158,7 +158,7 @@ export class RegistroEmpresasComponent implements OnInit {
       }
     } else {
       console.log("FORM INVALIDO");
-      
+
       this.mostrarMensajeError('NO ESTAN INGRESADOS TODOS LOS DATOS, VERIFICAR!')
     }
 

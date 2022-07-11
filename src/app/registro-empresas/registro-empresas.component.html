@@ -75,7 +75,7 @@
     </div>
     </mat-card>
 
-    <p-dialog header="Registrar Gerente" [(visible)]="rempleado" [modal]="true" [style]="{width: '80%', height: '40vw'}"
+    <p-dialog appendTo="body" header="Registrar Gerente" [(visible)]="rempleado" [modal]="true" [style]="{width: '80%', height: '40vw'}"
         [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
 
         <form [formGroup]="formEmpleado" >
