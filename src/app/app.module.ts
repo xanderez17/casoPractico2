@@ -94,6 +94,8 @@ import { NotificacionCronogramaComponent } from './notificacion-cronograma/notif
 import { ConsultaRegistroAsistenciaComponent } from './consulta-registro-asistencia/consulta-registro-asistencia.component';
 import {ListaConvocatoriasComponent} from "./responsable/lista-convocatorias/lista-convocatorias.component";
 import { CertificadoEmpresaComponent } from './empresa/certificado-empresa/certificado-empresa.component';
+import { ListarconveniosComponent } from './listarconvenios/listarconvenios.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -117,6 +119,7 @@ import { CertificadoEmpresaComponent } from './empresa/certificado-empresa/certi
     SolicitudEstudianteComponent,
     ConsultasReportesComponent,
     ActaReunionComponent,
+    ListarconveniosComponent,
     ConsultasReportesComponent,
     ConsultaEstadoComponent,
     ConsultasReportesComponent,

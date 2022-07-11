@@ -51,9 +51,11 @@ import {
 import { RegistroSeguimientoService } from './services/registro-seguimiento.service';
 import { ConsultaRegistroAsistenciaComponent } from './consulta-registro-asistencia/consulta-registro-asistencia.component';
 import { ListaConvocatoriasComponent} from './responsable/lista-convocatorias/lista-convocatorias.component';
+import { ListarconveniosComponent } from './listarconvenios/listarconvenios.component';
 
 const routes: Routes = [
   {path: '', component:DashboardComponent},
+   {path: 'listar-convenios', component:  ListarconveniosComponent},
   {path: 'consulta-conv-publico', component: ConsultaConvPublicoComponent},
    {path: 'informe-acreditacion/:cedula', component:InformeAcreditacionComponent},
   {path: 'anexosde-ppp', component: AnexosdePPPComponent},
