@@ -50,8 +50,9 @@
 
                     <div class="form-group col-md-6">
                       <label>ESTUDIANTE:</label>
-                      <input onkeydown="return /[a-z, ]/i.test(event.key)"  type="text" class="form-control"
-                             placeholder="{{lista.nombre_a|uppercase}} {{lista.apellido_a|uppercase}}" [disabled]="true">
+                      <input onkeydown="return /[a-z, ]/i.test(event.key)" type="text" class="form-control"
+                             placeholder="{{lista.nombre_a|uppercase}} {{lista.apellido_a|uppercase}}"
+                             [disabled]="true">
                     </div>
 
                   </div>
@@ -71,7 +72,8 @@
 
                     <div class="form-group col-md-6">
                       <label>TUTOR EMPRESARIAL:</label>
-                      <input onkeydown="return /[a-z, ]/i.test(event.key)"  type="text" class="form-control" placeholder="{{lista.nombre_t|uppercase}}"
+                      <input onkeydown="return /[a-z, ]/i.test(event.key)" type="text" class="form-control"
+                             placeholder="{{lista.nombre_t|uppercase}}"
                              [disabled]="true">
                     </div>
 
@@ -145,8 +147,6 @@
           </div>
 
 
-
-
         </div>
 
         <!--Si el estudiante ingresa por primera vez-->
@@ -160,14 +160,14 @@
       </div>
 
 
-        <!--No esta aprobado-->
-        <ng-template #noAprobado>
-          <br><br><br><br><br>
-          <h2 style="color: #1d3557; text-align: center;"> ESTIMADO ESTUDIANTE, AL MOMENTO USTED NO TIENE HABILITADO
-            ESTA SECCION </h2>
-          <br><br><br><br><br>
-          <br><br><br><br><br>
-        </ng-template>
+      <!--No esta aprobado-->
+      <ng-template #noAprobado>
+        <br><br><br><br><br>
+        <h2 style="color: #1d3557; text-align: center;"> ESTIMADO ESTUDIANTE, AL MOMENTO USTED NO TIENE HABILITADO
+          ESTA SECCION </h2>
+        <br><br><br><br><br>
+        <br><br><br><br><br>
+      </ng-template>
 
 
       </body>
@@ -182,12 +182,18 @@
 </section>
 
 
-
 <!----------------------------------------------------------------------------->
 <!--Dialogo Registro de actividades-->
 <section>
-  <p-dialog header="Registrar asistencia" [(visible)]="dis" [modal]="true" [style]="{width: '60vw'}"
-            [maximizable]="false" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <p-dialog header="Registrar asistencia"
+            appendTo="body"
+            [(visible)]="dis"
+            [modal]="true"
+            [style]="{width: '60vw'}"
+            [maximizable]="false"
+            [baseZIndex]="10000"
+            [draggable]="false"
+            [resizable]="false">
 
     <form [formGroup]="formValidacion">
       <!--LINEA 1-->
@@ -229,7 +235,6 @@
       </div>
 
 
-
       <div class="d-grid gap-2 col-4 mx-auto">
         <button type="submit" pButton icon="pi pi-save" (click)="create()" label="ENVIAR" class="ui-button-secondary"
                 style="background: #223a32; color: white;"></button>
@@ -243,8 +248,14 @@
 
 <!------------------------------------------------------------------------------------------------------------------------------------------>
 <!--Dialogo para mandar solicitud-->
-<p-dialog [(visible)]="dialogoGuardaryGenerar" [style]="{width:'37vw'}" [draggable]="false" [baseZIndex]="10000"
-          [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="dialogoGuardaryGenerar"
+          [style]="{width:'37vw'}"
+          [draggable]="false"
+          [baseZIndex]="10000"
+          [modal]="true"
+          styleClass="p-fluid"
+          appendTo="body">
+
   <ng-template pTemplate="content">
 
     <mat-card class="card" style="width: 100%;">
@@ -258,7 +269,7 @@
 
           <div>
             <label for="horaSalida">SELECCIONE DOCUMENTO</label>
-            <input class="form-control" type="file" (change)="onFileSelected($event)" accept=".pdf" />
+            <input class="form-control" type="file" (change)="onFileSelected($event)" accept=".pdf"/>
           </div>
 
           <br>
@@ -268,10 +279,12 @@
           <div class="d-grid gap-2 d-md-flex justify-content-md-end">
             <button class="btn btn-primary me-md-2" type="button" style="background: #9f2a2a; color: white;"
                     (click)="generate(datoEstudiante,datoEmpresa,datoTutor,datoCarrera)">DESCARGAR
-              DOCUMENTO</button>
+              DOCUMENTO
+            </button>
             <button class="btn btn-primary" type="button" style="background: #28528d; color: white;"
                     (click)=" editarRegistro()">SUBIR
-              DOCUMENTO</button>
+              DOCUMENTO
+            </button>
           </div>
         </mat-card>
 
@@ -283,5 +296,7 @@
 
 </p-dialog>
 <div class="text-center">
-  <button type="submit" class="btn btn-danger"style="background: #1d3557; color: white;" [routerLink]="['/consulta-registro-asistencia']">Consulta Registro de asistencia de estudiantes</button>
+  <button type="submit" class="btn btn-danger" style="background: #1d3557; color: white;"
+          [routerLink]="['/consulta-registro-asistencia']">Consulta Registro de asistencia de estudiantes
+  </button>
 </div>
