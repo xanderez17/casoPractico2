@@ -102,7 +102,7 @@ export class SolicitudEstudianteComponent implements OnInit {
 
 
       if (this.solicitudes[i].alumno.idAlumno == ide) {
-        if (this.solicitudes[i].estado == "Aceptado") {
+        if (this.solicitudes[i].estado.toUpperCase() == "ACEPTADO") {
 
 
           swal.fire({

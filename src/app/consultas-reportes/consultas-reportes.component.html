@@ -1,78 +1,121 @@
+
 <mat-card-title style="background-color:#1d3557; color:white; padding: 20px; border-radius: 5px">
-  Consultas y Reportes Prácticas PP
+  Consultras y Reportes Practicas PP
 </mat-card-title>
 <mat-card>
   <h2 style="color: #1d3557;">Consultas</h2>
 
   <div>
-    <p-dropdown
-      [options]="drop"
-      [(ngModel)]="dropselect"
+    <p-dropdown 
+      [options]="drop" 
+      [(ngModel)]="dropselect" 
       placeholder="Seleccione una opción"
-      optionLabel="name"
-      [showClear]="true" >
+      optionLabel="name" 
+      [showClear]="true" 
+      (onChange)="OnChange($event)">
     </p-dropdown>
     <br><br>
-    <div class="card card-w-title" >
-      <p-table #dt2 id="talumnos"
-               [paginator]="true"
-               [rows]="10"
-               optionLabel="name"
-               >
-      </p-table>
-      <br><br>
-
-      <div class="card card-w-title"  *ngIf="this.banAlumnos == true" >
-        <p-table #dt2 id="talumnos"
-                 [value]="dataAlumnos"
-                 [paginator]="true"
-                 [columns]="colsalumnos"
-                 [rows]="10"
-                 [showCurrentPageReport]="true"
-                 [rowsPerPageOptions]="[10,25,50]"
-                 [paginator]="true"
-                 [globalFilterFields]="['cedula','primerNombre','segundoNombre','primerApellido','segundoApellido']"
-        >
-
+    <div class="card card-w-title"  *ngIf="this.banEmpresas == true" >
+      <p-table #dt id="tempresas" 
+          [value]="empresas" 
+          [paginator]="true" 
+          [columns]="cols" 
+          [rows]="10" 
+          [showCurrentPageReport]="true"
+          [rowsPerPageOptions]="[10,25,50]" 
+          [paginator]="true"
+          [globalFilterFields]="['nombreEmpresa','ruc']"
+          >
+    
           <ng-template pTemplate="caption">
-            <div class="p-grid">
-              <div class="p-col" style="text-align: left;">
-                <p>Lista de Estudiantes</p>
+              <div class="p-grid">
+                  <div class="p-col" style="text-align: left;">
+                      <p>Lista de Empresas</p>
+                  </div>
+                  <div class="p-col" style="text-align: right">
+                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                    <input type="text" pInputText size="50" placeholder="Busqueda: Nombre de empresa o ruc"
+                        (input)="dt.filterGlobal($any($event.target).value, 'contains')" style="width:auto">
+                </div>
               </div>
-              <div class="p-col" style="text-align: right">
-                <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
-                <input type="text" pInputText size="50" placeholder="Busqueda: Nombre de alumno"
-                       (input)="dt2.filterGlobal($any($event.target).value, 'contains')" style="width:auto">
-              </div>
-            </div>
           </ng-template>
           <ng-template pTemplate="header" let-columns>
-            <tr>
-              <th *ngFor="let col of colsalumnos">
-                {{col.header}}
-              </th>
-            </tr>
+              <tr>
+                  <th *ngFor="let col of cols">
+                      {{col.header}}
+                  </th>
+              </tr>
           </ng-template>
-
+          
+          <ng-template pTemplate="body" let-empresas>
+              <tr>
+                <td>{{empresas.ruc}}</td>
+                <td>{{empresas.nombreEmpresa}}</td>
+                <td>{{empresas.vision}}</td>
+                <td>{{empresas.mision}}</td>
+                <td>{{empresas.telefono}}</td>
+                <td>{{empresas.direccion}}</td>
+                <td>{{empresas.duracionConvenio}}</td>
+                
+              </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+              <tr>
+                  <td [attr.colspan]="cols.length">No hay datos.</td>
+              </tr>
+          </ng-template>
+          
+      </p-table>
+    </div>
+    <div class="card card-w-title"  *ngIf="this.banAlumnos == true" >
+      <p-table #dt2 id="talumnos" 
+          [value]="dataAlumnos" 
+          [paginator]="true" 
+          [columns]="colsalumnos" 
+          [rows]="10" 
+          [showCurrentPageReport]="true"
+          [rowsPerPageOptions]="[10,25,50]" 
+          [paginator]="true"
+          [globalFilterFields]="['cedula','primerNombre','segundoNombre','primerApellido','segundoApellido']"
+          >
+    
+          <ng-template pTemplate="caption">
+              <div class="p-grid">
+                  <div class="p-col" style="text-align: left;">
+                      <p>Lista de Estudiantes</p>
+                  </div>
+                  <div class="p-col" style="text-align: right">
+                    <i class="pi pi-search" style="margin:4px 4px 0 0"></i>
+                    <input type="text" pInputText size="50" placeholder="Busqueda: Nombre de alumno"
+                        (input)="dt2.filterGlobal($any($event.target).value, 'contains')" style="width:auto">
+                </div>
+              </div>
+          </ng-template>
+          <ng-template pTemplate="header" let-columns>
+              <tr>
+                  <th *ngFor="let col of colsalumnos">
+                      {{col.header}}
+                  </th>
+              </tr>
+          </ng-template>
+          
           <ng-template pTemplate="body" >
             <tr *ngFor="let alumno of dataAlumnos">
               <td *ngFor="let col of colsalumnos">
                 <div [ngSwitch]="col.field">
-
+                   
                   <span *ngSwitchDefault>{{alumno[col.field]}}</span>
                 </div>
               </td>
             </tr>
           </ng-template>
           <ng-template pTemplate="emptymessage">
-            <tr>
-              <td [attr.colspan]="colsalumnos.length">No hay datos.</td>
-              <td [attr.colspan]="cols.length">No hay datos.</td>
-            </tr>
+              <tr>
+                  <td [attr.colspan]="cols.length">No hay datos.</td>
+              </tr>
           </ng-template>
-
-        </p-table>
-      </div>
+          
+      </p-table>
     </div>
   </div>
 </mat-card>
