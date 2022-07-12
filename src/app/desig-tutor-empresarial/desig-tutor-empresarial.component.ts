@@ -226,7 +226,7 @@ export class DesigTutorEmpresarialComponent implements OnInit {
   terminarDesignacion() {
     if (this.base64Output != null) {
       let tutorEmpresarial: any = {
-        control: 'MONITOREAR AL ALUMNO EN SUS ACTIVIDADES',
+        control: 'matutino',
         docAsignacion: this.base64Output
       }
       this._crudTutorE.createTutorEmpresarial(this.ObjetoEmpleado.cedula, this.ObjetoAlumno.cedula, tutorEmpresarial).then(value => {

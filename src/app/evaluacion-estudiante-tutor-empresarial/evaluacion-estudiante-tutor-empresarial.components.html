@@ -7,19 +7,20 @@
     <mat-card>
       <div>
         <div class="card card-w-title">
-          <p-table #dt id="ttutorE" [value]="tutorEm" [paginator]="true" [columns]="columnasTutorEm" [rows]="1"
-                   [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="true"
-                   [globalFilterFields]="['primerNombre','primerApellido']">
+          <table class="table table-striped">
+            <thead class="bg-warning">
+            <tr>
+              <th scope="col">CI Tutor</th>
+              <th scope="col">Nombres T</th>
+              <th scope="col">Apellido T</th>
+              <th scope="col">CI Estudiante</th>
+              <th scope="col">Nombres E</th>
+              <th scope="col">Apellidos E</th>
+              <th scope="col">Evaluar E</th>
 
-            <ng-template pTemplate="header" let-columnasTutorEm>
-              <tr>
-                <th *ngFor="let col of columnasTutorEm">
-                  {{col.header}}
-                </th>
-              </tr>
-            </ng-template>
-
-            <ng-template pTemplate="body">
+            </tr>
+            </thead>
+            <tbody>
               <tr *ngFor="let tutorem of tutorEm">
                 <td>{{tutorem.personalEmpresa.persona.cedula |uppercase}}</td>
                 <td>{{tutorem.personalEmpresa.persona.primerNombre+" "+tutorem.personalEmpresa.persona.segundoNombre}}</td>
@@ -29,7 +30,7 @@
                 <td>{{tutorem.alumno.persona.primerApellido+" "+tutorem.alumno.persona.segundoApellido}}</td>
                 <td>
                   <button
-                          class="p-button-warning"
+                          class="p-button-success"
                           type="button"
                           pButton
                           icon="pi pi-chart-line"
@@ -38,14 +39,14 @@
 
                 </td>
               </tr>
-            </ng-template>
+            </tbody>
+          </table>
             <ng-template pTemplate="emptymessage">
               <tr>
                 <td [attr.colspan]="columnasTutorEm.length">No hay datos.</td>
               </tr>
             </ng-template>
 
-          </p-table>
 
         </div>
       </div>
