@@ -25,7 +25,7 @@
                     {{lisTutorEmpresarial.alumno.persona.primerApellido|uppercase}}
                     {{lisTutorEmpresarial.alumno.persona.segundoApellido|uppercase}}
                   <p><strong>NOMBRE TUTOR:
-                    </strong>{{lisTutorEmpresarial.personalEmpresa.persona.primerNombre|uppercase}}
+                  </strong>{{lisTutorEmpresarial.personalEmpresa.persona.primerNombre|uppercase}}
                     {{lisTutorEmpresarial.personalEmpresa.persona.primerApellido|uppercase}}
                     {{lisTutorEmpresarial.personalEmpresa.persona.segundoApellido|uppercase}}</p>
                   <p><strong>EMPRESA: </strong>{{lisTutorEmpresarial.personalEmpresa.empresa.nombreEmpresa|uppercase}}
@@ -36,8 +36,8 @@
                   <div class="col-sm-5 offset-sm-9 col-md-8 offset-md-3">
                     <br>
                     <button class="mat-flat-button" style="background: #38821d; color: rgb(230, 225, 225);" pButton
-                      icon="pi pi-arrow-circle-right" label="CERTIFICAR"
-                      (click)="showGuarda(lisTutorEmpresarial.alumno.carrera.nombre,lisTutorEmpresarial.personalEmpresa.persona.primerNombre+' '+lisTutorEmpresarial.personalEmpresa.persona.primerApellido,lisTutorEmpresarial.alumno.persona.primerNombre+' '+lisTutorEmpresarial.alumno.persona.segundoNombre+' '+lisTutorEmpresarial.alumno.persona.primerApellido+' '+lisTutorEmpresarial.alumno.persona.segundoApellido,lisTutorEmpresarial.alumno.persona.cedula,lisTutorEmpresarial.personalEmpresa.persona.cedula,listaSolicitudA.horasPPP,lisTutorEmpresarial.personalEmpresa.empresa.nombreEmpresa,lisTutorEmpresarial.idTutorEmpresarial)"></button>
+                            icon="pi pi-arrow-circle-right" label="CERTIFICAR"
+                            (click)="showGuarda(lisTutorEmpresarial.alumno.carrera.nombre,lisTutorEmpresarial.personalEmpresa.persona.primerNombre+' '+lisTutorEmpresarial.personalEmpresa.persona.primerApellido,lisTutorEmpresarial.alumno.persona.primerNombre+' '+lisTutorEmpresarial.alumno.persona.segundoNombre+' '+lisTutorEmpresarial.alumno.persona.primerApellido+' '+lisTutorEmpresarial.alumno.persona.segundoApellido,lisTutorEmpresarial.alumno.persona.cedula,lisTutorEmpresarial.personalEmpresa.persona.cedula,listaSolicitudA.horasPPP,lisTutorEmpresarial.personalEmpresa.empresa.nombreEmpresa,lisTutorEmpresarial.idTutorEmpresarial,lisTutorEmpresarial.personalEmpresa.idPersonal,lisTutorEmpresarial.alumno.idAlumno)"></button>
                   </div>
 
 
@@ -59,7 +59,7 @@
 <!------------------------------------------------------------------------------------------------------------------------------------------>
 <!--Dialogo para mandar solicitud-->
 <p-dialog [(visible)]="dialogoGuardaryGenerar" [style]="{width:'37vw'}" [draggable]="false" [baseZIndex]="10000"
-  [modal]="true" styleClass="p-fluid">
+          [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
 
     <mat-card class="card" style="width: 100%;">
@@ -87,7 +87,7 @@
               " (click)="generate()">DESCARGAR
               DOCUMENTO</button>
             <button class="btn btn-primary" type="button" style="background: #28528d; color: white;"
-              (click)="create()">SUBIR
+                    (click)="create()">SUBIR
               DOCUMENTO</button>
           </div>
         </mat-card>
