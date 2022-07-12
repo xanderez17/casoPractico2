@@ -179,7 +179,6 @@ export class AppComponent implements OnInit {
   deleteNotificacion(id){
     this.notificacionesService.deleteNotificacion(id).then(res=>{
       console.log('Notificacion eliminada');
-
     })
   }
 
