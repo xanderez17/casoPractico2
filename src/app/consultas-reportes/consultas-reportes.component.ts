@@ -24,7 +24,7 @@ export class ConsultasReportesComponent implements OnInit {
   empresa: Empresa = new Empresa();
   empresas : Empresa[];
   cols: any[];
-
+  
   dataAlumnos: any[] ;
   colsalumnos: any[];
 
@@ -47,7 +47,8 @@ export class ConsultasReportesComponent implements OnInit {
       { field: 'vision', header: 'Vision' },
       { field: 'mision', header: 'Mision' },
       { field: 'telefono', header: 'Telefono' },
-      { field: 'direccion', header: 'Dirección' }
+      { field: 'direccion', header: 'Dirección' },
+      { field: 'duracionConvenio', header: 'Convenio' }
     ];
     this.listarEmpresas();
     this.colsalumnos=[
