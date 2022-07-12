@@ -196,9 +196,9 @@ export class InformeFinalTutorAcademicoComponent implements OnInit {
     var notaF = (((this.formActa.get('notaA').value)*0.40)+((this.formActa.get('notaE').value)*0.60));
     var estado;
     if ((((this.formActa.get('notaA').value)*0.40)+((this.formActa.get('notaE').value)*0.60))>70) {
-      estado="APROBADA";
+      estado="APROBADO";
     }else{
-      estado="NO APROBADAs";
+      estado="NO APROBADO";
     }
 
 
@@ -211,9 +211,9 @@ export class InformeFinalTutorAcademicoComponent implements OnInit {
 
     this.informeFinal.docInformeFinal=this.formActa.get('fecha').value;
     if ((((this.formActa.get('notaA').value)*0.40)+((this.formActa.get('notaE').value)*0.60))>70) {
-      this.informeFinal.estado="APROBADA";
+      this.informeFinal.estado="APROBADO";
     }else{
-      this.informeFinal.estado="NO APROBADA";
+      this.informeFinal.estado="NO APROBADO";
     }
 
     console.log(this.informeFinal);
