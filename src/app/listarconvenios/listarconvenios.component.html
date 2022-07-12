@@ -24,8 +24,9 @@
               <th scope="col">Empresa</th>
               <th scope="col">CI Gerente</th>
               <th scope="col">Gerente</th>
-<!--              <th scope="col">CI Responsable PPP</th>-->
-<!--              <th scope="col">Responsable PPP</th>-->
+              <th scope="col">Carrera</th>
+              <!--              <th scope="col">CI Responsable PPP</th>-->
+              <!--              <th scope="col">Responsable PPP</th>-->
             </tr>
             </thead>
 
@@ -37,8 +38,8 @@
               <td>{{convenio.gerente.empresa.nombreEmpresa |uppercase}}</td>
               <td>{{convenio.gerente.persona.cedula |uppercase}}</td>
               <td>{{convenio.gerente.persona.primerNombre+" "+convenio.gerente.persona.primerApellido}}</td>
-<!--              <td>{{convenio.responsablePPP.docente.persona.cedula |uppercase}}</td>-->
-<!--              <td>{{convenio.responsablePPP.docente.persona.primerNombre+" "+convenio.responsablePPP.docente.persona.primerApellido}}</td>-->
+              <td>{{convenio.responsablePPP.docente.carrera.nombre }}</td>
+              <!--              <td>{{convenio.responsablePPP.docente.persona.primerNombre+" "+convenio.responsablePPP.docente.persona.primerApellido}}</td>-->
             </tr>
             </tbody>
           </table>
