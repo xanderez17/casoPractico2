@@ -53,6 +53,8 @@ export class HomeComponent implements OnInit {
   nombre= "nombre de prueba";
 
  
+
+  
   generate(nom) {
     loadFile("http://localhost:8082/files/anexo1.docx", function(
       error,
@@ -110,6 +112,12 @@ export class HomeComponent implements OnInit {
       saveAs(out, "output.docx");
     });
   }
+
+
+
+
+
+
 
   //Subir un archivo a la base
 

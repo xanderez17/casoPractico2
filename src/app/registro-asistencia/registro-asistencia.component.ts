@@ -15,9 +15,11 @@ import { registroA } from '../models/RegistroAsistencia';
 import { Observable } from 'rxjs';
 import { ReplaySubject } from 'rxjs';
 
-function loadFile(url, callback) {
+
+function loadFile(url,callback) {
   PizZipUtils.getBinaryContent(url, callback);
 }
+
 
 
 @Component({
@@ -306,6 +308,7 @@ export class RegistroAsistenciaComponent implements OnInit {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   //metodo generar documento
+  /*
 
   generate(est: any, emp: any, tut: any, car: any) {
     var actido = this.datoCapturaActividades;
@@ -376,7 +379,6 @@ export class RegistroAsistenciaComponent implements OnInit {
     //location.reload();
   }
 
-
-
+*/
 
 }
